@@ -13,6 +13,7 @@
         body {
             background-color: rgb(36, 36, 36);
             margin: 0;
+            font-family: 'Arial', sans-serif;
         }
 
         header {
@@ -55,8 +56,21 @@
 
         #add-category-button {
             position: absolute;
-            left: 10px;
+            left: 20px;
             top: 60px;
+            padding: 10px 20px;
+            background-color: rgb(29, 185, 84);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.7s;
+            z-index: 2;
+        }
+
+        #add-category-button:hover {
+            color: rgb(29, 185, 84);
+            background-color: white;
         }
 
         main {
@@ -66,24 +80,47 @@
             justify-content: center;
             height: 80vh;
             color: black;
+            padding-top: 60px;
         }
-        
+
         main > h1 {
             color: white;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        #categoryTable {
+            max-height: 300px;
+            overflow-y: auto;
+            width: 320px;
+            margin-top: 20px;
+            border-radius: 10px;
         }
 
         table {
             margin: 10px auto;
-            background-color: white;
-            border-collapse: collapse;
-            width: 300px;
-            text-align: center;
+            background-color: rgb(40, 40, 40);
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
         }
 
         td {
-            border: 2px solid grey;
-            padding: 10px;
-            color: black;
+            border: 2px solid #333;
+            padding: 12px;
+            color: white;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: rgb(60, 60, 60);
+            border-radius: 8px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            position: relative;
+        }
+
+        td:hover {
+            background-color: rgb(29, 185, 84);
+            color: white;
         }
 
         button {
@@ -111,9 +148,11 @@
             transform: translate(-50%, -50%);
             background: white;
             padding: 20px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
             border-radius: 10px;
             text-align: center;
+            width: 300px;
+            z-index: 3;
         }
 
         .popup-buttons {
@@ -133,7 +172,7 @@
 
         .popup-input {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             border: 2px solid #ccc;
             border-radius: 5px;
             font-size: 16px;
@@ -151,29 +190,56 @@
             left: 20px;
             padding: 10px 20px;
         }
+
+        .options-menu {
+            display: none;
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: rgb(40, 40, 40);
+            border: 1px solid #333;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            z-index: 2;
+            width: 120px;
+        }
+
+        .options-menu button {
+            background: none;
+            color: white;
+            border: none;
+            padding: 5px;
+            width: 100%;
+            text-align: left;
+        }
+
+        .options-menu button:hover {
+            background-color: rgb(29, 185, 84);
+        }
+
+        /* Estilo para los tres puntos */
+        .three-dots {
+            position: absolute;
+            top: 50%;
+            right: 5px;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: white;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .three-dots:hover {
+            color: rgb(29, 185, 84);
+        }
+
+        /* Mostrar menú con JavaScript */
+        .show-menu {
+            display: block;
+        }
     </style>
 
-    <script>
-        function openPopup() {
-            document.getElementById("popupOverlay").style.display = "block";
-        }
-
-        function closePopup() {
-            document.getElementById("popupOverlay").style.display = "none";
-        }
-
-        function addCategory() {
-            let categoryName = document.getElementById("categoryInput").value;
-            if (categoryName.trim() !== "") {
-                let table = document.getElementById("categoryTable");
-                let newRow = table.insertRow();
-                let newCell = newRow.insertCell(0);
-                newCell.textContent = categoryName;
-                document.getElementById("categoryInput").value = "";
-                closePopup();
-            }
-        }
-    </script>
 </head>
 
 <body>
@@ -187,7 +253,7 @@
         </div>
     </header>
 
-    <button id="add-category-button" onclick="openPopup()">Añadir categoría</button>
+    <button id="add-category-button" onclick="document.getElementById('popupOverlay').style.display = 'block'">Añadir categoría</button>
 
     <main>
         <h1>Categorías</h1>
@@ -196,17 +262,77 @@
             <input type="text" id="categoryInput" class="popup-input" placeholder="Introduce la categoría" required>
             <div class="popup-buttons">
                 <button onclick="addCategory()">Añadir</button>
-                <button onclick="closePopup()">Cancelar</button>
+                <button onclick="document.getElementById('popupOverlay').style.display = 'none'">Cancelar</button>
             </div>
         </div>
-        <table id="categoryTable">
-            <tr>
-                <td>Categoría</td>
-            </tr>
-        </table>
+        <div id="categoryTable">
+            <table id="categoryList">
+                <tr>
+                    <td>
+                        Categoría
+                        <div class="three-dots" onclick="toggleMenu(this)"><i class="bi bi-three-dots"></i></div>
+                        <div class="options-menu">
+                            <button>Obtener detalles</button>
+                            <button>Editar</button>
+                            <button>Eliminar</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </main>
-    
+
     <button id="back-button">Volver atrás</button>
+
+    <script>
+        function addCategory() {
+            const categoryName = document.getElementById('categoryInput').value;
+            if (categoryName.trim() !== "") {
+                const table = document.getElementById("categoryList");
+                const newRow = table.insertRow();
+                const cell = newRow.insertCell();
+                cell.innerHTML = `${categoryName} 
+                <div class="three-dots" onclick="toggleMenu(this)">
+                    <i class="bi bi-three-dots"></i>
+                </div>
+                <div class="options-menu">
+                    <button>Obtener detalles</button>
+                    <button>Editar</button>
+                    <button>Eliminar</button>
+                </div>`;
+
+                // Cierra el popup
+                document.getElementById('popupOverlay').style.display = 'none';
+
+                // Limpia el input
+                document.getElementById('categoryInput').value = '';
+            } else {
+                alert("Por favor, introduce un nombre para la categoría.");
+            }
+        }
+
+        function toggleMenu(element) {
+            const menu = element.nextElementSibling;
+            const menus = document.querySelectorAll('.options-menu');
+            // Ocultar otros menús abiertos
+            menus.forEach(function (m) {
+                if (m !== menu) {
+                    m.classList.remove('show-menu');
+                }
+            });
+            // Alternar el menú del elemento clicado
+            menu.classList.toggle('show-menu');
+        }
+
+        // Cierra el menú si se hace clic fuera
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('.three-dots') && !e.target.closest('.options-menu')) {
+                document.querySelectorAll('.options-menu').forEach(function (menu) {
+                    menu.classList.remove('show-menu');
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>
