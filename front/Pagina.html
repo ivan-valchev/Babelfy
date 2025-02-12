@@ -29,10 +29,12 @@
         }
 
         td {
-            border: 2px solid grey;
-            background-color: white;
+            /* border: 2px solid grey; */
+            background-color: rgb(85, 85, 85);
             margin: 20px auto;
             text-align: center;
+            min-width: 125px;
+            color: white;
         }
 
         table {
@@ -45,14 +47,16 @@
 
         nav {
             flex: 0 0 150px;
-            background-color: rgb(20,20,20);
+            background-color: rgb(20, 20, 20);
             color: rgb(255, 255, 255);
             height: 700px;
         }
-        nav>div{
+
+        nav>div {
             padding-left: 10px;
         }
-        nav>div>hr{
+
+        nav>div>hr {
             margin-right: 5px;
         }
 
@@ -63,7 +67,8 @@
         main {
             flex: 1 1 auto;
         }
-        main>div{
+
+        main>div {
             text-align: center;
             margin-right: 125px;
         }
@@ -72,42 +77,188 @@
             list-style-type: none;
         }
 
-        header>div>i:hover{
-            color:red;
+        header>div>i:hover {
+            color: red;
         }
-        #icono2{
+
+        #icono2 {
             font-size: 40px;
         }
-        h1{
+
+        h1 {
             color: white;
         }
-        button{
+
+        .button1 {
             border: none;
             font-size: 20px;
             color: white;
-            background-color: 	rgb(29, 185, 84);
-            cursor:pointer;
+            background-color: rgb(29, 185, 84);
+            cursor: pointer;
             transition: all 0.7s;
         }
 
-        button:hover{
-            color:rgb(29, 185, 84) ;
+        .button1:hover {
+            color: rgb(29, 185, 84);
             background-color: white;
         }
 
-        #popupOverlay{
+        #popupOverlay {
             display: none;
+        }
+
+        /*Desplegable categorías*/
+        .desplegable {
+            border: none;
+            font-size: 15px;
+            color: white;
+            background-color: rgb(85, 85, 85);
+            cursor: pointer;
+        }
+
+        #info {
+            display: none;
+            word-spacing: 10px;
+
+        }
+
+        /* #info> */
+        /*popup eliminar*/
+        .cancelbtn,
+        .deletebtn {
+            float: left;
+            width: 50%;
+            border: none;
+            opacity: 0.9;
+        }
+        .deletebtn:hover{
+            opacity: 1;
+        }
+
+        .cancelbtn {
+            background-color: rgb(174, 47, 47);
+            color: white;
+            border: none;
+            opacity: 0.9;
+        }
+        .cancelbtn:hover{
+            opacity: 1;
+        }   
+
+        .deletebtn {
+            background-color: rgb(29, 185, 84);
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            padding: 16px;
+        }
+        .container>h1{
+            color: rgb(255, 255, 255);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            padding-top: 50px;
+        }
+
+        .modal-content {
+            background-color: rgb(0, 0, 0);
+            margin: 5% auto 15% auto;
+            border: 1px solid #353535;
+            width: 50%;
+            color: rgb(255, 255, 255);
+            border-radius: 25px;
+        }
+
+        .close {
+            position: absolute;
+            right: 35px;
+            top: 15px;
+            font-size: 40px;
+            color: white;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: green;
+            cursor: pointer;
+        }
+
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        @media screen and (max-width:300px) {
+
+            .cancelbtn,
+            .deletebtn {
+                width: 100%;
+            }
+        }
+
+        /*PopUp*/
+        .popup-overlay{
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .open-popup-btn{
+            padding: 12px 20px;
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius:5px;
+            cursor:pointer;
+        }
+        .open-popup-btn:hover{
+            background-color: rgb(29, 185, 84);
         }
 
     </style>
 
     <script>
-        function openPopup(){
-            document.getElementById("popupOverlay").style.display="block";
+        function openPopup() {
+            document.getElementById("popupOverlay").style.display = "block";
         }
-        function closePopup(){
-            document.getElementById("popupOverlay").style.display="none";
+        function closePopup() {
+            document.getElementById("popupOverlay").style.display = "none";
         }
+        /*Desplegable categoría*/
+        function desplegar() {
+            var x = document.getElementById("info")
+            if (x.style.display == "none") {
+                x.style.display = "block"
+            } else {
+                x.style.display = "none"
+            }
+        }
+
+
+        var modal = document.getElementById('id01');
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none"
+            }
+        }
+
+
     </script>
 </head>
 
@@ -148,9 +299,9 @@
         </nav>
         <main>
             <div>
-                <h1>Canciones</h1>
+                <h1>Categoría</h1>
                 <!-- <button class="button1" type="button" onclick="alert ('Esto es la prueba de un botón')">Añadir canción</button> -->
-                <button class="button1" type="button" onclick="openPopup()">Añadir canción</button>
+                <button class="open-popup-btn" type="button" onclick="openPopup()">Añadir canción</button>
                 <div id="popupOverlay">
                     <button onclick="closePopup()">X</button>
                     <h2>Añadir canción</h2>
@@ -159,17 +310,49 @@
                         <input type="text" name="Categoría" placeholder="Introduzca la categoría" required>
                         <input type="text" name="Artista" placeholder="Introduce el nombre del artista" required>
                         <button type="reset">Añadir categoría</button>
-                    </form> 
+                    </form>
 
                 </div>
                 <table>
                     <tr>
-                        <td>Canción</td>
-                        <td>Autor</td>
+                        <td>Categoría</td>
                     </tr>
                     <tr>
-                        <td>Adsasdhasjdadasdsadasdas</td>
-                        <td>Bfafewfwaefefewgwfwef</td>
+                        <td><button class="desplegable" type="button" onclick="desplegar()">Pop</button>
+
+                            <div id="info">
+                                <hr>
+                                <!-- Modificar -->
+                                <p><button class="open-popup-btn" type="button">Modificar <i class="bi bi-pencil"></i></button></p>
+                                <div class="popup-overlay" id="popupOverlay">
+                                    <div class="popup-form">
+
+                                    </div>
+                                </div>
+                                <!-- Borrar -->
+
+                                <p><button type="button" onclick="document.getElementById('id01').style.display='block'">Borrar <i
+                                            class="bi bi-trash3-fill"></i></button></p>
+                                <div id="id01" class="modal">
+                                    <span onclick="document.getElementById('id01').style.display = 'none'" class="close"
+                                        title="Close Modal">x</span>
+                                    <form class="modal-content" action="/action_page.php">
+                                        <div class="container">
+                                            <h1>Borrar Categoría</h1>
+                                            <p>¿Estás seguro que quieres eliminar esta categoría?</p>
+                                            <div class="clearfix">
+                                                <button type="button"
+                                                    onclick="document.getElementById('id01').style.display='none'"
+                                                    class="deletebtn">Aceptar</button>
+                                                <button type="button"
+                                                    onclick="document.getElementById('id01').style.display = 'none'"
+                                                    class="cancelbtn">Cancelar</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -178,7 +361,7 @@
                     <caption style="text-align: center;"></caption>
                     <tr>
                         <td>Categoría</td>
-                        
+
                     </tr>
                     <tr>
                         <td>Rock</td>
