@@ -88,6 +88,9 @@
         h1 {
             color: white;
         }
+        h2{
+            color: white;
+        }
 
         .button1 {
             border: none;
@@ -118,7 +121,7 @@
 
         #info {
             display: none;
-            word-spacing: 10px;
+            word-spacing: 2px;
 
         }
 
@@ -168,6 +171,7 @@
             height: 100%;
             overflow: auto;
             padding-top: 50px;
+            background-color: rgba(0, 0, 0, 0.5);
         }
 
         .modal-content {
@@ -193,6 +197,21 @@
             cursor: pointer;
         }
 
+        .display-delete-btn{
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius:5px;
+            cursor:pointer;
+            width: 90%;
+            height:40px;
+        }
+
+        .display-delete-btn:hover{
+            background-color: rgb(29, 185, 84);
+            color: white;
+        }
+
         .clearfix::after {
             content: "";
             clear: both;
@@ -207,7 +226,7 @@
             }
         }
 
-        /*PopUp*/
+        /*PopUp Modificar*/
         .popup-overlay{
             display: none;
             position: fixed;
@@ -229,16 +248,70 @@
         }
         .open-popup-btn:hover{
             background-color: rgb(29, 185, 84);
+            color: white;
+        }
+        .popup-form{
+            position: fixed;
+            top: -10px;
+            left: 50%;
+            transform: translate(-50%,50%);
+            background-color: rgb(0, 0, 0);
+            padding: 30px;
+            border-radius: 10px;
+            width: 300px;
+            box-shadow:0 4px 8px rgba(0, 0, 0, 0.1);
+            /* z-index: 500; */
+        }
+        .popup-form button{
+            width: 100%;
+            padding: 12px;
+            background-color: white;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .popup-form button:hover{
+            background-color: rgb(29, 185, 84);
+        }
+        .popup-form input[type = "text"]{
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid rgb(29, 185, 84);
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .accept-btn{
+            margin-top: 15px;
+        }
+        .close-btn{
+            background-color: white;
+            color: black;
+            font-weight: 100;
+        }
+        .close-btn:hover{
+            background-color: rgb(29, 185, 84);
+            color: white;
         }
 
     </style>
 
     <script>
+        /*PopUp Form Modificar*/
         function openPopup() {
             document.getElementById("popupOverlay").style.display = "block";
         }
         function closePopup() {
             document.getElementById("popupOverlay").style.display = "none";
+        }
+        boton = document.getElementById("cerrar-aceptar-btn");
+        
+        window.onclick = function(event){
+            var popup = document.getElementById("popupOverlay");
+            if(event.target == popup){
+                closePopup();
+            }
         }
         /*Desplegable categoría*/
         function desplegar() {
@@ -301,8 +374,8 @@
             <div>
                 <h1>Categoría</h1>
                 <!-- <button class="button1" type="button" onclick="alert ('Esto es la prueba de un botón')">Añadir canción</button> -->
-                <button class="open-popup-btn" type="button" onclick="openPopup()">Añadir canción</button>
-                <div id="popupOverlay">
+                <!-- <button class="open-popup-btn" type="button" onclick="openPopup()">Añadir canción</button> -->
+                <!-- <div id="popupOverla">
                     <button onclick="closePopup()">X</button>
                     <h2>Añadir canción</h2>
                     <form>
@@ -312,7 +385,7 @@
                         <button type="reset">Añadir categoría</button>
                     </form>
 
-                </div>
+                </div> -->
                 <table>
                     <tr>
                         <td>Categoría</td>
@@ -323,15 +396,20 @@
                             <div id="info">
                                 <hr>
                                 <!-- Modificar -->
-                                <p><button class="open-popup-btn" type="button">Modificar <i class="bi bi-pencil"></i></button></p>
+                                <p><button class="open-popup-btn" type="button" onclick="openPopup()">Modificar <i class="bi bi-pencil"></i></button></p>
                                 <div class="popup-overlay" id="popupOverlay">
                                     <div class="popup-form">
-
+                                        <button class="close-btn" onclick="closePopup()">X</button>
+                                        <h2>Modificar categoría</h2>
+                                        <form>
+                                            <input type="text" name="name" placeholder="Introduzca el nombre de la categoría" required>
+                                        </form>
+                                        <button onclick="closePopup()" class="accept-btn" type="submit">Aceptar</button>
                                     </div>
                                 </div>
                                 <!-- Borrar -->
 
-                                <p><button type="button" onclick="document.getElementById('id01').style.display='block'">Borrar <i
+                                <p><button class="display-delete-btn" type="button" onclick="document.getElementById('id01').style.display='block'">Borrar <i
                                             class="bi bi-trash3-fill"></i></button></p>
                                 <div id="id01" class="modal">
                                     <span onclick="document.getElementById('id01').style.display = 'none'" class="close"
