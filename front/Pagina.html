@@ -15,181 +15,198 @@
             margin: 0;
         }
 
-        header>div>i {
-            color: rgb(17, 150, 17);
-            font-size: 20px;
+        header {
+            position: relative;
         }
 
         header>div {
             background-color: rgb(20, 20, 20);
-            height: 35px;
-            text-align: center;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
-            padding-top: 7px;
+            font-size: 24px;
+            font-weight: bold;
         }
 
-        td {
-            border: 2px solid grey;
-            background-color: white;
-            margin: 20px auto;
-            text-align: center;
+        #logo-container {
+            position: absolute;
+            left: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        #logo-container i {
+            font-size: 40px;
+            color: white;
+        }
+
+        #logo-center {
+            display: flex;
+            align-items: center;
+            color: rgb(17, 150, 17);
+        }
+
+        #logo-center i {
+            font-size: 40px;
+            margin-right: 10px;
+        }
+
+        #add-category-button {
+            position: absolute;
+            left: 10px;
+            top: 60px;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 80vh;
+            color: black;
+        }
+        
+        main > h1 {
+            color: white;
         }
 
         table {
             margin: 10px auto;
-        }
-
-        #contenido {
-            display: flex;
-        }
-
-        nav {
-            flex: 0 0 150px;
-            background-color: rgb(20,20,20);
-            color: rgb(255, 255, 255);
-            height: 700px;
-        }
-        nav>div{
-            padding-left: 10px;
-        }
-        nav>div>hr{
-            margin-right: 5px;
-        }
-
-        #lupa {
-            padding-left: 50px;
-        }
-
-        main {
-            flex: 1 1 auto;
-        }
-        main>div{
+            background-color: white;
+            border-collapse: collapse;
+            width: 300px;
             text-align: center;
-            margin-right: 125px;
         }
 
-        ul {
-            list-style-type: none;
+        td {
+            border: 2px solid grey;
+            padding: 10px;
+            color: black;
         }
 
-        header>div>i:hover{
-            color:red;
-        }
-        #icono2{
-            font-size: 40px;
-        }
-        h1{
-            color: white;
-        }
-        button{
+        button {
             border: none;
             font-size: 20px;
             color: white;
-            background-color: 	rgb(29, 185, 84);
-            cursor:pointer;
+            background-color: rgb(29, 185, 84);
+            cursor: pointer;
             transition: all 0.7s;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
         }
 
-        button:hover{
-            color:rgb(29, 185, 84) ;
+        button:hover {
+            color: rgb(29, 185, 84);
             background-color: white;
         }
 
-        #popupOverlay{
+        #popupOverlay {
             display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            text-align: center;
         }
 
+        .popup-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .popup-buttons button:last-child {
+            background-color: red;
+        }
+
+        .popup-buttons button:last-child:hover {
+            color: red;
+            background-color: white;
+        }
+
+        .popup-input {
+            width: 100%;
+            padding: 8px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        .popup-input:focus {
+            border-color: rgb(29, 185, 84);
+        }
+
+        #back-button {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            padding: 10px 20px;
+        }
     </style>
 
     <script>
-        function openPopup(){
-            document.getElementById("popupOverlay").style.display="block";
+        function openPopup() {
+            document.getElementById("popupOverlay").style.display = "block";
         }
-        function closePopup(){
-            document.getElementById("popupOverlay").style.display="none";
+
+        function closePopup() {
+            document.getElementById("popupOverlay").style.display = "none";
+        }
+
+        function addCategory() {
+            let categoryName = document.getElementById("categoryInput").value;
+            if (categoryName.trim() !== "") {
+                let table = document.getElementById("categoryTable");
+                let newRow = table.insertRow();
+                let newCell = newRow.insertCell(0);
+                newCell.textContent = categoryName;
+                document.getElementById("categoryInput").value = "";
+                closePopup();
+            }
         }
     </script>
 </head>
 
 <body>
     <header>
-        <div>
-            <i id="logo" class="bi bi-spotify"></i>
+        <div id="logo-container">
+            <i class="bi bi-spotify"></i>
+        </div>
+        <div id="logo-center">
+            <i class="bi bi-spotify"></i>
             Spotify
         </div>
-
     </header>
-    <div id="contenido">
 
-        <nav>
-            <div>
-                <i id="icono2" class="bi bi-spotify"></i>
-                <hr>
-                Search <i id="lupa" class="bi bi-search"></i>
-                <hr>
-                Home <br>Your Music
-                <hr>
-                Recently Played<br>
-                <ul>
-                    <li>Favorites</li>
-                    <li>PLAYLIST</li>
-                    <li>Rap</li>
-                    <li>Show</li>
-                </ul>
-            </div>
+    <button id="add-category-button" onclick="openPopup()">Añadir categoría</button>
 
-            <!-- 
-            <ul>
-                <li>Search <i id="lupa" class="bi bi-search"></i></li>
-                <li>Your Music</li>
-                <hr>
-                <li>Favorite</li>
-            </ul> -->
-        </nav>
-        <main>
-            <div>
-                <h1>Canciones</h1>
-                <!-- <button class="button1" type="button" onclick="alert ('Esto es la prueba de un botón')">Añadir canción</button> -->
-                <button class="button1" type="button" onclick="openPopup()">Añadir canción</button>
-                <div id="popupOverlay">
-                    <button onclick="closePopup()">X</button>
-                    <h2>Añadir canción</h2>
-                    <form>
-                        <input type="text" name="name" placeholder="Introduce el nombre de la canción" required>
-                        <input type="text" name="Categoría" placeholder="Introduzca la categoría" required>
-                        <input type="text" name="Artista" placeholder="Introduce el nombre del artista" required>
-                        <button type="reset">Añadir categoría</button>
-                    </form> 
-
-                </div>
-                <table>
-                    <tr>
-                        <td>Canción</td>
-                        <td>Autor</td>
-                    </tr>
-                    <tr>
-                        <td>Adsasdhasjdadasdsadasdas</td>
-                        <td>Bfafewfwaefefewgwfwef</td>
-                    </tr>
-                </table>
+    <main>
+        <h1>Categorías</h1>
+        <div id="popupOverlay">
+            <h2>Añadir categoría</h2>
+            <input type="text" id="categoryInput" class="popup-input" placeholder="Introduce la categoría" required>
+            <div class="popup-buttons">
+                <button onclick="addCategory()">Añadir</button>
+                <button onclick="closePopup()">Cancelar</button>
             </div>
-            <div>
-                <table>
-                    <caption style="text-align: center;"></caption>
-                    <tr>
-                        <td>Categoría</td>
-                        
-                    </tr>
-                    <tr>
-                        <td>Rock</td>
-                    </tr>
-                    <tr>
-                        <td>Pop</td>
-                    </tr>
-                </table>
-            </div>
-        </main>
-    </div>
+        </div>
+        <table id="categoryTable">
+            <tr>
+                <td>Categoría</td>
+            </tr>
+        </table>
+    </main>
+    
+    <button id="back-button">Volver atrás</button>
 </body>
 
 </html>
