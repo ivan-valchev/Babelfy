@@ -2,6 +2,7 @@ package com.babel.babelfy.service;
 
 import com.babel.babelfy.dto.CategoryDTO;
 import com.babel.babelfy.model.Category;
+import com.babel.babelfy.repository.CategoryRepository;
 import lombok.Data;
 
 import java.util.List;
@@ -10,36 +11,33 @@ import java.util.List;
 
 public class CategoryService {
 
-    List<Category> categories;
-    public boolean modifyCategory(CategoryDTO cDTO, int id){
-        Category c = findByID(id);
-        boolean modificado = false;
+    private CategoryRepository repo;
+
+    public Category modifyCategory(CategoryDTO cDTO){
+        Category c = repo.findById(cDTO.getId())
+                .orElse(null) ;
         if(c!=null){
-            c.setName(cDTO.getName());
-            modificado= true;
-        }else{
-            modificado = false;
-
+            repo.save(c);
         }
-        return modificado;
+        return c;
+//        boolean modificado = false;
+//        if(c!=null){
+//            c.setName(cDTO.getName());
+//            modificado= true;
+//        }
+//        return modificado;
     }
-    public boolean deleteCategory(CategoryDTO cDTO,int id){
-        Category c = findByID(id);
-        boolean eliminado = false;
-        if(c!=null) {
-            categories.remove(c);
-            eliminado = true;
+    public Category deleteCategory(CategoryDTO cDTO){
+        Category c = repo.findById(cDTO.getId())
+                .orElse(null);
+        if(c!=null){
+            repo.delete(c);
         }
-        return eliminado;
+        return c;
     }
 
-    public Category findByID(int id){
-
-        for (Category c:categories){
-            if(c.getId() == id){
-                return c;
-            }
-        }
-        return null;
-    }
+//    public Category buildTo(Category cNew){
+//        Category c = new Category(cNew.getName(),cNew.getId());
+//        return c;
+//    }
 }

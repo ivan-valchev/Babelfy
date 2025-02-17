@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 public class CategoryController {
-
         CategoryService cs;
+
     @PutMapping()
-    public String modify(@RequestBody CategoryDTO cDTO, int id){
+    public String modify(@RequestBody CategoryDTO cDTO){
         String text;
-        if(cs.modifyCategory(cDTO,id)){
+        if(cs.modifyCategory(cDTO)!=null){
             text = "Cambio realizado con éxito";
         }else{
             text = "El cambio no se pudo realizar";
@@ -23,9 +23,9 @@ public class CategoryController {
         return text;
     }
     @DeleteMapping()
-    public String delete(@RequestBody CategoryDTO cDTO,int id){
+    public String delete(@RequestBody CategoryDTO cDTO){
         String text;
-        if(cs.deleteCategory(cDTO,id)){
+        if(cs.deleteCategory(cDTO)!=null){
             text = "Borrado realizado con éxito";
         }else{
             text = "No se pudo realizar el borrado";
