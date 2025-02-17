@@ -1,5 +1,6 @@
 package com.babel.babelfy.dto;
 
+import com.babel.babelfy.model.Category;
 import lombok.*;
 
 import java.util.List;
@@ -12,4 +13,8 @@ public class CategoryDTO {
     private long id;
     private List<SongDTO> songs;
     //Lista id canciones
+
+//    public CategoryDTO categoryToCategoryDTO(Category){
+//
+//    }
 }

@@ -3,18 +3,26 @@ package com.babel.babelfy.controller;
 import com.babel.babelfy.dto.CategoryDTO;
 import com.babel.babelfy.model.Category;
 import com.babel.babelfy.service.CategoryService;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
+@Controller
+@RequiredArgsConstructor
+@RequestMapping("/categories")
 public class CategoryController {
-        CategoryService cs;
+       private final CategoryService categoryService;
+
+
+    public CategoryDTO getCategory(@PathVariable long id){
+        Category cat = categoryService.getCategoryById(id);
+        return categoryService.buildTO(cat);
+    }
 
     @PutMapping()
     public String modify(@RequestBody CategoryDTO cDTO){
         String text;
-        if(cs.modifyCategory(cDTO)!=null){
+        if(categoryService.modifyCategory(cDTO)!=null){
             text = "Cambio realizado con éxito";
         }else{
             text = "El cambio no se pudo realizar";
@@ -22,10 +30,10 @@ public class CategoryController {
 
         return text;
     }
-    @DeleteMapping()
+    @DeleteMapping("/{id}")
     public String delete(@RequestBody CategoryDTO cDTO){
         String text;
-        if(cs.deleteCategory(cDTO)!=null){
+        if(categoryService.deleteCategory(cDTO)!=null){
             text = "Borrado realizado con éxito";
         }else{
             text = "No se pudo realizar el borrado";

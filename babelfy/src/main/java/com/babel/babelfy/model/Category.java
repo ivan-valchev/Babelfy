@@ -1,8 +1,6 @@
 package com.babel.babelfy.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
@@ -12,8 +10,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Category {
-    private String name;
-    private List<Song>songs;
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    private String name;
+
+    @OneToMany
+    private List<Song>songs;
+
 }
