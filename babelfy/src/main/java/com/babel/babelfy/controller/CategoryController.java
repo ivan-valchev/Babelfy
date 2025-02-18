@@ -57,7 +57,7 @@ public class CategoryController {
     @DeleteMapping("")
     public String delete(@RequestBody CategoryDTORequest cDTOR){
         categoryService.delete(cDTOR);
-        return "Realizado correctamente";
+        return "Borrado correctamente";
     }
 }
 
