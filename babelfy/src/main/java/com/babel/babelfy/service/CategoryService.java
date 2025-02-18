@@ -80,15 +80,15 @@ public class CategoryService {
 
     }
 
-    public void delete(CategoryDTORequest cDTOR){
-        Category c;
-
-        c = repo.findById(cDTOR.getId()).orElse(null);
-        if(c!=null){
-            repo.delete(c);
-        }
-
-    }
+//    public void delete(CategoryDTORequest cDTOR){
+//        Category c;
+//
+//        c = repo.findById(cDTOR.getId()).orElse(null);
+//        if(c!=null){
+//            repo.delete(c);
+//        }
+//
+//    }
 
     public void delete(long id){
         Category c;

@@ -58,14 +58,15 @@ public class CategoryController {
         Category c  = new Category("Pop");
         categoryService.createCategory(c);
     }
-    @PutMapping("")
-    public String modify(@RequestBody CategoryDTORequest cDTOR){
+    @PutMapping("/{id},{name}")
+    public String modify(@PathVariable long id, String name){
         categoryService.modify(cDTOR);
         return "Modificado correctamente";
     }
-    @DeleteMapping("")
-    public String delete(@RequestBody CategoryDTORequest cDTOR){
-        categoryService.delete(cDTOR);
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable long id){
+        System.out.println(id);
+        categoryService.delete(id);
         return "Borrado correctamente";
     }
 }
