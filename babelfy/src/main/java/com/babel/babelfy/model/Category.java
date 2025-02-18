@@ -9,6 +9,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Category {
 
     @Id
@@ -16,6 +17,11 @@ public class Category {
     private long id;
 
     private String name;
+
+    public Category(String name){
+        this.name = name;
+    }
+
 
     @OneToMany
     private List<Song>songs;

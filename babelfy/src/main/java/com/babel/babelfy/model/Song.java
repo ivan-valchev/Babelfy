@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -18,4 +20,11 @@ public class Song {
 
     @ManyToOne
     private Category category;
+
+    private String name;
+    private int duration;
+    private String artistName;
+    private String albumName;
+    private Date releaseDate;
+
 }
