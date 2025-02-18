@@ -11,13 +11,25 @@
  * Paso 1: Esperar a que el documento HTML se cargue completamente.
  * Esto asegura que todos los elementos (como el contenedor) estén disponibles.
  */
-document.addEventListener('DOMContentLoaded', function () {
+
 
   /*
    * Función: getSongs
    * Descripción: Llama a la API para obtener la lista de canciones.
    *              Luego, procesa la respuesta y llama a la función renderSongs.
    */
+  function toggleMenu(){
+    var toggle = document.getElementById("menu")
+    if(toggle.style.display == "none"){
+      toggle.style.display = "block"
+    }else{
+      toggle.style.display = "none"
+    }
+  }
+
+
+  document.addEventListener('DOMContentLoaded', function () {
+
   function getCategories() {
     // URL del endpoint de la API que devuelve la lista de canciones.
     // Cambia la URL a la de tu API real si es necesario.
@@ -61,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Paso 5: Seleccionar el contenedor donde se mostrarán las tarjetas de canciones.
     var container = document.getElementById('categories-container');
     // Limpiar el contenedor por si ya tenía contenido previo.
-    container.innerHTML = '';
+    //container.innerHTML = '';
 
     if (!categories || categories.length <= 0) {
 
@@ -77,18 +89,35 @@ document.addEventListener('DOMContentLoaded', function () {
         // Crear un nuevo elemento <div> para la tarjeta de la canción.
         var card = document.createElement('div');
         // Agregar la clase "song-card" para aplicar los estilos CSS definidos.
-        card.classList.add('song-card');
+        card.classList.add('category-card');
 
+       
         // Paso 7: Asignar el contenido HTML de la tarjeta.
         // Se muestran los datos: título, artista, año y categoría.
         card.innerHTML = 
-          '<h2>' + category.name + '</h2>' +
-          '<p><strong>Id:</strong> ' + category.id + '</p>' +
-          // '<p><strong>Duración:</strong> ' + song.duration + '</p>' +
-          // '<p><strong>Categoría:</strong> ' + song.category + '</p>';
+          '<h2><strong>' + category.name + '</strong></h2>' 
 
+         container.appendChild(card);
         // Paso 8: Añadir la tarjeta al contenedor.
-        container.appendChild(card);
+
+        
+
+        //Añadiendo menú desplegable.
+        
+        // var menu = document.createElement('button');
+        // menu.innerHTML = 
+        //   '<span> <strong>. . .</strong></span>'
+        // menu.classList.add('button')
+        // menu.onclick  = function () {
+        //   toggleMenu()
+        // }
+        // card.appendChild(menu);
+        
+        // div = document.createElement('div')
+        // div.id = 'menu'
+        // div.style.display = 'none'
+        // div.innerHTML = '<ul><li><button>Modificar</button></li><li><button>Borrar</button></li></ul>'
+        // card.appendChild(div)
       });
     }
   }
