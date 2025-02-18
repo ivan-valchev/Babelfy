@@ -17,7 +17,7 @@ public class CategoryDTOResponse {
 
     private long id;
     private String name;
-    private List<Song>songs;
+    //private List<Song>songs;
 
 
     public CategoryDTOResponse categoryToCategoryDTOResponse(Category category){
@@ -26,7 +26,7 @@ public class CategoryDTOResponse {
              cDTO =  CategoryDTOResponse.builder()
                      .id(category.getId())
                      .name(category.getName())
-                     .songs(category.getSongs())
+                     //.songs(category.getSongs())
                      .build();
             return cDTO;
         }else{

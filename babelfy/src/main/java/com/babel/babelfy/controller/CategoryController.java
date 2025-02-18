@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/categories")
@@ -44,6 +46,13 @@ public class CategoryController {
 //
 //        return text;
 //    }
+
+
+    @GetMapping("")
+    public List<Category> getAll(){
+        return categoryService.getAll();
+    }
+
     @PostMapping("")
     public void create(){
         Category c  = new Category("Pop");

@@ -57,6 +57,10 @@ public class CategoryService {
         repo.save(category);
     }
 
+    public List<Category> getAll(){
+        return repo.findAll();
+    }
+
     public void modifyCategory(String name,long id){
         Category c;
         c = repo.findById(id).orElse(null);

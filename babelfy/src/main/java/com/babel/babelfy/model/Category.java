@@ -23,7 +23,7 @@ public class Category {
     }
 
 
-    @OneToMany
-    private List<Song>songs;
+//    @OneToMany
+//    private List<Song>songs;
 
 }

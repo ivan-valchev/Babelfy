@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Canciones - Ejemplo Completo</title>
+  <style>
+    /* =========================
+       Estilos para la maquetación
+       ========================= */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #3498db;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    /* Contenedor para las tarjetas de canciones */
+    #categories-container {
+      margin: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    /* Estilo para cada tarjeta de canción */
+    .song-card {
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin: 10px;
+      padding: 15px;
+      width: 300px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Encabezado de la página -->
+  <header>
+    <h1>Lista de Canciones</h1>
+  </header>
+  
+  <!-- Este div es el contenedor donde se mostrarán las tarjetas de canciones -->
+  <div id="categories-container"></div>
+ 
+  <!-- Enlace al archivo JavaScript que contiene la lógica para llamar a la API y pintar los datos -->
+  <script src="JavaScript/app.js"></script>
+</body>
+</html>
