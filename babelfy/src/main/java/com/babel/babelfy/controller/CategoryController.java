@@ -4,41 +4,49 @@ import com.babel.babelfy.dto.CategoryDTO;
 import com.babel.babelfy.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import com.babel.babelfy.dto.CategoryDTORequest;
+import com.babel.babelfy.dto.CategoryDTOResponse;
+import com.babel.babelfy.model.Category;
+import com.babel.babelfy.service.CategoryService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/categories")
 public class CategoryController {
+       private final CategoryService categoryService;
 
-    @Autowired
-    private CategoryService categoryService;
 
-    @GetMapping
-    public List<CategoryDTO> getAllCategories() {
-        return categoryService.getAllCategories();
+    @GetMapping("")
+    public List<Category> getAll(){
+        return categoryService.getAll();
     }
-
     @GetMapping("/{id}")
-    public CategoryDTO getCategoryById(@PathVariable("id") long id) {
-        return categoryService.getCategoryById(id);
+    public CategoryDTO findId(@PathVariable long id){
+        return categoryService.getById(id);
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public CategoryDTO addCategory(@RequestBody CategoryDTO categoryDTO) {
-        return categoryService.addCategory(categoryDTO);
+    @PostMapping("/{name}")
+    public String create(@PathVariable String name){
+        categoryService.createCategory(name);
+        return "Añadido corredtamente";
     }
-
-    @PutMapping("/{id}")
-    public CategoryDTO updateCategory(@PathVariable("id") long id, @RequestBody CategoryDTO categoryDTO) {
-        return categoryService.updateCategory(id, categoryDTO);
+    @PutMapping("/{id}/{name}")
+    public String modify(@PathVariable long id, @PathVariable String name){
+        categoryService.modify(id,name);
+        return "Modificado correctamente";
     }
-
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCategory(@PathVariable("id") long id) {
-        categoryService.deleteCategory(id);
+    public String delete(@PathVariable long id){
+        System.out.println(id);
+        categoryService.delete(id);
+        return "Borrado correctamente";
     }
 }
+
