@@ -81,6 +81,7 @@ function renderCategories(categories) {
 
     var warning = document.createElement('p')
 
+    container.innerHTML = '';
     warning.innerHTML = '<span> No hay canciones </span>'
 
     container.appendChild(warning)
@@ -240,7 +241,6 @@ function deleteCategory(id) {
     })
     .then(function () {
       getCategories();
-      renderCategories();
     })
     .catch(function (error) {
       // Paso 4: Manejo de errores.
