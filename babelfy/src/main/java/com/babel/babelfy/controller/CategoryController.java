@@ -58,9 +58,9 @@ public class CategoryController {
         Category c  = new Category("Pop");
         categoryService.createCategory(c);
     }
-    @PutMapping("/{id},{name}")
-    public String modify(@PathVariable long id, String name){
-        categoryService.modify(cDTOR);
+    @PutMapping("/{id}/{name}")
+    public String modify(@PathVariable long id, @PathVariable String name){
+        categoryService.modify(id,name);
         return "Modificado correctamente";
     }
     @DeleteMapping("/{id}")

@@ -70,13 +70,14 @@ public class CategoryService {
         }
     }
 
-    public void modify(CategoryDTORequest cDTOR){
+    public void modify(long id, String name){
         Category cOld;
-        cOld = repo.findById(cDTOR.getId()).orElse(null);
+        cOld = repo.findById(id).orElse(null);
         if(cOld!=null){
-            cOld.setName(cDTOR.getName());
+            cOld.setName(name);
+            repo.save(cOld);
         }
-        repo.save(cOld);
+
 
     }
 
