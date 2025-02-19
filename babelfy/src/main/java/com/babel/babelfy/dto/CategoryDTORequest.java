@@ -2,6 +2,7 @@ package com.babel.babelfy.dto;
 
 import com.babel.babelfy.model.Category;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
+
 public class CategoryDTORequest {
         private String name;
         private long id;

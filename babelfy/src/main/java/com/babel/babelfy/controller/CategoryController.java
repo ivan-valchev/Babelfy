@@ -1,15 +1,20 @@
 package com.babel.babelfy.controller;
 
 import com.babel.babelfy.dto.CategoryDTO;
+import com.babel.babelfy.service.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import com.babel.babelfy.dto.CategoryDTORequest;
 import com.babel.babelfy.dto.CategoryDTOResponse;
 import com.babel.babelfy.model.Category;
 import com.babel.babelfy.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -17,46 +22,21 @@ import java.util.List;
 public class CategoryController {
        private final CategoryService categoryService;
 
-//
-//    public CategoryDTO getCategory(@PathVariable long id){
-////        Category cat = categoryService.getCategoryById(id);
-////        return categoryService.buildTO(cat);
-//        return null;
-//    }
-//
-//    @PutMapping("")
-//    public String modify(@RequestBody CategoryDTOResponse cDTO,long id){
-//        String text;
-//        if(categoryService.modifyCategory(cDTO, id)!=null){
-//            text = "Cambio realizado con éxito";
-//        }else{
-//            text = "El cambio no se pudo realizar";
-//        }
-//
-//        return text;
-//    }
-//    @DeleteMapping("")
-//    public String delete(@PathVariable long id){
-//        String text;
-//        if(categoryService.deleteCategory(id)!=null){
-//            text = "Borrado realizado con éxito";
-//        }else{
-//            text = "No se pudo realizar el borrado";
-//        }
-//
-//        return text;
-//    }
-
 
     @GetMapping("")
     public List<Category> getAll(){
         return categoryService.getAll();
     }
+    @GetMapping("/{id}")
+    public String findId(@PathVariable long id){
+        categoryService.getById(id);
+        return "Encontrado correctamente";
+    }
 
-    @PostMapping("")
-    public void create(){
-        Category c  = new Category("Pop");
-        categoryService.createCategory(c);
+    @PostMapping("/{name}")
+    public String create(@PathVariable String name){
+        categoryService.createCategory(name);
+        return "Añadido corredtamente";
     }
     @PutMapping("/{id}/{name}")
     public String modify(@PathVariable long id, @PathVariable String name){
@@ -65,7 +45,6 @@ public class CategoryController {
     }
     @DeleteMapping("/{id}")
     public String delete(@PathVariable long id){
-        System.out.println(id);
         categoryService.delete(id);
         return "Borrado correctamente";
     }
