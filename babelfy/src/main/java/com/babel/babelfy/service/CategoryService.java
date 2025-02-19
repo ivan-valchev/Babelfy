@@ -54,14 +54,14 @@ public class CategoryService {
 
 
 
-    public void modifyCategory(String name,long id){
-        Category c;
-        c = repo.findById(id).orElse(null);
-        if (c != null) {
-            c.setName(name);
-            repo.save(c);
-        }
-    }
+//    public void modifyCategory(String name,long id){
+//        Category c;
+//        c = repo.findById(id).orElse(null);
+//        if (c != null) {
+//            c.setName(name);
+//            repo.save(c);
+//        }
+//    }
 
     public void modify(long id, String name){
         Category cOld;

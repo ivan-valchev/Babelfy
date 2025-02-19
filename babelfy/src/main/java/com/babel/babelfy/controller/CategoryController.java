@@ -28,8 +28,9 @@ public class CategoryController {
         return categoryService.getAll();
     }
     @GetMapping("/{id}")
-    public CategoryDTO findId(@PathVariable long id){
-        return categoryService.getById(id);
+    public String findId(@PathVariable long id){
+        categoryService.getById(id);
+        return "Encontrado correctamente";
     }
 
     @PostMapping("/{name}")
@@ -44,7 +45,6 @@ public class CategoryController {
     }
     @DeleteMapping("/{id}")
     public String delete(@PathVariable long id){
-        System.out.println(id);
         categoryService.delete(id);
         return "Borrado correctamente";
     }
