@@ -201,15 +201,20 @@ function closeInfo(){
 
 function acceptInput() {
   let inputValue = document.getElementById("popup-input").value;
+  var regex = /[A-Za-z]/;
   if(inputValue == ""){
-    editMessage().value = "No se ha podido editar la categoría"
     closePopup();
-  }else{
+    editMessage(false)
+  }else if(!regex.test(inputValue)){
+    alert("Solo se permiten letras a la hora de modificar una clase")
+  } else{
     editCategory(currentId, inputValue);
     closePopup();
     editMessage();
   
   }
+  
+ 
   
 }
 
@@ -235,7 +240,12 @@ function deleteMessage(){
   document.getElementById("message-edit").style.display = "none"
 }
 
-function editMessage(){
+function editMessage(funcionando = true){
+  if(!funcionando){
+    document.getElementById("message-edit").innerHTML = '<h2>La categoría no se ha podido modificar</h2>' +'<button id="close-message">Cerrar</button>'
+  }else{
+    document.getElementById("message-edit").innerHTML = '<h2>Se ha modificado correctamente.</h2> '+'<button id="close-message">Cerrar</button>'
+  }
   document.getElementById("message-overlay").style.display = "block"
   document.getElementById("message-edit").style.display = "block"
   document.getElementById("message-delete").style.display = "none"
