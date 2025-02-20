@@ -127,24 +127,28 @@ document.addEventListener('click', function (event) {
   if (event.target && event.target.id.startsWith('delete-')) {
     const categoryId = parseInt(event.target.id.split('-')[1])
     deleteCategory(categoryId);
+    deleteMessage();
   }
   if (event.target && event.target.id.startsWith('edit-')) {
     currentId = parseInt(event.target.id.split('-')[1])
     console.log(currentId);
     openPopup();
+    
   }
   if (event.target && event.target.id === 'submit-btn') {
     acceptInput();
+    
   }
   if (event.target && event.target.id === 'close-btn') {
     closePopup();
   }
   if (event.target && event.target.id === 'add') {
-
+    
     openAdd();
   }
   if (event.target && event.target.id === 'add-submit') {
     addInput();
+    addMessage();
   }
   if (event.target && event.target.id === 'add-close-btn') {
     closeAdd();
@@ -161,6 +165,10 @@ document.addEventListener('click', function (event) {
   if(event.target && event.target.id === 'close-info'){      
     closeInfo();
   } 
+
+  if(event.target && event.target.id === 'close-message'){
+    closeMessage();
+  }
 });
 
 function openPopup() {
@@ -193,14 +201,50 @@ function closeInfo(){
 
 function acceptInput() {
   let inputValue = document.getElementById("popup-input").value;
-  editCategory(currentId, inputValue);
-  closePopup();
+  if(inputValue == ""){
+    editMessage().value = "No se ha podido editar la categoría"
+    closePopup();
+  }else{
+    editCategory(currentId, inputValue);
+    closePopup();
+    editMessage();
+  
+  }
+  
 }
 
 function addInput() {
   let inputName = document.getElementById("add-input").value;
   addCategory(inputName)
   closeAdd();
+}
+
+
+function addMessage(){
+  document.getElementById("message-overlay").style.display = "block"
+  document.getElementById("message-add").style.display = "block"
+  document.getElementById("message-delete").style.display = "none"
+  document.getElementById("message-edit").style.display = "none"
+}
+function deleteMessage(){
+  console.log("DELETE MESSAGE");
+  
+  document.getElementById("message-overlay").style.display = "block"
+  document.getElementById("message-delete").style.display = "block"
+  document.getElementById("message-add").style.display = "none"
+  document.getElementById("message-edit").style.display = "none"
+}
+
+function editMessage(){
+  document.getElementById("message-overlay").style.display = "block"
+  document.getElementById("message-edit").style.display = "block"
+  document.getElementById("message-delete").style.display = "none"
+  document.getElementById("message-add").style.display = "none"
+}
+function closeMessage(){
+
+  document.getElementById("message-overlay").style.display = "none";
+
 }
 
 function addCategory(name) {
@@ -292,3 +336,4 @@ function getCategoryId(id){
       console.error('Error editing category', error)
     })
 } 
+
