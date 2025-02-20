@@ -38,10 +38,6 @@ public class CategoryService {
 
     public CategoryDTO getById(long id) {
         Category category = repo.findById(id).orElseThrow(() -> new RuntimeException("Category not found"));
-//        List<Long> songIds = new ArrayList<>();
-//        for (int i = 0; i < category.getSongs().size(); i++) {
-//            songIds.add(category.getSongs().get(i).getId());
-//        }
         return new CategoryDTO(category.getName(),category.getId());
     }
 
@@ -76,15 +72,21 @@ public class CategoryService {
 //        }
 //    }
 
-    public void modify(CategoryDTORequestEdit cDTO){
+    public String modify(CategoryDTORequestEdit cDTO){
         Category cOld;
+        List<Category> category = repo.findByName(cDTO.getName());
+        String text ="Found";
         cOld = repo.findById(cDTO.getId()).orElse(null);
         if(cOld!=null){
-            cOld.setName(cDTO.getName());
-            repo.save(cOld);
+            if(category.isEmpty()){
+                cOld.setName(cDTO.getName());
+                repo.save(cOld);
+                text = "";
+            }
+
         }
 
-
+        return text;
     }
 
     public void delete(CategoryDTORequestDelete cDTO){

@@ -132,7 +132,7 @@ document.addEventListener('click', function (event) {
   if (event.target && event.target.id.startsWith('edit-')) {
     currentId = parseInt(event.target.id.split('-')[1])
     console.log(currentId);
-    openPopup();
+    openPopup(currentId);
     
   }
   if (event.target && event.target.id === 'submit-btn') {
@@ -171,9 +171,12 @@ document.addEventListener('click', function (event) {
   }
 });
 
-function openPopup() {
-  document.getElementById("popup-input").value = "";
-  document.getElementById("popup-overlay").style.display = "block";
+function openPopup(id) {
+  getCategoryId(id,true)
+  .then(function(value) {
+    document.getElementById("popup-input").value = value;
+    document.getElementById("popup-overlay").style.display = "block";
+  })
 }
 
 function openAdd() {
@@ -210,7 +213,7 @@ function acceptInput() {
   } else{
     editCategory(currentId, inputValue);
     closePopup();
-    editMessage();
+    // editMessage();
   
   }
   
@@ -350,7 +353,13 @@ function editCategory(id, name) {
       }
       return response.text();
     })
-    .then(function () {
+    .then(function (text) {
+      console.log(text);
+      if(text == "Found"){
+        alert("No se puede modificar la categoría.")
+      }else{
+        editMessage();
+      }
       getCategories();
     })
     .catch(function (error) {
@@ -358,9 +367,10 @@ function editCategory(id, name) {
     })
 }
 
-function getCategoryId(id){
+function getCategoryId(id,name = true){
   const apiUrl = 'http://localhost:9000/categories/' + id ;
-  fetch(apiUrl, {
+  var value;
+  value = fetch(apiUrl, {
     method: 'GET',
 
   })
@@ -368,13 +378,18 @@ function getCategoryId(id){
       if (!response.ok) {
         throw new Error('Error en la respuesta de la API: ' + response.statusText);
       }
-      return response.text();
+      return response.json();
     })
-    .then(function () {
-      getCategories();
+    .then(function (text) {
+      if (name) {
+        return text.name;
+      } else {
+        getCategories();
+      }
     })
     .catch(function (error) {
       console.error('Error editing category', error)
-    })
+    })    
+  return value
 } 
 
