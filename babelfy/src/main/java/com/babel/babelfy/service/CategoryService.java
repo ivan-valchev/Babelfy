@@ -1,6 +1,9 @@
 package com.babel.babelfy.service;
 
 import com.babel.babelfy.dto.CategoryDTO;
+import com.babel.babelfy.dto.CategoryDTORequestCreate;
+import com.babel.babelfy.dto.CategoryDTORequestDelete;
+import com.babel.babelfy.dto.CategoryDTORequestEdit;
 import com.babel.babelfy.model.Category;
 import com.babel.babelfy.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +45,20 @@ public class CategoryService {
         return new CategoryDTO(category.getName(),category.getId());
     }
 
-    public void createCategory(String name) {
-        Category category = new Category();
-        category.setName(name);
-        category = repo.save(category);
+    public String createCategory(CategoryDTORequestCreate categoryCreate) {
+        Category category;
+
+        List<Category> categoryNames = repo.findByName(categoryCreate.getName());
+
+        if(categoryNames.isEmpty()){
+            category = CategoryDTORequestCreate.categoryDTOCreateToCategory(categoryCreate);
+            repo.save(category);
+            return"";
+        }else{
+            return "Found";
+        }
+
+
 //        return new CategoryDTO(category.getId(), category.getName(), categoryDTO.getSongIds());
     }
 
@@ -63,20 +76,20 @@ public class CategoryService {
 //        }
 //    }
 
-    public void modify(long id, String name){
+    public void modify(CategoryDTORequestEdit cDTO){
         Category cOld;
-        cOld = repo.findById(id).orElse(null);
+        cOld = repo.findById(cDTO.getId()).orElse(null);
         if(cOld!=null){
-            cOld.setName(name);
+            cOld.setName(cDTO.getName());
             repo.save(cOld);
         }
 
 
     }
 
-    public void delete(long id){
+    public void delete(CategoryDTORequestDelete cDTO){
         Category c;
-        c = repo.findById(id).orElse(null);
+        c = repo.findById(cDTO.getId()).orElse(null);
         if(c!=null){
             repo.delete(c);
         }

@@ -148,7 +148,7 @@ document.addEventListener('click', function (event) {
   }
   if (event.target && event.target.id === 'add-submit') {
     addInput();
-    addMessage();
+    // addMessage();
   }
   if (event.target && event.target.id === 'add-close-btn') {
     closeAdd();
@@ -220,12 +220,27 @@ function acceptInput() {
 
 function addInput() {
   let inputName = document.getElementById("add-input").value;
-  addCategory(inputName)
-  closeAdd();
+  var regex = /[A-Za-z]/;
+  if(inputName ==""){
+    closeAdd();
+    addMessage(false)
+  }else if(!regex.test(inputName)){
+    alert("Solo se permiten letras a la hora de crear una clase.")
+  }else{
+    addCategory(inputName);
+    closeAdd();
+  }
+  // addCategory(inputName)
+  // closeAdd();
 }
 
 
-function addMessage(){
+function addMessage(funcionando = true){
+  if(!funcionando){
+    document.getElementById("message-add").innerHTML = '<h2>La categoría no se ha podido crear</h2>' +'<button id="close-message">Cerrar</button>'
+  }else{
+    document.getElementById("message-add").innerHTML = '<h2>La categoría se ha podido crear correctamente</h2>' +'<button id="close-message">Cerrar</button>'
+  }
   document.getElementById("message-overlay").style.display = "block"
   document.getElementById("message-add").style.display = "block"
   document.getElementById("message-delete").style.display = "none"
@@ -259,10 +274,13 @@ function closeMessage(){
 
 function addCategory(name) {
   console.log(name);
-  const apiUrl = 'http://localhost:9000/categories/' + name;;
+  const apiUrl = 'http://localhost:9000/categories';
   fetch(apiUrl, {
     method: 'POST',
-    body: JSON.stringify({ name: name })
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ "name": name })
 
   })
     .then(function (response) {
@@ -271,7 +289,12 @@ function addCategory(name) {
       }
       return response.text();
     })
-    .then(function () {
+    .then(function (text) {
+      if(text == 'Found'){
+        alert("No se puede crear la categoria, ya existe una con ese nombre")
+      }else{
+        addMessage();
+      }
       getCategories();
     })
     .catch(function (error) {
@@ -281,9 +304,13 @@ function addCategory(name) {
 
 function deleteCategory(id) {
   console.log("Delete", id);
-  const apiUrl = 'http://localhost:9000/categories/' + id;
+  const apiUrl = 'http://localhost:9000/categories';
   fetch(apiUrl, {
-    method: 'DELETE'
+    method: 'DELETE',
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ "id": id })
   })
     .then(function (response) {
       // Paso 2: Verificar que la respuesta sea exitosa.
@@ -294,6 +321,7 @@ function deleteCategory(id) {
       return response.text();
     })
     .then(function () {
+      console.log("Recargo")
       getCategories();
     })
     .catch(function (error) {
@@ -307,10 +335,13 @@ function deleteCategory(id) {
 }
 
 function editCategory(id, name) {
-  const apiUrl = 'http://localhost:9000/categories/' + id + "/" + name;
+  const apiUrl = 'http://localhost:9000/categories';
   fetch(apiUrl, {
     method: 'PUT',
-    body: JSON.stringify({ name: name })
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ "name": name, "id":id })
 
   })
     .then(function (response) {
