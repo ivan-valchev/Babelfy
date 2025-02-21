@@ -20,7 +20,9 @@ public class SongService {
     @Autowired
     private SongRepository repository;
 
-
+    public List<Song> getAll(){
+        return repository.findAll();
+    }
 
     public Song addSong(SongDTORequestCreate songDTO) {
 

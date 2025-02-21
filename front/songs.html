@@ -29,7 +29,7 @@
     }
 
     /* Contenedor para las tarjetas de canciones */
-    #categories-container {
+    #songs-container {
       margin: 20px;
       display: flex;
       flex-wrap: wrap;
@@ -37,7 +37,7 @@
     }
 
     /* Estilo para cada tarjeta de canción */
-    .category-card {
+    .song-card {
       background-color: rgb(29, 185, 84);
       border: 1px solid rgb(33, 33, 33)#ccc;
       border-radius: 5px;
@@ -50,7 +50,7 @@
       transition: all 0.5s;
     }
 
-    /* .category-card:hover {
+    /* .song-card:hover {
       color: rgb(29, 185, 84);
       background-color: rgb(255, 255, 255);
       cursor: pointer;
@@ -345,10 +345,10 @@
       <p>Add Song</p>
       <form>
         <input type="text" id="add-name-input" placeholder="Song name">
-        <input type="number" id="add-duration-input" placeholder="Duration">
+        <input type="number" min="0" id="add-duration-input" placeholder="Duration">
         <input type="text" id="add-artist-input" placeholder="Artist">
-        <input type="text" id="add-album-input" placeholder="Album">
-        <input type="text" id="add-date-input" placeholder="YYYY-MM-DD">
+        <input type="text" id="add-album-input" placeholder="Album"><br>
+        <input type="date" id="add-date-input" placeholder="YYYY-MM-DD">
       </form>
       <button type="submit" id="add-submit">Add Song</button>
     </div>
@@ -369,7 +369,7 @@
     </div>
   </div>
   <!-- Este div es el contenedor donde se mostrarán las tarjetas de canciones -->
-  <div id="categories-container"></div>
+  <div id="songs-container"></div>
 
   <!-- Enlace al archivo JavaScript que contiene la lógica para llamar a la API y pintar los datos -->
   <script src="JavaScript/song.js"></script>

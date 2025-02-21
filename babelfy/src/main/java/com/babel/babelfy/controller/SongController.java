@@ -17,7 +17,10 @@ public class SongController {
 
     @Autowired
     private SongService songService;
-
+    @GetMapping("")
+    public List<Song> getAll(){
+        return songService.getAll();
+    }
   @PostMapping("")
   public Song create (@RequestBody SongDTORequestCreate songDTO){
     return songService.addSong(songDTO);
