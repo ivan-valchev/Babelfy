@@ -105,7 +105,7 @@ function renderCategories(categories) {
         '<button id = edit-' + category.id + ' class = "edit"> Edit </button>' +
         '<button id = info-'+category.id+' class = "info">Info</button>'+
         '<div id = popup-overlay> <div id = popup-form> <button id = close-btn>X</button> <p>Modificar</p> <form><input type ="text" id = popup-input> </form> <button type= "submit" id="submit-btn">Submit</button> </div></div>'+
-        '<div id = overlay-info'+category.id+'> <div class = "form-info" id = form-info-'+category.id+'> <button id = close-info>X</button> <p>Información</p> <h2> Nombre: '+category.name+'</h2><h2> Id:'+category.id+'</h2> </div></div>';
+        '<div id = overlay-info'+category.id+'> <div class = "form-info" id = form-info-'+category.id+'> <button id = close-info>X</button> <h2>Información</h2> <h3> Nombre: '+category.name+'</h3></div></div>';
 
       container.appendChild(card);
 
