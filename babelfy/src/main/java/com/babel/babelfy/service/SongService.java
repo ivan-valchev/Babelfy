@@ -21,10 +21,17 @@ public class SongService {
     private SongRepository repository;
 
 
-    public void addSong(SongDTORequestCreate songDTO) {
+
+    public Song addSong(SongDTORequestCreate songDTO) {
 
         Song s;
+        s = SongDTORequestCreate.songDTOCreateToSong(songDTO);
 
-
+        if(s!= null) {
+            repository.save(s);
+            return s;
+        }else{
+            return null;
+        }
     }
 }
