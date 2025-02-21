@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function getSongs() {
     // URL del endpoint de la API que devuelve la lista de canciones.
     // Cambia la URL a la de tu API real si es necesario.
-    const apiUrl = 'http://localhost:9002/songs';
+    const apiUrl = 'http://localhost:9000/songs';
 
     // Se realiza la petición a la API utilizando fetch.
     fetch(apiUrl)
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function renderSongs(songs) {
     // Paso 5: Seleccionar el contenedor donde se mostrarán las tarjetas de canciones.
-    var container = document.getElementById('song-container');
+    var container = document.getElementById('songs-container');
     // Limpiar el contenedor por si ya tenía contenido previo.
     container.innerHTML = '';
 
@@ -70,10 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Agregar la clase "song-card" para aplicar los estilos CSS definidos.
         card.classList.add('song-card');
 
-        card.innerHTML = '<h2>' + song.name + '</h2>' +
-          '<p><strong>Artista:</strong> ' + song.artistName + '</p>' +
-          '<p><strong>Duración:</strong> ' + song.duration + '</p>' +
-          '<p><strong>Categoría:</strong> ' + song.category + '</p>';
+        card.innerHTML = '<h2>' + song.name + '</h2>';
 
         // Paso 8: Añadir la tarjeta al contenedor.
         container.appendChild(card);
