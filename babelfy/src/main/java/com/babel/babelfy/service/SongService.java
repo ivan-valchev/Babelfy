@@ -1,105 +1,106 @@
-//package com.babel.babelfy.service;
-//
-//import com.babel.babelfy.dto.SongDTO;
-//import com.babel.babelfy.model.Song;
-//import com.babel.babelfy.repository.SongRepository;
-//import com.babel.babelfy.repository.CategoryRepository;
-//import jakarta.transaction.Transactional;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Service;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//@Service
-//@Transactional
-//public class SongService {
-//
-//<<<<<<< HEAD
-//    @Autowired
-//    private SongRepository songRepository;
-//
-//    @Autowired
-//    private CategoryRepository categoryRepository;
-//
-//    // Método para agregar una nueva canción
-//    public SongDTO addSong(SongDTO songDTO) {
-//        Song song = new Song();
-//        song.setName(songDTO.getName());
-//        song.setDuration(songDTO.getDuration());
-//        song.setArtistName(songDTO.getArtistName());
-//        song.setAlbumName(songDTO.getAlbumName());
-//        song.setReleaseDate(songDTO.getReleaseDate());
-//
-//        // Si el Category ID está presente en el DTO, asignamos la categoría
-//        if (songDTO.getCategoryId() != null) {
-//            categoryRepository.findById(songDTO.getCategoryId())
-//                    .ifPresent(song::setCategory);
-//        }
-//
-//        // Guardar la canción
-//        song = songRepository.save(song);
-//
-//        // Devolver el DTO de la canción guardada
-//        return new SongDTO(song.getId(), song.getName(), song.getDuration(),
-//                song.getArtistName(), song.getAlbumName(), song.getReleaseDate(),
-//                song.getCategory() != null ? song.getCategory().getId() : null);
-//    }
-//
-//    // Obtener todas las canciones
-//    public List<SongDTO> getAllSongs() {
-//        List<Song> songs = songRepository.findAll();
-//        List<SongDTO> songDTOs = new ArrayList<>();
-//        for (Song song : songs) {
-//            songDTOs.add(new SongDTO(
-//                    song.getId(),
-//                    song.getName(),
-//                    song.getDuration(),
-//                    song.getArtistName(),
-//                    song.getAlbumName(),
-//                    song.getReleaseDate(),
-//                    song.getCategory() != null ? song.getCategory().getId() : null
-//            ));
-//        }
-//        return songDTOs;
-//    }
-//
-//    // Obtener canción por ID
-//    public SongDTO getSongById(long id) {
-//        Song song = songRepository.findById(id).orElseThrow(() -> new RuntimeException("Song not found"));
-//        return new SongDTO(
-//                song.getId(),
-//                song.getName(),
-//                song.getDuration(),
-//                song.getArtistName(),
-//                song.getAlbumName(),
-//                song.getReleaseDate(),
-//                song.getCategory() != null ? song.getCategory().getId() : null
-//        );
-//    }
-//
-//    // Actualizar canción (Cambiar categoría)
-//    public SongDTO updateSongCategory(long songId, SongDTO songDTO) {
-//        Song song = songRepository.findById(songId).orElseThrow(() -> new RuntimeException("Song not found"));
-//        if (songDTO.getCategoryId() != null) {
-//            categoryRepository.findById(songDTO.getCategoryId()).ifPresent(song::setCategory);
-//        }
-//        song = songRepository.save(song);
-//        return new SongDTO(
-//                song.getId(),
-//                song.getName(),
-//                song.getDuration(),
-//                song.getArtistName(),
-//                song.getAlbumName(),
-//                song.getReleaseDate(),
-//                song.getCategory() != null ? song.getCategory().getId() : null
-//        );
-//    }
-//
-//    // Eliminar canción
-//    public void deleteSong(long id) {
-//        songRepository.deleteById(id);
-//    }
-//=======
-//>>>>>>> origin/dev
-//}
+package com.babel.babelfy.service;
+
+import com.babel.babelfy.dto.SongDTORequest;
+import com.babel.babelfy.dto.SongDTOResponse;
+import com.babel.babelfy.model.Category;
+import com.babel.babelfy.model.Song;
+import com.babel.babelfy.repository.CategoryRepository;
+import com.babel.babelfy.repository.SongRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import jakarta.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+@Transactional
+public class SongService {
+
+    @Autowired
+    private SongRepository songRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    public void createSong(SongDTORequest songDTORequest) {
+        Category category = null;
+        if (songDTORequest.getCategoryId() != null) {
+            Optional<Category> optionalCategory = categoryRepository.findById(songDTORequest.getCategoryId());
+            if (optionalCategory.isPresent()) {
+                category = optionalCategory.get();
+            }
+        }
+        Song song = new Song();
+        song.setName(songDTORequest.getName());
+        song.setDuration(songDTORequest.getDuration());
+        song.setArtistName(songDTORequest.getArtistName());
+        song.setAlbumName(songDTORequest.getAlbumName());
+        song.setReleaseDate(songDTORequest.getReleaseDate());
+        song.setCategory(category);
+        songRepository.save(song);
+    }
+
+    public SongDTOResponse getById(long id) {
+        Optional<Song> optionalSong = songRepository.findById(id);
+        if (!optionalSong.isPresent()) {
+            throw new RuntimeException("Song not found");
+        }
+        Song song = optionalSong.get();
+        return new SongDTOResponse(song.getId(), song.getName(), song.getDuration(), song.getArtistName(), song.getAlbumName(), song.getReleaseDate(), song.getCategory());
+    }
+
+    public List<SongDTOResponse> getAll() {
+        List<Song> songs = songRepository.findAll();
+        List<SongDTOResponse> songDTOResponses = new ArrayList<>();
+        for (Song song : songs) {
+            songDTOResponses.add(new SongDTOResponse(song.getId(), song.getName(), song.getDuration(), song.getArtistName(), song.getAlbumName(), song.getReleaseDate(), song.getCategory()));
+        }
+        return songDTOResponses;
+    }
+
+    public void modify(long id, SongDTORequest songDTORequest) {
+        Optional<Song> optionalSong = songRepository.findById(id);
+        if (!optionalSong.isPresent()) {
+            throw new RuntimeException("Song not found");
+        }
+        Song song = optionalSong.get();
+        song.setName(songDTORequest.getName());
+        song.setDuration(songDTORequest.getDuration());
+        song.setArtistName(songDTORequest.getArtistName());
+        song.setAlbumName(songDTORequest.getAlbumName());
+        song.setReleaseDate(songDTORequest.getReleaseDate());
+        if (songDTORequest.getCategoryId() != null) {
+            Optional<Category> optionalCategory = categoryRepository.findById(songDTORequest.getCategoryId());
+            if (optionalCategory.isPresent()) {
+                song.setCategory(optionalCategory.get());
+            }
+        }
+        songRepository.save(song);
+    }
+
+    public void delete(long id) {
+        songRepository.deleteById(id);
+    }
+
+    public void modifyCategory(long id, long categoryId) {
+        Optional<Song> optionalSong = songRepository.findById(id);
+        if (!optionalSong.isPresent()) {
+            throw new RuntimeException("Song not found");
+        }
+        Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
+        if (!optionalCategory.isPresent()) {
+            throw new RuntimeException("Category not found");
+        }
+        Song song = optionalSong.get();
+        song.setCategory(optionalCategory.get());
+        songRepository.save(song);
+    }
+
+    public void removeCategory(long id) {
+        Song song = songRepository.findById(id).orElseThrow(() -> new RuntimeException("Song not found"));
+        song.setCategory(null);
+        songRepository.save(song);
+    }
+
+}

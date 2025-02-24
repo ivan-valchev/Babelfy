@@ -13,13 +13,12 @@ import java.util.List;
 import java.util.ArrayList;
 
 @Service
-@Transactional
 public class CategoryService {
 
     @Autowired
     private CategoryRepository repo;
-
-    public List<Category> getAll() {
+    @Transactional
+    public List<CategoryDTO> getAll() {
         List<Category> categories = repo.findAll();
         List<CategoryDTO> categoryDTOs = new ArrayList<>();
         for (int i = 0; i < categories.size(); i++) {
@@ -30,7 +29,7 @@ public class CategoryService {
 //            }
             categoryDTOs.add(new CategoryDTO(category.getName(),category.getId()));
         }
-        return categories;
+        return categoryDTOs;
     }
 
     public CategoryDTO getById(long id) {
@@ -42,6 +41,7 @@ public class CategoryService {
         return new CategoryDTO(category.getName(),category.getId());
     }
 
+    @Transactional
     public void createCategory(String name) {
         Category category = new Category();
         category.setName(name);

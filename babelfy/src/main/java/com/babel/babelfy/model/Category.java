@@ -21,10 +21,8 @@ public class Category {
     public Category(String name){
         this.name = name;
     }
-
-
-//    @OneToMany
-//    private List<Song>songs;
+    @OneToMany
+    private List<Song>songs;
 
 
 }

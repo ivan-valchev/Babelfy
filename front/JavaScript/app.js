@@ -7,7 +7,7 @@
  * Cada paso se explica en detalle mediante comentarios.
  */
 
-/* 
+/*
  * Paso 1: Esperar a que el documento HTML se cargue completamente.
  * Esto asegura que todos los elementos (como el contenedor) estén disponibles.
  */
