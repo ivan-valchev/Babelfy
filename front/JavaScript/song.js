@@ -56,7 +56,7 @@ function renderSongs(songs) {
     warning.innerHTML = '<span> No hay canciones </span>'
 
     container.appendChild(warning)
-    
+
   } else {
     // Paso 6: Recorrer el array de canciones.
     songs.forEach(function (song) {
@@ -64,11 +64,13 @@ function renderSongs(songs) {
       var card = document.createElement('div');
       // Agregar la clase "song-card" para aplicar los estilos CSS definidos.
       card.classList.add('song-card');
-      
-      card.innerHTML = '<h2>' + song.name + '</h2>'+
-      '<button id=song-delete-'+song.id+' class=delete>Delete</button>'+
-      '<button id=song-btn-info-'+song.id+' class = info>Info</button>'+
-      '<div id=song-info-overlay-'+song.id+' class = song-info-overlay><div id =song-info-form-'+song.id+' class = "song-info-form"> <button id="song-close-info" class=button>X</button><h2>Información</h2> <h3>Nombre:'+song.name+'</h3><h3>Duración:'+song.duration+' minutos</h3><h3>Artista:'+song.artistName+'</h3><h3>Albúm: '+song.albumName+'</h3><h3>Fecha Lanzamiento: '+song.releaseDate+' </h3></div></div>';
+
+      card.innerHTML = '<h2>' + song.name + '</h2>' +
+        '<button id=song-delete-' + song.id + ' class=delete>Delete</button>' +
+        '<button id =song-edit-' + song.id + ' class =edit>Edit</button>' +
+        '<button id=song-btn-info-' + song.id + ' class = info>Info</button>' +
+        '<div id=song-info-overlay-' + song.id + ' class = song-info-overlay><div id =song-info-form-' + song.id + ' class = "song-info-form"> <button id="song-close-info" class=button>X</button><h2>Información</h2> <h3>Nombre:' + song.name + '</h3><h3>Duración:' + song.duration + ' minutos</h3><h3>Artista:' + song.artistName + '</h3><h3>Albúm: ' + song.albumName + '</h3><h3>Fecha Lanzamiento: ' + song.releaseDate + ' </h3></div></div>' +
+        '<div id = edit-overlay> <div id = edit-form> <button id = close-btn>X</button> <p>Modificar</p> <form><input type ="text" id = edit-name-input><input type="number" min="0" id="edit-duration-input" placeholder="Duration">   <input type="text" id="edit-artist-input" placeholder="Artist"> <input type="text" id="edit-album-input" placeholder="Album">  <input type="date" id="edit-date-input" placeholder="YYYY-MM-DD"> </form> <button type= "submit" id="submit-btn">Submit</button> </div></div>';
 
       // Paso 8: Añadir la tarjeta al contenedor.
       container.appendChild(card);
@@ -81,73 +83,111 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
-document.addEventListener('click',function(event){
+document.addEventListener('click', function (event) {
 
-if(event.target && event.target.id == 'add'){
-  openAddPopup();
-}
-if(event.target && event.target.id == 'add-close-btn'){
-  closeAddPopup();
-}
-if(event.target && event.target.id == 'add-submit'){
-  addInputSong();
-  closeAddPopup();
-}
-if(event.target && event.target.id.startsWith('song-btn-info-')){
-  index = parseInt(event.target.id.split('-')[3])
-  console.log(index);
-  openInfo(index);
-}
-if(event.target && event.target.id === 'song-close-info'){
-  closeInfo();
-}
-if(event.target && event.target.id.startsWith('song-delete-')){
-  id = parseInt(event.target.id.split('-')[2])
-  console.log(id);
-  deleteSong(id);
+  if (event.target && event.target.id == 'add') {
+    openAddPopup();
+  }
+  if (event.target && event.target.id == 'add-close-btn') {
+    closeAddPopup();
+  }
+  if (event.target && event.target.id == 'add-submit') {
+    addInputSong();
+    closeAddPopup();
+  }
+  if (event.target && event.target.id.startsWith('song-btn-info-')) {
+    index = parseInt(event.target.id.split('-')[3])
+    console.log(index);
+    openInfo(index);
+  }
+  if (event.target && event.target.id === 'song-close-info') {
+    closeInfo();
+  }
+  if (event.target && event.target.id.startsWith('song-delete-')) {
+    id = parseInt(event.target.id.split('-')[2])
+    console.log(id);
+    deleteSong(id);
 
-}
+  }
+  if (event.target && event.target.id.startsWith('song-edit-')) {
+    idEdit = parseInt(event.target.id.split('-')[2])
+    openEdit(idEdit);
+  }
+  if (event.target && event.target.id === "close-btn") {
+    closeEdit();
+  }
+  if(event.target && event.target.id === 'submit-btn'){
+    submitEdit();
+  }
+
 })
 
-function openAddPopup(){
-  document.getElementById("add-overlay").style.display="block";
-  let inputName = document.getElementById("add-name-input").value ="";
-  let inputDuration = document.getElementById("add-duration-input").value="";
-  let inputArtist = document.getElementById("add-artist-input").value="";
-  let inputAlbum = document.getElementById("add-album-input").value="";
-  let inputDate = document.getElementById("add-date-input").value="";
+function openAddPopup() {
+  document.getElementById("add-overlay").style.display = "block";
+  document.getElementById("add-name-input").value = "";
+  document.getElementById("add-duration-input").value = "";
+  document.getElementById("add-artist-input").value = "";
+  document.getElementById("add-album-input").value = "";
+  document.getElementById("add-date-input").value = "";
 }
 
-function closeAddPopup(){
+function closeAddPopup() {
   document.getElementById("add-overlay").style.display = "none";
 }
-function openInfo(index){
-  document.getElementById("song-info-overlay-"+index).style.display = "block";
-  document.getElementById("song-info-form-"+index).style.display = "block";
+function openInfo(index) {
+  document.getElementById("song-info-overlay-" + index).style.display = "block";
+  document.getElementById("song-info-form-" + index).style.display = "block";
 }
-function closeInfo(){
-  document.getElementById("song-info-form-"+index).style.display = "none";
+function closeInfo() {
+  document.getElementById("song-info-form-" + index).style.display = "none";
   console.log(index);
 }
+function openEdit(id) {
+  console.log(id);
+  body = getById(id, true)
+    .then(function (body) {
+      console.log(body)
+      document.getElementById("edit-name-input").value = body.name;
+      document.getElementById("edit-duration-input").value = body.duration;
+      document.getElementById("edit-artist-input").value = body.artistName;
+      document.getElementById("edit-album-input").value = body.albumName;
+      document.getElementById("edit-date-input").value = body.releaseDate;
 
-function addInputSong(){
+      document.getElementById("edit-overlay").style.display = "block";
+
+    })
+
+}
+function closeEdit(){
+  document.getElementById('edit-overlay').style.display ="none";
+}
+function submitEdit(){
+  let editName = document.getElementById("edit-name-input").value;
+  let editDuration = document.getElementById("edit-duration-input").value;
+  let editArtist = document.getElementById("edit-artist-input").value;
+  let editAlbum = document.getElementById("edit-album-input").value;
+  let editDate = document.getElementById("edit-date-input").value;
+  editSong(idEdit,editName,editDuration,editArtist,editAlbum,editDate);
+}
+
+function addInputSong() {
   let inputName = document.getElementById("add-name-input").value;
   let inputDuration = document.getElementById("add-duration-input").value;
   let inputArtist = document.getElementById("add-artist-input").value;
   let inputAlbum = document.getElementById("add-album-input").value;
   let inputDate = document.getElementById("add-date-input").value;
 
-  addSong(inputName,inputDuration,inputArtist,inputAlbum,inputDate);
+  addSong(inputName, inputDuration, inputArtist, inputAlbum, inputDate);
 }
 
-function addSong(name,duration,artistName,albumName,releaseDate) {
+function addSong(id,name, duration, artistName, albumName, releaseDate) {
   const apiUrl = 'http://localhost:9000/songs';
   fetch(apiUrl, {
     method: 'POST',
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ "name": name ,"duration":duration,"artistName":artistName,"albumName":albumName,"releaseDate":releaseDate})
+    body: JSON.stringify({"id":id, "name": name, "duration": duration, "artistName": artistName, "albumName": albumName, "releaseDate": releaseDate })
 
   })
     .then(function (response) {
@@ -168,15 +208,43 @@ function addSong(name,duration,artistName,albumName,releaseDate) {
       console.error('Error editing category', error)
     })
 }
-function deleteSong(id){
+function editSong(id,name, duration, artistName, albumName, releaseDate) {
   const apiUrl = 'http://localhost:9000/songs';
-  console.log("delete"+id);
+  fetch(apiUrl, {
+    method: 'PUT',
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({"id":id, "name": name, "duration": duration, "artistName": artistName, "albumName": albumName, "releaseDate": releaseDate })
+
+  })
+    .then(function (response) {
+      if (!response.ok) {
+        throw new Error('Error en la respuesta de la API: ' + response.statusText);
+      }
+      return response.json();
+    })
+    .then(function (text) {
+      // if(text == 'Found'){
+      //   alert("No se puede crear la canción, ya existe una con ese nombre")
+      // }else{
+      //   addMessage();
+      // }
+      getSongs();
+    })
+    .catch(function (error) {
+      console.error('Error editing category', error)
+    })
+}
+function deleteSong(id) {
+  const apiUrl = 'http://localhost:9000/songs';
+  console.log("delete" + id);
   fetch(apiUrl, {
     method: 'DELETE',
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({"id":id})
+    body: JSON.stringify({ "id": id })
 
   })
     .then(function (response) {
@@ -191,6 +259,31 @@ function deleteSong(id){
       // }else{
       //   addMessage();
       // }
+      getSongs();
+    })
+    .catch(function (error) {
+      console.error('Error editing category', error)
+    })
+}
+
+async function getById(id, name = true) {
+  const apiUrl = 'http://localhost:9000/songs/' + id;
+  return fetch(apiUrl, {
+    method: 'GET',
+
+  })
+    .then(function (response) {
+      if (!response.ok) {
+        throw new Error('Error en la respuesta de la API: ' + response.statusText);
+      }
+      return response.json();
+    })
+    .then(function (text) {
+      if (name) {
+        return text;
+      } else {
+        addMessage();
+      }
       getSongs();
     })
     .catch(function (error) {

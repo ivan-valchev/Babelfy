@@ -28,10 +28,10 @@ public class SongService {
         return repository.findAll();
     }
 
-    public Song getById(SongDTORequestFind sDTO){
+    public Song getById(long id){
         Song s;
 
-        s = repository.findById(sDTO.getId()).orElse(null);
+        s = repository.findById(id).orElse(null);
 
         return s;
     }
@@ -49,8 +49,7 @@ public class SongService {
         }
     }
 
-
-    public SongDTOResponse updateSong(SongDTORequest request) {
+    public Song updateSong(SongDTORequest request) {
         Song song = repository.findById(request.getId()).orElse(null);
 
         if (song == null) {
@@ -64,7 +63,7 @@ public class SongService {
         song.setReleaseDate(request.getReleaseDate());
 
         repository.save(song);
-        return new SongDTOResponse(song);
+        return song;
     }
 
     public void deleteSong(long id) {

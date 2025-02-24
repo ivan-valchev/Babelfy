@@ -27,8 +27,8 @@ private SongService songService;
         return songService.getAll();
     }
 @GetMapping("/{id}")
-public Song getById(@RequestBody SongDTORequestFind sDTO){
-    return songService.getById(sDTO);
+public Song getById(@PathVariable long id){
+    return songService.getById(id);
 }
   @PostMapping("")
   public Song create (@RequestBody SongDTORequestCreate songDTO) {
@@ -36,8 +36,8 @@ public Song getById(@RequestBody SongDTORequestFind sDTO){
 
   }
     @PutMapping("")
-    public ResponseEntity<SongDTOResponse> updateSong(@RequestBody SongDTORequest request) {
-        return ResponseEntity.ok(songService.updateSong(request));
+    public Song updateSong(@RequestBody SongDTORequest request) {
+        return songService.updateSong(request);
     }
 
     @DeleteMapping
