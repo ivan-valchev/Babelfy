@@ -2,6 +2,7 @@ package com.babel.babelfy.service;
 
 import com.babel.babelfy.dto.SongDTO;
 import com.babel.babelfy.dto.SongDTORequestCreate;
+import com.babel.babelfy.dto.SongDTORequestFind;
 import com.babel.babelfy.model.Category;
 import com.babel.babelfy.model.Song;
 import com.babel.babelfy.repository.SongRepository;
@@ -22,6 +23,14 @@ public class SongService {
 
     public List<Song> getAll(){
         return repository.findAll();
+    }
+
+    public Song getById(SongDTORequestFind sDTO){
+        Song s;
+
+        s = repository.findById(sDTO.getId()).orElse(null);
+
+        return s;
     }
 
     public Song addSong(SongDTORequestCreate songDTO) {

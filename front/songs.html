@@ -241,7 +241,7 @@
     }
 
     /*INFO*/
-    #overlay-info{
+    #song-info-overlay{
       display: none;
       position: fixed;
       top: 0;
@@ -251,7 +251,7 @@
       background-color: rgba(0, 0, 0, 0.5);
       z-index: 1000;
     }
-    .form-info{
+    .song-info-form{
       display: none;
       position: fixed;
       top: -10px;
@@ -260,7 +260,8 @@
       background-color: rgb(0, 0, 0);
       padding: 30px;
       border-radius: 10px;
-      width: 300px;
+      width: 25%;
+      max-width: 300px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
     .info{
@@ -277,14 +278,16 @@
       color:rgb(29, 185, 84);
     }
 
-    #close-info {
+    #song-close-info {
       background-color: white;
       color: black;
       font-weight: 100;
       border: none;
+      width: 100%;
+      border-radius: 2px;
      
     }
-    #close-info:hover{
+    #song-close-info:hover{
       background-color: rgb(29, 185, 84);
       color: white;
     }
@@ -329,6 +332,9 @@
       border-radius: 5px;
     }
 
+    #add-date-input{
+      width: 176px;
+    }
 
   </style>
 </head>

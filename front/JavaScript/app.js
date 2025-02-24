@@ -200,6 +200,7 @@ function closeAdd() {
 function closeInfo(){
   //document.getElementById("overlay-info").style.display = "none";
   document.getElementById("form-info-"+currentCat).style.display = "none";
+  console.log(currentCat);
 }
 
 function acceptInput() {

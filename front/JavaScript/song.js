@@ -70,7 +70,9 @@ document.addEventListener('DOMContentLoaded', function () {
         // Agregar la clase "song-card" para aplicar los estilos CSS definidos.
         card.classList.add('song-card');
 
-        card.innerHTML = '<h2>' + song.name + '</h2>';
+        card.innerHTML = '<h2>' + song.name + '</h2>'+
+        '<button id=song-btn-info-'+song.id+' class = info>Info</button>'+
+        '<div id=song-info-overlay-'+song.id+'><div id =song-info-form-'+song.id+' class = "song-info-form"> <button id="song-close-info" class=button>X</button><h2>Información</h2> <h3>Nombre:'+song.name+'</h3><h3>Duración:'+song.duration+' minutos</h3><h3>Artista:'+song.artistName+'</h3><h3>Albúm: '+song.albumName+'</h3><h3>Fecha Lanzamiento: '+song.releaseDate+' </h3></div></div>';
 
         // Paso 8: Añadir la tarjeta al contenedor.
         container.appendChild(card);
@@ -95,6 +97,14 @@ if(event.target && event.target.id == 'add-submit'){
   addInputSong();
   closeAddPopup();
 }
+if(event.target && event.target.id.startsWith('song-btn-info-')){
+  index = parseInt(event.target.id.split('-')[3])
+  console.log(index);
+  openInfo(index);
+}
+if(event.target && event.target.id === 'song-close-info'){
+  closeInfo();
+}
 
 })
 
@@ -104,6 +114,14 @@ function openAddPopup(){
 
 function closeAddPopup(){
   document.getElementById("add-overlay").style.display = "none";
+}
+function openInfo(index){
+  document.getElementById("song-info-overlay-"+index).style.display = "block";
+  document.getElementById("song-info-form-"+index).style.display = "block";
+}
+function closeInfo(){
+  document.getElementById("song-info-form-"+index).style.display = "none";
+  console.log(index);
 }
 
 function addInputSong(){
@@ -138,7 +156,7 @@ function addSong(name,duration,artistName,albumName,releaseDate) {
       // }else{
       //   addMessage();
       // }
-      getCategories();
+      getSongs();
     })
     .catch(function (error) {
       console.error('Error editing category', error)
