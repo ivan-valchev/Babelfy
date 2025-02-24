@@ -3,6 +3,7 @@ package com.babel.babelfy.service;
 import com.babel.babelfy.dto.SongDTO;
 import com.babel.babelfy.dto.SongDTORequest;
 import com.babel.babelfy.dto.SongDTORequestCreate;
+import com.babel.babelfy.dto.SongDTORequestFind;
 import com.babel.babelfy.dto.SongDTOResponse;
 import com.babel.babelfy.model.Category;
 import com.babel.babelfy.model.Song;
@@ -27,6 +28,14 @@ public class SongService {
         return repository.findAll();
     }
 
+    public Song getById(long id){
+        Song s;
+
+        s = repository.findById(id).orElse(null);
+
+        return s;
+    }
+
     public Song addSong(SongDTORequestCreate songDTO) {
 
         Song s;
@@ -40,8 +49,7 @@ public class SongService {
         }
     }
 
-
-    public SongDTOResponse updateSong(SongDTORequest request) {
+    public Song updateSong(SongDTORequest request) {
         Song song = repository.findById(request.getId()).orElse(null);
 
         if (song == null) {
@@ -55,7 +63,7 @@ public class SongService {
         song.setReleaseDate(request.getReleaseDate());
 
         repository.save(song);
-        return new SongDTOResponse(song);
+        return song;
     }
 
     public void deleteSong(long id) {

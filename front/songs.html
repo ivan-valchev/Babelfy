@@ -73,11 +73,16 @@
       list-style-type: none;
     }
 
+    .song-info-overlay{
+      display: none;
+      width: 100%;
+    }
+
     #button {
       display: none;
     }
 
-    #popup-overlay {
+    #edit-overlay {
       display: none;
       position: fixed;
       top: 0;
@@ -102,7 +107,7 @@
       color: rgb(29, 185, 84);
     }
 
-    #popup-form {
+    #edit-form {
       position: fixed;
       top: -10px;
       left: 50%;
@@ -114,7 +119,7 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
-    #popup-form button {
+    #edit-form button {
       width: 100%;
       padding: 12px;
       background-color: white;
@@ -128,7 +133,7 @@
       background-color: rgb(29, 185, 84);
     } */
 
-    #popup-input {
+    #edit-input {
       width: 100%;
       padding: 10px;
       margin-bottom: 15px;
@@ -241,7 +246,7 @@
     }
 
     /*INFO*/
-    #overlay-info{
+    #song-info-overlay{
       display: none;
       position: fixed;
       top: 0;
@@ -251,16 +256,17 @@
       background-color: rgba(0, 0, 0, 0.5);
       z-index: 1000;
     }
-    .form-info{
+    .song-info-form{
       display: none;
       position: fixed;
       top: -10px;
       left: 50%;
-      transform: translate(-50%, 50%);
+      transform: translate(-50%, 10%);
       background-color: rgb(0, 0, 0);
       padding: 30px;
       border-radius: 10px;
-      width: 300px;
+      width: 25%;
+      max-width: 300px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
     .info{
@@ -277,14 +283,16 @@
       color:rgb(29, 185, 84);
     }
 
-    #close-info {
+    #song-close-info {
       background-color: white;
       color: black;
       font-weight: 100;
       border: none;
+      width: 100%;
+      border-radius: 2px;
      
     }
-    #close-info:hover{
+    #song-close-info:hover{
       background-color: rgb(29, 185, 84);
       color: white;
     }
@@ -329,6 +337,9 @@
       border-radius: 5px;
     }
 
+    #add-date-input{
+      width: 176px;
+    }
 
   </style>
 </head>
@@ -347,7 +358,7 @@
         <input type="text" id="add-name-input" placeholder="Song name">
         <input type="number" min="0" id="add-duration-input" placeholder="Duration">
         <input type="text" id="add-artist-input" placeholder="Artist">
-        <input type="text" id="add-album-input" placeholder="Album"><br>
+        <input type="text" id="add-album-input" placeholder="Album">
         <input type="date" id="add-date-input" placeholder="YYYY-MM-DD">
       </form>
       <button type="submit" id="add-submit">Add Song</button>
