@@ -1,6 +1,5 @@
 package com.babel.babelfy.service;
 
-<<<<<<< HEAD
 import com.babel.babelfy.dto.SongDTORequest;
 import com.babel.babelfy.dto.SongDTOResponse;
 import com.babel.babelfy.model.Category;
@@ -13,27 +12,12 @@ import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-=======
-import com.babel.babelfy.dto.SongDTO;
-import com.babel.babelfy.dto.SongDTORequestCreate;
-import com.babel.babelfy.model.Category;
-import com.babel.babelfy.model.Song;
-import com.babel.babelfy.repository.SongRepository;
-import com.babel.babelfy.repository.CategoryRepository;
-import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
->>>>>>> origin/dev
 
 @Service
 @Transactional
 public class SongService {
 
     @Autowired
-<<<<<<< HEAD
     private SongRepository songRepository;
 
     @Autowired
@@ -119,24 +103,4 @@ public class SongService {
         songRepository.save(song);
     }
 
-=======
-    private SongRepository repository;
-
-    public List<Song> getAll(){
-        return repository.findAll();
-    }
-
-    public Song addSong(SongDTORequestCreate songDTO) {
-
-        Song s;
-        s = SongDTORequestCreate.songDTOCreateToSong(songDTO);
-
-        if(s!= null) {
-            repository.save(s);
-            return s;
-        }else{
-            return null;
-        }
-    }
->>>>>>> origin/dev
 }

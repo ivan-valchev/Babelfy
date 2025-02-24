@@ -20,7 +20,7 @@ public class CategoryDTOResponse {
     //private List<Song>songs;
 
 
-    public static CategoryDTOResponse categoryToCategoryDTOResponse(Category category){
+    public CategoryDTOResponse categoryToCategoryDTOResponse(Category category){
         CategoryDTOResponse cDTO;
         if(category !=null){
              cDTO =  CategoryDTOResponse.builder()
