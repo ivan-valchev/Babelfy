@@ -1,19 +1,9 @@
 package com.babel.babelfy.controller;
 
-<<<<<<< HEAD
 import com.babel.babelfy.dto.SongDTORequest;
 import com.babel.babelfy.dto.SongDTOResponse;
 import com.babel.babelfy.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
-=======
-import com.babel.babelfy.dto.SongDTO;
-import com.babel.babelfy.dto.SongDTORequestCreate;
-import com.babel.babelfy.model.Category;
-import com.babel.babelfy.model.Song;
-import com.babel.babelfy.service.SongService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
->>>>>>> origin/dev
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +14,6 @@ public class SongController {
 
     @Autowired
     private SongService songService;
-<<<<<<< HEAD
 
     @PostMapping("")
     public String create(@RequestBody SongDTORequest songDTORequest) {
@@ -66,14 +55,3 @@ public class SongController {
         return "Categoría eliminada de la canción correctamente";
     }
 }
-=======
-    @GetMapping("")
-    public List<Song> getAll(){
-        return songService.getAll();
-    }
-  @PostMapping("")
-  public Song create (@RequestBody SongDTORequestCreate songDTO){
-    return songService.addSong(songDTO);
-  }
-}
->>>>>>> origin/dev

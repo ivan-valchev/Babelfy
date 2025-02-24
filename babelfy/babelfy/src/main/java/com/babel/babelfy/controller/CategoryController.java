@@ -1,9 +1,11 @@
 package com.babel.babelfy.controller;
 
-import com.babel.babelfy.dto.*;
+import com.babel.babelfy.dto.CategoryDTO;
 import com.babel.babelfy.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import com.babel.babelfy.dto.CategoryDTORequest;
+import com.babel.babelfy.dto.CategoryDTOResponse;
 import com.babel.babelfy.model.Category;
 import com.babel.babelfy.service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -26,22 +28,24 @@ public class CategoryController {
         return categoryService.getAll();
     }
     @GetMapping("/{id}")
-    public CategoryDTO findId(@PathVariable long id){
-        return categoryService.getById(id);
+    public String findId(@PathVariable long id){
+        categoryService.getById(id);
+        return "Encontrado correctamente";
     }
 
-    @PostMapping("")
-    public String create(@RequestBody CategoryDTORequestCreate cDTOR){
-
-        return categoryService.createCategory(cDTOR);
+    @PostMapping("/{name}")
+    public String create(@PathVariable String name){
+        categoryService.createCategory(name);
+        return "Añadido corredtamente";
     }
-    @PutMapping("")
-    public String modify(@RequestBody CategoryDTORequestEdit cDTO){
-        return  categoryService.modify(cDTO);
+    @PutMapping("/{id}/{name}")
+    public String modify(@PathVariable long id, @PathVariable String name){
+        categoryService.modify(id,name);
+        return "Modificado correctamente";
     }
-    @DeleteMapping("")
-    public String delete(@RequestBody CategoryDTORequestDelete cDTO){
-        categoryService.delete(cDTO);
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable long id){
+        categoryService.delete(id);
         return "Borrado correctamente";
     }
 }
