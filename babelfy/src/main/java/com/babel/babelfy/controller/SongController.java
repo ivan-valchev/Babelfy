@@ -6,7 +6,7 @@ import com.babel.babelfy.dto.SongDTOResponse;
 import com.babel.babelfy.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 =======
-import com.babel.babelfy.dto.SongDTO;
+import comx.babel.babelfy.dto.SongDTO;
 import com.babel.babelfy.dto.SongDTORequestCreate;
 import com.babel.babelfy.model.Category;
 import com.babel.babelfy.model.Song;
