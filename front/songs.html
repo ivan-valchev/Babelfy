@@ -337,8 +337,11 @@
       border-radius: 5px;
     }
 
-    #add-date-input{
+    .date{
       width: 176px;
+    }
+    .message-button:hover{
+      cursor: pointer;
     }
 
   </style>
@@ -356,10 +359,10 @@
       <p>Add Song</p>
       <form>
         <input type="text" id="add-name-input" placeholder="Song name">
-        <input type="number" min="0" id="add-duration-input" placeholder="Duration">
+        <input type="number" min="1" id="add-duration-input" placeholder="Duration">
         <input type="text" id="add-artist-input" placeholder="Artist">
         <input type="text" id="add-album-input" placeholder="Album">
-        <input type="date" id="add-date-input" placeholder="YYYY-MM-DD">
+        <input type="date" id="add-date-input"class="date" placeholder="YYYY-MM-DD">
       </form>
       <button type="submit" id="add-submit">Add Song</button>
     </div>
@@ -371,8 +374,8 @@
       <button id="close-message">Cerrar</button>
     </div>
     <div id="message-delete">
-      <h2>Categoría eliminada correctamente!</h2>
-      <button id="close-message">Cerrar</button>
+      <h2>Canción eliminada correctamente!</h2>
+      <button id="close-message" class="message-button">Cerrar</button>
     </div>
     <div id="message-edit">
       <!-- <h2>Categoría modificada correctamente!</h2>
