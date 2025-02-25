@@ -328,6 +328,27 @@
       border: 2px solid rgb(29, 185, 84);
       border-radius: 5px;
     }
+    .message-button:hover{
+      cursor: pointer;
+    }
+    .enlaces{
+      background-color:rgb(14, 65, 33);
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .enlaces>a{
+      color: white;
+      text-decoration: none;
+      margin:30px;
+    }
+    .enlaces>a:hover{
+      color:rgb(29, 185, 84);
+    }
+    .titulo{
+      color: rgb(255, 255, 255);
+      text-align: center;
+    }
 
 
   </style>
@@ -338,6 +359,11 @@
   <header>
     <h1><i class="bi bi-spotify"></i>Spotify</h1>
   </header>
+  <div class="enlaces">
+    <a href="index 1.html">Categories</a>
+    <a href="songs.html">Songs</a>
+  </div>
+  <h1 class="titulo">Categories</h1>
   <button id="add" class="add">Add Category</button>
   <div id="add-overlay">
     <div id="add-form">
@@ -353,11 +379,11 @@
   <div id="message-overlay" class="message-overlay">
     <div id="message-add">
       <h2>Categoría añadida correctamente!</h2>
-      <button id="close-message">Cerrar</button>
+      <button id="close-message" class="message-button">Cerrar</button>
     </div>
     <div id="message-delete">
       <h2>Categoría eliminada correctamente!</h2>
-      <button id="close-message">Cerrar</button>
+      <button id="close-message" class="message-button">Cerrar</button>
     </div>
     <div id="message-edit">
       <!-- <h2>Categoría modificada correctamente!</h2>

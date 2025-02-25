@@ -69,8 +69,8 @@ function renderSongs(songs) {
         '<button id=song-delete-' + song.id + ' class=delete>Delete</button>' +
         '<button id =song-edit-' + song.id + ' class =edit>Edit</button>' +
         '<button id=song-btn-info-' + song.id + ' class = info>Info</button>' +
-        '<div id=song-info-overlay-' + song.id + ' class = song-info-overlay><div id =song-info-form-' + song.id + ' class = "song-info-form"> <button id="song-close-info" class=button>X</button><h2>Información</h2> <h3>Nombre:' + song.name + '</h3><h3>Duración:' + song.duration + ' minutos</h3><h3>Artista:' + song.artistName + '</h3><h3>Albúm: ' + song.albumName + '</h3><h3>Fecha Lanzamiento: ' + song.releaseDate + ' </h3></div></div>' +
-        '<div id = edit-overlay> <div id = edit-form> <button id = close-btn>X</button> <p>Modificar</p> <form><input type ="text" id = edit-name-input><input type="number" min="0" id="edit-duration-input" placeholder="Duration">   <input type="text" id="edit-artist-input" placeholder="Artist"> <input type="text" id="edit-album-input" placeholder="Album">  <input type="date" id="edit-date-input" placeholder="YYYY-MM-DD"> </form> <button type= "submit" id="submit-btn">Submit</button> </div></div>';
+        '<div id=song-info-overlay-' + song.id + ' class = song-info-overlay><div id =song-info-form-' + song.id + ' class = "song-info-form"> <button id="song-close-info" class=button>X</button><h2>Información</h2> <h3>Nombre:' + song.name + '</h3><h3>Duración:' + song.duration + ' minutos</h3><h3>Artista:' + song.artistName + '</h3><h3>Albúm: ' + song.albumName + '</h3><h3>Fecha Lanzamiento: ' + reverseText(song.releaseDate) + ' </h3></div></div>' +
+        '<div id = edit-overlay> <div id = edit-form> <button id = close-btn>X</button> <p>Modificar</p> <form><input type ="text" id = edit-name-input><input type="number" min="0" id="edit-duration-input" placeholder="Duration">   <input type="text" id="edit-artist-input" placeholder="Artist"> <input type="text" id="edit-album-input" placeholder="Album"><br>  <input type="date" class=date id="edit-date-input" placeholder="YYYY-MM-DD"> </form> <button type= "submit" id="submit-btn">Submit</button> </div></div>';
 
       // Paso 8: Añadir la tarjeta al contenedor.
       container.appendChild(card);
@@ -93,7 +93,6 @@ document.addEventListener('click', function (event) {
   }
   if (event.target && event.target.id == 'add-submit') {
     addInputSong();
-    closeAddPopup();
   }
   if (event.target && event.target.id.startsWith('song-btn-info-')) {
     index = parseInt(event.target.id.split('-')[3])
@@ -107,6 +106,7 @@ document.addEventListener('click', function (event) {
     id = parseInt(event.target.id.split('-')[2])
     console.log(id);
     deleteSong(id);
+    deleteMessage();
 
   }
   if (event.target && event.target.id.startsWith('song-edit-')) {
@@ -118,6 +118,9 @@ document.addEventListener('click', function (event) {
   }
   if(event.target && event.target.id === 'submit-btn'){
     submitEdit();
+  }
+  if(event.target && event.target.id === 'close-message'){
+    closeMessage();
   }
 
 })
@@ -162,32 +165,121 @@ function closeEdit(){
   document.getElementById('edit-overlay').style.display ="none";
 }
 function submitEdit(){
+  var regex = /[A-Za-z-0-9]/;
+  var num = -1;
+  
   let editName = document.getElementById("edit-name-input").value;
   let editDuration = document.getElementById("edit-duration-input").value;
   let editArtist = document.getElementById("edit-artist-input").value;
   let editAlbum = document.getElementById("edit-album-input").value;
   let editDate = document.getElementById("edit-date-input").value;
-  editSong(idEdit,editName,editDuration,editArtist,editAlbum,editDate);
+
+if(editName == ""){
+  num =0;
+}else if(editDuration ==""){
+  num =1;
+}else if(editArtist ==""){
+  num =2;
+}else if(editAlbum == ""){
+  num = 3;
+}else if(editDate == ""){
+  num =4
+}
+
+ if(num>=0){
+    switch (num) {
+      case 0:
+        alert("Rellene el nombre de la canción")
+        break;
+      case 1:
+        alert("Rellene la duración de la canción")
+        break;
+      case 2:
+        alert("Rellene el nombre del artista")
+        break;
+      case 3:
+        alert("Rellene el nombre del álbum")
+        break;
+      case 4:
+        alert("Rellene la fecha de lanzamiento")
+        break;
+      default:
+        alert("Falla")
+        break;
+    }
+  }else  if(!regex.test(editName)||!regex.test(editArtist)||!regex.test(editAlbum)){
+    alert("Introduzca un caracter válido");
+  }
+  else{
+    editMessage();
+    editSong(idEdit,editName,editDuration,editArtist,editAlbum,editDate);
+    
+  }
+  
 }
 
 function addInputSong() {
+  var regex = /[A-Za-z-0-9]/;
+  var num =-1;
   let inputName = document.getElementById("add-name-input").value;
   let inputDuration = document.getElementById("add-duration-input").value;
   let inputArtist = document.getElementById("add-artist-input").value;
   let inputAlbum = document.getElementById("add-album-input").value;
   let inputDate = document.getElementById("add-date-input").value;
 
-  addSong(inputName, inputDuration, inputArtist, inputAlbum, inputDate);
+  if(inputName == ""){
+    num =0;
+  }else if(inputDuration ==""){
+    num =1;
+  }else if(inputArtist ==""){
+    num =2;
+  }else if(inputAlbum == ""){
+    num = 3;
+  }else if(inputDate == ""){
+    num =4
+  }
+  
+   if(num>=0){
+      switch (num) {
+        case 0:
+          alert("Rellene el nombre de la canción")
+          break;
+        case 1:
+          alert("Rellene la duración de la canción")
+          break;
+        case 2:
+          alert("Rellene el nombre del artista")
+          break;
+        case 3:
+          alert("Rellene el nombre del álbum")
+          break;
+        case 4:
+          alert("Rellene la fecha de lanzamiento")
+          break;
+        default:
+          alert("Falla")
+          break;
+      }
+    }else  if(!regex.test(inputName)||!regex.test(inputArtist)||!regex.test(inputAlbum)){
+      alert("Introduzca un caracter válido");
+    }
+    else{
+      addSong(inputName, inputDuration, inputArtist, inputAlbum, inputDate);
+      closeAddPopup();
+      addMessage();
+    }
+
+  
 }
 
-function addSong(id,name, duration, artistName, albumName, releaseDate) {
+function addSong(name, duration, artistName, albumName, releaseDate) {
   const apiUrl = 'http://localhost:9000/songs';
   fetch(apiUrl, {
     method: 'POST',
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({"id":id, "name": name, "duration": duration, "artistName": artistName, "albumName": albumName, "releaseDate": releaseDate })
+    body: JSON.stringify({ "name": name, "duration": duration, "artistName": artistName, "albumName": albumName, "releaseDate": releaseDate })
 
   })
     .then(function (response) {
@@ -289,4 +381,37 @@ async function getById(id, name = true) {
     .catch(function (error) {
       console.error('Error editing category', error)
     })
+}
+
+function reverseText(text){
+  return text.split('-').reverse().join('-');
+  
+}
+
+function deleteMessage(){
+  console.log("DELETE MESSAGE");
+  
+  document.getElementById("message-overlay").style.display = "block"
+  document.getElementById("message-delete").style.display = "block"
+  document.getElementById("message-add").style.display = "none"
+  document.getElementById("message-edit").style.display = "none"
+}
+function editMessage(){
+  document.getElementById("message-edit").innerHTML = '<h2>La canción se ha modificado correctamente</h2>' +'<button id="close-message" class="message-button">Cerrar</button>'
+  document.getElementById("message-overlay").style.display = "block"
+  document.getElementById("message-delete").style.display = "none"
+  document.getElementById("message-add").style.display = "none"
+  document.getElementById("message-edit").style.display = "block"
+}
+
+function addMessage(){
+  document.getElementById("message-add").innerHTML = '<h2>La canción se ha creado correctamente</h2>' +'<button class=message-button id="close-message">Cerrar</button>'
+  document.getElementById("message-overlay").style.display = "block"
+  document.getElementById("message-delete").style.display = "none"
+  document.getElementById("message-add").style.display = "block"
+  document.getElementById("message-edit").style.display = "none"
+}
+
+function closeMessage(){
+  document.getElementById("message-overlay").style.display = "none";
 }
