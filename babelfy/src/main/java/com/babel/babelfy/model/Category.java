@@ -23,8 +23,8 @@ public class Category {
     }
 
 
-//    @OneToMany
-//    private List<Song>songs;
+    @OneToMany(mappedBy ="category")
+    private List<Song>songs;
 
 
 }
