@@ -393,6 +393,12 @@ function deleteMessage(){
   document.getElementById("message-add").style.display = "none"
   document.getElementById("message-edit").style.display = "none"
 }
+function editMessage(){
+  document.getElementById("message-overlay").style.display = "block"
+  document.getElementById("message-delete").style.display = "none"
+  document.getElementById("message-add").style.display = "none"
+  document.getElementById("message-edit").style.display = "block"
+}
 
 function closeMessage(){
   document.getElementById("message-overlay").style.display = "none";

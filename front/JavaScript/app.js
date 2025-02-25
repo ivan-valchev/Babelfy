@@ -261,9 +261,9 @@ function deleteMessage(){
 
 function editMessage(funcionando = true){
   if(!funcionando){
-    document.getElementById("message-edit").innerHTML = '<h2>La categoría no se ha podido modificar</h2>' +'<button id="close-message">Cerrar</button>'
+    document.getElementById("message-edit").innerHTML = '<h2>La categoría no se ha podido modificar</h2>' +'<button id="close-message" class="message-button">Cerrar</button>'
   }else{
-    document.getElementById("message-edit").innerHTML = '<h2>Se ha modificado correctamente.</h2> '+'<button id="close-message">Cerrar</button>'
+    document.getElementById("message-edit").innerHTML = '<h2>Se ha modificado correctamente.</h2> '+'<button id="close-message" class="message-button">Cerrar</button>'
   }
   document.getElementById("message-overlay").style.display = "block"
   document.getElementById("message-edit").style.display = "block"
