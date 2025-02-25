@@ -24,6 +24,7 @@ public class SongService {
     @Autowired
     private SongRepository repository;
 
+    @Transactional
     public List<Song> getAll(){
         return repository.findAll();
     }

@@ -6,33 +6,32 @@ import com.babel.babelfy.dto.CategoryDTORequestDelete;
 import com.babel.babelfy.dto.CategoryDTORequestEdit;
 import com.babel.babelfy.model.Category;
 import com.babel.babelfy.repository.CategoryRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import jakarta.transaction.Transactional;
 
 import java.util.List;
 
 import java.util.ArrayList;
 
 @Service
-@Transactional
 public class CategoryService {
 
     @Autowired
     private CategoryRepository repo;
 
+    @Transactional
     public List<Category> getAll() {
         List<Category> categories = repo.findAll();
-        List<CategoryDTO> categoryDTOs = new ArrayList<>();
-        for (int i = 0; i < categories.size(); i++) {
-            Category category = categories.get(i);
-//            List<Long> songIds = new ArrayList<>();
-//            for (int j = 0; j < category.getSongs().size(); j++) {
-//                songIds.add(category.getSongs().get(j).getId());
-//            }
-            categoryDTOs.add(new CategoryDTO(category.getName(),category.getId()));
-        }
+//        List<CategoryDTO> categoryDTOs = new ArrayList<>();
+//        for (int i = 0; i < categories.size(); i++) {
+//            Category category = categories.get(i);
+////            List<Long> songIds = new ArrayList<>();
+////            for (int j = 0; j < category.getSongs().size(); j++) {
+////                songIds.add(category.getSongs().get(j).getId());
+////            }
+//            categoryDTOs.add(new CategoryDTO(category.getName(),category.getId()));
+//        }
         return categories;
     }
 
