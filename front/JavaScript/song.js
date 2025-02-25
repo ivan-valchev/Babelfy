@@ -211,7 +211,9 @@ if(editName == ""){
     alert("Introduzca un caracter válido");
   }
   else{
+    editMessage();
     editSong(idEdit,editName,editDuration,editArtist,editAlbum,editDate);
+    
   }
   
 }
@@ -264,6 +266,7 @@ function addInputSong() {
     else{
       addSong(inputName, inputDuration, inputArtist, inputAlbum, inputDate);
       closeAddPopup();
+      addMessage();
     }
 
   
@@ -394,10 +397,19 @@ function deleteMessage(){
   document.getElementById("message-edit").style.display = "none"
 }
 function editMessage(){
+  document.getElementById("message-edit").innerHTML = '<h2>La canción se ha modificado correctamente</h2>' +'<button id="close-message" class="message-button">Cerrar</button>'
   document.getElementById("message-overlay").style.display = "block"
   document.getElementById("message-delete").style.display = "none"
   document.getElementById("message-add").style.display = "none"
   document.getElementById("message-edit").style.display = "block"
+}
+
+function addMessage(){
+  document.getElementById("message-add").innerHTML = '<h2>La canción se ha creado correctamente</h2>' +'<button class=message-button id="close-message">Cerrar</button>'
+  document.getElementById("message-overlay").style.display = "block"
+  document.getElementById("message-delete").style.display = "none"
+  document.getElementById("message-add").style.display = "block"
+  document.getElementById("message-edit").style.display = "none"
 }
 
 function closeMessage(){
