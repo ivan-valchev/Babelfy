@@ -1,28 +1,24 @@
 package com.babel.babelfy.dto;
 
-
+import com.babel.babelfy.model.Category;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.babel.babelfy.model.Category;
-import lombok.*;
 
-import java.util.List;
-
-import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 
-public class CategoryDTO {
+public class CategoryDTOResponseList {
     private String name;
     private long id;
 
-    public static CategoryDTO categoryToCategoryDTO(Category c){
-        CategoryDTO cDTO;
+    public static CategoryDTOResponseList categoryToCategoryDTOResponseList(Category c){
+        CategoryDTOResponseList cDTO;
         if(c!=null){
-            cDTO=CategoryDTO.builder()
+            cDTO=CategoryDTOResponseList.builder()
                     .id(c.getId())
                     .name(c.getName())
                     .build();
@@ -32,8 +28,4 @@ public class CategoryDTO {
         }
 
     }
-//    private List<SongDTO> songs;
-    //Lista id canciones
-
-
 }

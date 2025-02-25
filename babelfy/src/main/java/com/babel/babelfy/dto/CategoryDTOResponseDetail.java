@@ -7,23 +7,21 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class CategoryDTOResponse {
+public class CategoryDTOResponseDetail {
 
     private long id;
     private String name;
     //private List<Song>songs;
 
 
-    public static CategoryDTOResponse categoryToCategoryDTOResponse(Category category){
-        CategoryDTOResponse cDTO;
+    public static CategoryDTOResponseDetail categoryToCategoryDTOResponse(Category category){
+        CategoryDTOResponseDetail cDTO;
         if(category !=null){
-             cDTO =  CategoryDTOResponse.builder()
+             cDTO =  CategoryDTOResponseDetail.builder()
                      .id(category.getId())
                      .name(category.getName())
                      //.songs(category.getSongs())
