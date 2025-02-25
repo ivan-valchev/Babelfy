@@ -200,14 +200,16 @@ function closeAdd() {
 function closeInfo(){
   //document.getElementById("overlay-info").style.display = "none";
   document.getElementById("form-info-"+currentCat).style.display = "none";
+  console.log(currentCat);
 }
 
 function acceptInput() {
   let inputValue = document.getElementById("popup-input").value;
-  var regex = /[A-Za-z]/;
+  var regex = /[A-Za-z-0-9]/;
   if(inputValue == ""){
-    closePopup();
-    editMessage(false)
+    alert("Introduce el nombre de la categoría")
+    // closePopup();
+    // editMessage(false)
   }else if(!regex.test(inputValue)){
     alert("Solo se permiten letras a la hora de modificar una clase")
   } else{
@@ -223,10 +225,11 @@ function acceptInput() {
 
 function addInput() {
   let inputName = document.getElementById("add-input").value;
-  var regex = /[A-Za-z]/;
+  var regex = /[A-Za-z-0-9]/;
   if(inputName ==""){
-    closeAdd();
-    addMessage(false)
+    alert("Introduce el nombre de la categoría")
+    // closeAdd();
+    // addMessage(false)
   }else if(!regex.test(inputName)){
     alert("Solo se permiten letras a la hora de crear una clase.")
   }else{
@@ -260,9 +263,9 @@ function deleteMessage(){
 
 function editMessage(funcionando = true){
   if(!funcionando){
-    document.getElementById("message-edit").innerHTML = '<h2>La categoría no se ha podido modificar</h2>' +'<button id="close-message">Cerrar</button>'
+    document.getElementById("message-edit").innerHTML = '<h2>La categoría no se ha podido modificar</h2>' +'<button id="close-message" class="message-button">Cerrar</button>'
   }else{
-    document.getElementById("message-edit").innerHTML = '<h2>Se ha modificado correctamente.</h2> '+'<button id="close-message">Cerrar</button>'
+    document.getElementById("message-edit").innerHTML = '<h2>Se ha modificado correctamente.</h2> '+'<button id="close-message" class="message-button">Cerrar</button>'
   }
   document.getElementById("message-overlay").style.display = "block"
   document.getElementById("message-edit").style.display = "block"
@@ -294,7 +297,7 @@ function addCategory(name) {
     })
     .then(function (text) {
       if(text == 'Found'){
-        alert("No se puede crear la categoria, ya existe una con ese nombre")
+        alert("Ya existe una categoría con ese nombre")
       }else{
         addMessage();
       }
@@ -356,7 +359,7 @@ function editCategory(id, name) {
     .then(function (text) {
       console.log(text);
       if(text == "Found"){
-        alert("No se puede modificar la categoría.")
+        alert("Ya existe una categoría con ese nombre")
       }else{
         editMessage();
       }

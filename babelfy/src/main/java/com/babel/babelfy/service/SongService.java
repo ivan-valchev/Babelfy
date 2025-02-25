@@ -1,7 +1,9 @@
 package com.babel.babelfy.service;
 
+import com.babel.babelfy.dto.SongDTO;
 import com.babel.babelfy.dto.SongDTORequest;
 import com.babel.babelfy.dto.SongDTORequestCreate;
+import com.babel.babelfy.dto.SongDTORequestFind;
 import com.babel.babelfy.dto.SongDTOResponse;
 import com.babel.babelfy.model.Category;
 import com.babel.babelfy.model.Song;
@@ -12,6 +14,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,32 +22,32 @@ import java.util.List;
 public class SongService {
 
     @Autowired
-    private SongRepository songRepository;
+    private SongRepository Srepository;
+    private CategoryRepository cRepository;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
+    public List<Song> getAll(){
+        return Srepository.findAll();
+    }
 
-    public List<Song> getAll() {
-        return songRepository.findAll();
+    public Song getById(long id){
+        Song s;
+
+        s = Srepository.findById(id).orElse(null);
+
+        return s;
     }
 
     public Song addSong(SongDTORequestCreate songDTO) {
-        if (songDTO == null) {
+
+        Song s;
+        s = SongDTORequestCreate.songDTOCreateToSong(songDTO);
+
+        if(s!= null) {
+            Srepository.save(s);
+            return s;
+        }else{
             return null;
         }
-
-        Category category = null;
-        if (songDTO.getCategoryId() != null) {
-            category = categoryRepository.findById(songDTO.getCategoryId()).orElse(null);
-        }
-
-        Song song = SongDTORequestCreate.songDTOCreateToSong(songDTO, category);
-
-        if (song != null) {
-            songRepository.save(song);
-        }
-
-        return song;
     }
 
     public SongDTOResponse updateSong(SongDTORequest request) {
@@ -53,7 +56,7 @@ public class SongService {
         }
 
         // Buscar la canción en la base de datos
-        Song song = songRepository.findById(request.getId()).orElse(null);
+        Song song = Srepository.findById(request.getId()).orElse(null);
         if (song == null) {
             throw new EntityNotFoundException("Song not found");
         }
@@ -67,29 +70,30 @@ public class SongService {
 
         // Manejar correctamente la categoría:
         if (request.getCategoryId() != null) {
-            Category category = categoryRepository.findById(request.getCategoryId()).orElse(null);
+            Category category = cRepository.findById(request.getCategoryId()).orElse(null);
             if (category == null) {
                 throw new EntityNotFoundException("Category not found");
             }
             song.setCategory(category);
         } else {
-            song.setCategory(null); // Ahora sí elimina la categoría correctamente
+            song.setCategory(null); // ✅ Ahora sí elimina la categoría correctamente
         }
 
         // Guardar cambios en la base de datos
-        songRepository.save(song);
+        Srepository.save(song);
 
         return new SongDTOResponse(song);
     }
 
+
     public void deleteSong(long id) {
-        Song song = songRepository.findById(id).orElse(null);
+        Song song = Srepository.findById(id).orElse(null);
 
         if (song == null) {
             throw new EntityNotFoundException("Song not found");
         }
 
-        songRepository.delete(song);
+        Srepository.delete(song);
     }
 
 }

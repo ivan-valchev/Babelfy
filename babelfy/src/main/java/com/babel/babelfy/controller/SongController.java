@@ -3,6 +3,7 @@ package com.babel.babelfy.controller;
 import com.babel.babelfy.dto.SongDTO;
 import com.babel.babelfy.dto.SongDTORequest;
 import com.babel.babelfy.dto.SongDTORequestCreate;
+import com.babel.babelfy.dto.SongDTORequestFind;
 import com.babel.babelfy.dto.SongDTOResponse;
 import com.babel.babelfy.model.Category;
 import com.babel.babelfy.model.Song;
@@ -18,20 +19,25 @@ import java.util.List;
 @RequestMapping("/songs")
 public class SongController {
 
-    @Autowired
-    private SongService songService;
-    @GetMapping("")
+@Autowired
+private SongService songService;
+
+@GetMapping("")
     public List<Song> getAll(){
         return songService.getAll();
     }
+@GetMapping("/{id}")
+public Song getById(@PathVariable long id){
+    return songService.getById(id);
+}
   @PostMapping("")
   public Song create (@RequestBody SongDTORequestCreate songDTO) {
       return songService.addSong(songDTO);
 
   }
     @PutMapping("")
-    public ResponseEntity<SongDTOResponse> updateSong(@RequestBody SongDTORequest request) {
-        return ResponseEntity.ok(songService.updateSong(request));
+    public Song updateSong(@RequestBody SongDTORequest request) {
+        return songService.updateSong(request);
     }
 
     @DeleteMapping
