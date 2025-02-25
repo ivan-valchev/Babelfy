@@ -27,7 +27,7 @@ public class Song {
     private String albumName;
     private LocalDate releaseDate;
 
-//    @ManyToOne
-//    private Category category;
+    @ManyToOne
+    private Category category;
 
 }
