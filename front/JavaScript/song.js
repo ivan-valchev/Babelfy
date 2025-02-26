@@ -87,10 +87,10 @@ document.addEventListener('click', function (event) {
   if (event.target && event.target.id == 'Song-add') {
     openAddPopup();
   }
-  if (event.target && event.target.id == 'add-close-btn') {
+  if (event.target && event.target.id == 'song-add-close-btn') {
     closeAddPopup();
   }
-  if (event.target && event.target.id == 'add-submit') {
+  if (event.target && event.target.id == 'song-add-submit') {
     addInputSong();
   }
   if (event.target && event.target.id.startsWith('song-btn-info-')) {
@@ -127,7 +127,7 @@ document.addEventListener('click', function (event) {
 function openAddPopup() {
   console.log("POP");
   
-  document.getElementById("add-overlay").style.display = "block";
+  document.getElementById("song-add-overlay").style.display = "block";
   document.getElementById("add-name-input").value = "";
   document.getElementById("add-duration-input").value = "";
   document.getElementById("add-artist-input").value = "";
@@ -138,7 +138,7 @@ function openAddPopup() {
 }
 
 function closeAddPopup() {
-  document.getElementById("add-overlay").style.display = "none";
+  document.getElementById("song-add-overlay").style.display = "none";
 }
 function songOpenInfo(index) {
   console.log(index)
@@ -401,24 +401,24 @@ function deleteMessage(){
   console.log("DELETE MESSAGE");
   
   document.getElementById("message-overlay").style.display = "block"
-  document.getElementById("message-delete").style.display = "block"
-  document.getElementById("message-add").style.display = "none"
-  document.getElementById("message-edit").style.display = "none"
+  document.getElementById("song-message-delete").style.display = "block"
+  document.getElementById("song-message-add").style.display = "none"
+  document.getElementById("song-message-edit").style.display = "none"
 }
 function editMessage(){
-  document.getElementById("message-edit").innerHTML = '<h2>La canción se ha modificado correctamente</h2>' +'<button id="close-message" class="message-button">Cerrar</button>'
+  document.getElementById("song-message-edit").innerHTML = '<h2>La canción se ha modificado correctamente</h2>' +'<button id="close-message" class="message-button">Cerrar</button>'
   document.getElementById("message-overlay").style.display = "block"
-  document.getElementById("message-delete").style.display = "none"
-  document.getElementById("message-add").style.display = "none"
-  document.getElementById("message-edit").style.display = "block"
+  document.getElementById("song-message-delete").style.display = "none"
+  document.getElementById("song-message-add").style.display = "none"
+  document.getElementById("song-message-edit").style.display = "block"
 }
 
 function addMessage(){
-  document.getElementById("message-add").innerHTML = '<h2>La canción se ha creado correctamente</h2>' +'<button class=message-button id="close-message">Cerrar</button>'
+  document.getElementById("song-message-add").innerHTML = '<h2>La canción se ha creado correctamente</h2>' +'<button class=message-button id="close-message">Cerrar</button>'
   document.getElementById("message-overlay").style.display = "block"
-  document.getElementById("message-delete").style.display = "none"
-  document.getElementById("message-add").style.display = "block"
-  document.getElementById("message-edit").style.display = "none"
+  document.getElementById("song-message-delete").style.display = "none"
+  document.getElementById("song-message-add").style.display = "block"
+  document.getElementById("song-message-edit").style.display = "none"
 }
 
 function closeMessage(){

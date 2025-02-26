@@ -171,7 +171,7 @@
       background-color: rgb(255, 255, 255);
       color: rgb(29, 185, 84);
     }
-    #add-overlay{
+    #song-add-overlay{
       display: none;
       position: fixed;
       top: 0;
@@ -193,7 +193,7 @@
       background-color: rgb(255, 255, 255);
       color: rgb(29, 185, 84);
     }
-    #add-form{
+    #song-add-form{
       position: fixed;
       top: -10px;
       left: 50%;
@@ -207,7 +207,7 @@
       text-align: center;
     }
 
-    #add-form button{
+    #song-add-form button{
       padding: 12px;
       background-color: white;
       color: black;
@@ -225,20 +225,20 @@
       box-sizing: border-box;
     }
 
-    #add-submit {
+    #song-add-submit {
       margin-top: 15px;
     }
-    #add-submit:hover{
+    #song-add-submit:hover{
       background-color: rgb(29, 185, 84);
       color: white;
     }
 
-    #add-close-btn {
+    #song-add-close-btn {
       background-color: white;
       color: black;
       font-weight: 100;
     }
-    #add-close-btn:hover{
+    #song-add-close-btn:hover{
       background-color: rgb(29, 185, 84);
       color: white;
     }
@@ -389,9 +389,9 @@
   </div>
   <h1 class="titulo">Songs</h1>
   <button id="Song-add" class="add">Add Song</button>
-  <div id="add-overlay">
-    <div id="add-form">
-      <button id="add-close-btn" class="close-window">X</button>
+  <div id="song-add-overlay">
+    <div id="song-add-form">
+      <button id="song-add-close-btn" class="close-window">X</button>
       <h2>Add Song</h2>
       <form>
         <input type="text" id="add-name-input" placeholder="Song name">
@@ -402,20 +402,20 @@
         <select id="categories-list">
         </select>
       </form>
-      <button type="submit" id="add-submit">Add Song</button>
+      <button type="submit" id="song-add-submit">Add Song</button>
     </div>
   </div>
 
   <div id="message-overlay" class="message-overlay">
-    <div id="message-add">
+    <div id="song-message-add">
       <h2>Categoría añadida correctamente!</h2>
       <button id="close-message">Cerrar</button>
     </div>
-    <div id="message-delete">
+    <div id="song-message-delete">
       <h2>Canción eliminada correctamente!</h2>
       <button id="close-message" class="message-button">Cerrar</button>
     </div>
-    <div id="message-edit">
+    <div id="song-message-edit">
       <!-- <h2>Categoría modificada correctamente!</h2>
       <button id="close-message">Cerrar</button> -->
     </div>

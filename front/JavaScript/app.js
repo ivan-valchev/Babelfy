@@ -87,7 +87,7 @@ function renderCategories(categories) {
     container.innerHTML = '';
     warning.innerHTML = '<span class=empty-page> No hay categorías </span>'
 
-    container.appendChild(warning)
+    categoriesContainer.appendChild(warning)
 
   } else {
     container.innerHTML = '';
@@ -121,7 +121,10 @@ function renderCategories(categories) {
 document.addEventListener('DOMContentLoaded', function () {
 
   // Paso 9: Llamar a la función getSongs para iniciar el proceso cuando se carga la página.
-  getCategories();
+  if(window.location.pathname === "Babelfy/front/categories.html"){
+    getCategories();
+  }
+  // getCategories();
 
 });
 
@@ -149,7 +152,7 @@ document.addEventListener('click', function (event) {
     
     openAdd();
   }
-  if (event.target && event.target.id === 'add-submit') {
+  if (event.target && event.target.id === 'song-add-submit') {
     addInput();
     // addMessage();
   }
