@@ -19,7 +19,7 @@ public class SongDTOResponseDetail {
     private String artistName;
     private String albumName;
     private LocalDate releaseDate;
-//    private String categoryName;
+    private String categoryName;
 
     public static SongDTOResponseDetail songToSongDTOResponseDetail(Song s){
         SongDTOResponseDetail sDTO;
@@ -32,6 +32,7 @@ public class SongDTOResponseDetail {
                     .artistName(s.getArtistName())
                     .albumName(s.getAlbumName())
                     .releaseDate(s.getReleaseDate())
+                    .categoryName(s.getCategory().getName())
                     .build();
             return sDTO;
         }else{

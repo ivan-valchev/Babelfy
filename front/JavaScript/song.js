@@ -68,7 +68,7 @@ function renderSongs(songs) {
         '<button id=song-delete-' + song.id + ' class=delete>Delete</button>' +
         '<button id =song-edit-' + song.id + ' class =edit>Edit</button>' +
         '<button id=song-btn-info-' + song.id + ' class = info>Info</button>' +
-        '<div id=song-info-overlay-' + song.id + ' class = song-info-overlay><div id =song-info-form-' + song.id + ' class = "song-info-form"> <button id="song-close-info" class=close-window>X</button><h2>Información</h2> <h3>Nombre:' + song.name + '</h3><h3 id = song-duration>Duración:' + song.duration + ' minutos</h3><h3>Artista:' + song.artistName + '</h3><h3>Albúm: ' + song.albumName + '</h3><h3>Fecha Lanzamiento: ' + song.releaseDate + ' </h3></div></div>' +
+        '<div id=song-info-overlay-' + song.id + ' class = song-info-overlay><div id =song-info-form-' + song.id + ' class = "song-info-form"> <button id="song-close-info" class=close-window>X</button><h2>Información</h2> <h3>Nombre:' + song.name + '</h3><h3 id = song-duration>Duración:' + song.duration + ' minutos</h3><h3>Artista:' + song.artistName + '</h3><h3>Albúm: ' + song.albumName + '</h3><h3>Fecha Lanzamiento: ' + song.releaseDate + ' </h3><h3>Categoría:'+song.categoryName+'</h3></div></div>' +
         '<div id = edit-overlay> <div id = edit-form> <button id = close-btn class=close-window>X</button> <h2>Modificar</h2> <form><input type ="text" id = edit-name-input><input type="number" min="0" id="edit-duration-input" placeholder="Duration">   <input type="text" id="edit-artist-input" placeholder="Artist"> <input type="text" id="edit-album-input" placeholder="Album"><br>  <input type="date" class=date id="edit-date-input" placeholder="YYYY-MM-DD"> </form> <button type= "submit" id="submit-btn">Submit</button> </div></div>';
 
       // Paso 8: Añadir la tarjeta al contenedor.
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.addEventListener('click', function (event) {
 
-  if (event.target && event.target.id == 'add') {
+  if (event.target && event.target.id == 'Song-add') {
     openAddPopup();
   }
   if (event.target && event.target.id == 'add-close-btn') {
@@ -125,12 +125,15 @@ document.addEventListener('click', function (event) {
 })
 
 function openAddPopup() {
+  console.log("POP");
+  
   document.getElementById("add-overlay").style.display = "block";
   document.getElementById("add-name-input").value = "";
   document.getElementById("add-duration-input").value = "";
   document.getElementById("add-artist-input").value = "";
   document.getElementById("add-album-input").value = "";
   document.getElementById("add-date-input").value = "";
+  fillList();
 }
 
 function closeAddPopup() {
@@ -414,4 +417,23 @@ function addMessage(){
 
 function closeMessage(){
   document.getElementById("message-overlay").style.display = "none";
+}
+
+function fillList(){
+  var list = document.getElementById("categories-list");
+  getCategories(true)
+  .then(function(data){
+    var optionFirst = document.createElement('option')
+      console.log(data)
+      optionFirst.value = ''
+      optionFirst.textContent = 'None'
+      list.appendChild(optionFirst)
+
+      data.forEach(function(category) {
+        var option = document.createElement('option')
+        option.value = category.id
+        option.textContent = category.name
+        list.appendChild(option)
+      })
+  })
 }

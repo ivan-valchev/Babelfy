@@ -28,7 +28,7 @@ function toggleMenu() {
   }
 }
 
-function getCategories() {
+async function getCategories(onlydata=false) {
   console.log("get");
   
   // URL del endpoint de la API que devuelve la lista de canciones.
@@ -36,7 +36,7 @@ function getCategories() {
   const apiUrl = 'http://localhost:9000/categories';
 
   // Se realiza la petición a la API utilizando fetch.
-  fetch(apiUrl)
+  return fetch(apiUrl)
     .then(function (response) {
       // Paso 2: Verificar que la respuesta sea exitosa.
       if (!response.ok) {
@@ -49,7 +49,10 @@ function getCategories() {
     .then(function (categories) {
       // 'songs' es un array de objetos, donde cada objeto representa una canción.
       // Se llama a la función que se encarga de pintar (renderizar) los datos en el HTML.
-      renderCategories(categories);
+      if (!onlydata) {
+        renderCategories(categories);
+      }
+      return categories
     })
     .catch(function (error) {
       // Paso 4: Manejo de errores.
