@@ -133,6 +133,7 @@ function openAddPopup() {
   document.getElementById("add-artist-input").value = "";
   document.getElementById("add-album-input").value = "";
   document.getElementById("add-date-input").value = "";
+  cleanOptions();
   fillList();
 }
 
@@ -425,15 +426,26 @@ function fillList(){
   .then(function(data){
     var optionFirst = document.createElement('option')
       console.log(data)
+      optionFirst.classList.add("categories-options")
       optionFirst.value = ''
       optionFirst.textContent = 'None'
       list.appendChild(optionFirst)
 
       data.forEach(function(category) {
         var option = document.createElement('option')
+        option.classList.add("categories-options")
         option.value = category.id
         option.textContent = category.name
         list.appendChild(option)
       })
   })
 }
+
+function cleanOptions(){
+  let list = document.getElementById("categories-list");
+  let options  = list.getElementsByTagName("option")
+  for(var i = options.length;i--;){
+    list.removeChild(options[i]);
+  }
+}
+
