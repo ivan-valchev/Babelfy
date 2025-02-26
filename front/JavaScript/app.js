@@ -152,7 +152,7 @@ document.addEventListener('click', function (event) {
     
     openAdd();
   }
-  if (event.target && event.target.id === 'song-add-submit') {
+  if (event.target && event.target.id === 'add-submit') {
     addInput();
     // addMessage();
   }
