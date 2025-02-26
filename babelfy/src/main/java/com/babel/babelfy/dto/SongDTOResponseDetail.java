@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SongDTOResponseDetail {
-
+    private long id;
     private String name;
     private int duration;
     private String artistName;
@@ -26,6 +26,7 @@ public class SongDTOResponseDetail {
 
         if(s!=null){
             sDTO = SongDTOResponseDetail.builder()
+                    .id(s.getId())
                     .name(s.getName())
                     .duration(s.getDuration())
                     .artistName(s.getArtistName())

@@ -19,7 +19,7 @@ public class SongController {
 private SongService songService;
 
 @GetMapping("")
-    public List<SongDTOResponseList> getAll(){
+    public List<SongDTOResponseDetail> getAll(){
         return songService.getAll();
     }
 @GetMapping("/{id}")

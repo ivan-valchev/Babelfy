@@ -20,11 +20,11 @@ public class SongService {
     @Autowired
     private SongRepository repository;
 
-    public List<SongDTOResponseList> getAll(){
+    public List<SongDTOResponseDetail> getAll(){
 
-        List<SongDTOResponseList>list = new ArrayList<>();
+        List<SongDTOResponseDetail>list = new ArrayList<>();
         for(Song s : repository.findAll()){
-            list.add(SongDTOResponseList.songToSongResponseList(s));
+            list.add(SongDTOResponseDetail.songToSongDTOResponseDetail(s));
         }
         return list;
     }
