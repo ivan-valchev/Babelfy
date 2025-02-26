@@ -1,10 +1,6 @@
 package com.babel.babelfy.service;
 
-import com.babel.babelfy.dto.SongDTO;
-import com.babel.babelfy.dto.SongDTORequest;
-import com.babel.babelfy.dto.SongDTORequestCreate;
-import com.babel.babelfy.dto.SongDTORequestFind;
-import com.babel.babelfy.dto.SongDTOResponse;
+import com.babel.babelfy.dto.*;
 import com.babel.babelfy.model.Category;
 import com.babel.babelfy.model.Song;
 import com.babel.babelfy.repository.SongRepository;
@@ -24,16 +20,19 @@ public class SongService {
     @Autowired
     private SongRepository repository;
 
-    public List<Song> getAll(){
-        return repository.findAll();
+    public List<SongDTOResponseDetail> getAll(){
+
+        List<SongDTOResponseDetail>list = new ArrayList<>();
+        for(Song s : repository.findAll()){
+            list.add(SongDTOResponseDetail.songToSongDTOResponseDetail(s));
+        }
+        return list;
     }
 
-    public Song getById(long id){
-        Song s;
-
+    public SongDTOResponseDetail getById(long id){
+       Song s;
         s = repository.findById(id).orElse(null);
-
-        return s;
+        return SongDTOResponseDetail.songToSongDTOResponseDetail(s);
     }
 
     public Song addSong(SongDTORequestCreate songDTO) {
