@@ -209,7 +209,6 @@
     }
 
     #add-form button{
-      width: 100%;
       padding: 12px;
       background-color: white;
       color: black;
@@ -361,6 +360,9 @@
       color: rgb(255, 255, 255);
       text-align: center;
     }
+    .close-style{
+      margin-left: 200px;
+    }
 
   </style>
 </head>
@@ -378,7 +380,7 @@
   <button id="add" class="add">Add Song</button>
   <div id="add-overlay">
     <div id="add-form">
-      <button id="add-close-btn">X</button>
+      <button id="add-close-btn" class="close-style">X</button>
       <p>Add Song</p>
       <form>
         <input type="text" id="add-name-input" placeholder="Song name">
