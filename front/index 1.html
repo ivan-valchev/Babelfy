@@ -115,7 +115,7 @@
     }
 
     #popup-form button {
-      width: 100%;
+      
       padding: 12px;
       background-color: white;
       color: black;
@@ -204,7 +204,6 @@
     }
 
     #add-form button{
-      width: 100%;
       padding: 12px;
       background-color: white;
       color: black;
@@ -349,6 +348,21 @@
       color: rgb(255, 255, 255);
       text-align: center;
     }
+    .close-window{
+      width: auto;
+      text-align: right;
+      width: auto;
+      margin-left: 275px;
+      padding: 12px;
+      background-color: white;
+      color: black;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .empty-page{
+      color: white;
+    }
 
 
   </style>
@@ -367,8 +381,8 @@
   <button id="add" class="add">Add Category</button>
   <div id="add-overlay">
     <div id="add-form">
-      <button id="add-close-btn">X</button>
-      <p>Add Category</p>
+      <button id="add-close-btn" class="close-window">X</button>
+      <h2>Add Category</h2>
       <form>
         <input type="text" id="add-input">
       </form>

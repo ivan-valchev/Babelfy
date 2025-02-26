@@ -120,7 +120,6 @@
     }
 
     #edit-form button {
-      width: 100%;
       padding: 12px;
       background-color: white;
       color: black;
@@ -287,8 +286,7 @@
       color: black;
       font-weight: 100;
       border: none;
-      width: 100%;
-      border-radius: 2px;
+      /* border-radius: 2px; */
      
     }
     #song-close-info:hover{
@@ -360,8 +358,21 @@
       color: rgb(255, 255, 255);
       text-align: center;
     }
-    .close-style{
-      margin-left: 200px;
+
+    .close-window{
+      width: auto;
+      text-align: right;
+      width: auto;
+      margin-left: 275px;
+      padding: 12px;
+      background-color: white;
+      color: black;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .empty-page{
+      color: white;
     }
 
   </style>
@@ -380,8 +391,8 @@
   <button id="add" class="add">Add Song</button>
   <div id="add-overlay">
     <div id="add-form">
-      <button id="add-close-btn" class="close-style">X</button>
-      <p>Add Song</p>
+      <button id="add-close-btn" class="close-window">X</button>
+      <h2>Add Song</h2>
       <form>
         <input type="text" id="add-name-input" placeholder="Song name">
         <input type="number" min="1" id="add-duration-input" placeholder="Duration">

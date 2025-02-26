@@ -82,7 +82,7 @@ function renderCategories(categories) {
     var warning = document.createElement('p')
 
     container.innerHTML = '';
-    warning.innerHTML = '<span> No hay canciones </span>'
+    warning.innerHTML = '<span class=empty-page> No hay categorías </span>'
 
     container.appendChild(warning)
 
@@ -104,8 +104,8 @@ function renderCategories(categories) {
         '<button id = delete-' + category.id + ' class = "delete"> Delete </button>' +
         '<button id = edit-' + category.id + ' class = "edit"> Edit </button>' +
         '<button id = info-'+category.id+' class = "info">Info</button>'+
-        '<div id = popup-overlay> <div id = popup-form> <button id = close-btn>X</button> <p>Modificar</p> <form><input type ="text" id = popup-input> </form> <button type= "submit" id="submit-btn">Submit</button> </div></div>'+
-        '<div id = overlay-info'+category.id+'> <div class = "form-info" id = form-info-'+category.id+'> <button id = close-info>X</button> <h2>Información</h2> <h3> Nombre: '+category.name+'</h3></div></div>';
+        '<div id = popup-overlay> <div id = popup-form> <button id = close-btn class = close-window>X</button> <h2>Modificar</h2> <form><input type ="text" id = popup-input> </form> <button type= "submit" id="submit-btn">Submit</button> </div></div>'+
+        '<div id = overlay-info'+category.id+'> <div class = "form-info" id = form-info-'+category.id+'> <button id = close-info class=close-window>X</button> <h2>Información</h2> <h3> Nombre: '+category.name+'</h3></div></div>';
 
       container.appendChild(card);
 
