@@ -230,6 +230,8 @@ function addInputSong() {
   let inputArtist = document.getElementById("add-artist-input").value;
   let inputAlbum = document.getElementById("add-album-input").value;
   let inputDate = document.getElementById("add-date-input").value;
+  let categoryId = document.getElementById("categories-list").value;
+  console.log(categoryId);
 
   if(inputName == ""){
     num =0;
@@ -260,6 +262,9 @@ function addInputSong() {
         case 4:
           alert("Rellene la fecha de lanzamiento")
           break;
+        case 5:
+          alert("Seleccione una categoría")
+          break;
         default:
           alert("Falla")
           break;
@@ -268,7 +273,7 @@ function addInputSong() {
       alert("Introduzca un caracter válido");
     }
     else{
-      addSong(inputName, inputDuration, inputArtist, inputAlbum, inputDate);
+      addSong(inputName, inputDuration, inputArtist, inputAlbum, inputDate,categoryId);
       closeAddPopup();
       addMessage();
     }
@@ -276,14 +281,14 @@ function addInputSong() {
   
 }
 
-function addSong(name, duration, artistName, albumName, releaseDate) {
+function addSong(name, duration, artistName, albumName, releaseDate,categoryId) {
   const apiUrl = 'http://localhost:9000/songs';
   fetch(apiUrl, {
     method: 'POST',
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ "name": name, "duration": duration, "artistName": artistName, "albumName": albumName, "releaseDate": releaseDate })
+    body: JSON.stringify({ "name": name, "duration": duration, "artistName": artistName, "albumName": albumName, "releaseDate": releaseDate,"categoryId":categoryId })
 
   })
     .then(function (response) {
@@ -427,7 +432,7 @@ function fillList(){
     var optionFirst = document.createElement('option')
       console.log(data)
       optionFirst.classList.add("categories-options")
-      optionFirst.value = ''
+      optionFirst.value = -1
       optionFirst.textContent = 'None'
       list.appendChild(optionFirst)
 

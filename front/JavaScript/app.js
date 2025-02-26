@@ -227,7 +227,7 @@ function acceptInput() {
 }
 
 function addInput() {
-  let inputName = document.getElementById("add-input").value;
+  let inputName = document.getElementById("add-input")
   var regex = /[A-Za-z-0-9]/;
   if(inputName ==""){
     alert("Introduce el nombre de la categoría")

@@ -19,6 +19,8 @@ public class SongService {
 
     @Autowired
     private SongRepository repository;
+    @Autowired
+    private CategoryRepository categoryRepo;
 
     public List<SongDTOResponseDetail> getAll(){
 
@@ -38,7 +40,7 @@ public class SongService {
     public Song addSong(SongDTORequestCreate songDTO) {
 
         Song s;
-        s = SongDTORequestCreate.songDTOCreateToSong(songDTO);
+        s = songDTOCreateToSong(songDTO);
 
         if(s!= null) {
             repository.save(s);
@@ -74,5 +76,20 @@ public class SongService {
 
         repository.delete(song);
     }
-
+    public  Song songDTOCreateToSong(SongDTORequestCreate song){
+        Song s;
+        if(song!=null){
+            s = Song.builder()
+                    .name(song.getName())
+                    .duration(song.getDuration())
+                    .artistName(song.getArtistName())
+                    .albumName(song.getAlbumName())
+                    .releaseDate(song.getReleaseDate())
+                    .category(categoryRepo.findById(song.getCategoryId()).orElse(null))
+                    .build();
+            return s;
+        }else{
+            return null;
+        }
+    }
 }
