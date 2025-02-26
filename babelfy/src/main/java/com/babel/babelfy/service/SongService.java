@@ -23,6 +23,7 @@ public class SongService {
     private CategoryRepository cRepository;
 
 
+<<<<<<< HEAD
     public List<Song> getAll(){
         return Srepository.findAll();
     }
@@ -67,6 +68,21 @@ public class SongService {
         }
 
         return s;
+=======
+    public List<SongDTOResponseDetail> getAll(){
+
+        List<SongDTOResponseDetail>list = new ArrayList<>();
+        for(Song s : repository.findAll()){
+            list.add(SongDTOResponseDetail.songToSongDTOResponseDetail(s));
+        }
+        return list;
+    }
+
+    public SongDTOResponseDetail getById(long id){
+       Song s;
+        s = repository.findById(id).orElse(null);
+        return SongDTOResponseDetail.songToSongDTOResponseDetail(s);
+>>>>>>> origin/dev
     }
 
 

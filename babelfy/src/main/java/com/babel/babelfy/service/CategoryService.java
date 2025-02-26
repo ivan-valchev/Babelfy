@@ -1,9 +1,6 @@
 package com.babel.babelfy.service;
 
-import com.babel.babelfy.dto.CategoryDTO;
-import com.babel.babelfy.dto.CategoryDTORequestCreate;
-import com.babel.babelfy.dto.CategoryDTORequestDelete;
-import com.babel.babelfy.dto.CategoryDTORequestEdit;
+import com.babel.babelfy.dto.*;
 import com.babel.babelfy.model.Category;
 import com.babel.babelfy.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,23 +19,20 @@ public class CategoryService {
     @Autowired
     private CategoryRepository repo;
 
-    public List<Category> getAll() {
-        List<Category> categories = repo.findAll();
-        List<CategoryDTO> categoryDTOs = new ArrayList<>();
-        for (int i = 0; i < categories.size(); i++) {
-            Category category = categories.get(i);
-//            List<Long> songIds = new ArrayList<>();
-//            for (int j = 0; j < category.getSongs().size(); j++) {
-//                songIds.add(category.getSongs().get(j).getId());
-//            }
-            categoryDTOs.add(new CategoryDTO(category.getName(),category.getId()));
-        }
-        return categories;
+    public List<CategoryDTOResponseList> getAll() {
+       List<Category> categories = repo.findAll();
+       List<CategoryDTOResponseList> categoriesDTO = new ArrayList<>();
+
+       for(Category c : categories){
+           categoriesDTO.add(CategoryDTOResponseList.categoryToCategoryDTOResponseList(c));
+       }
+       return categoriesDTO;
     }
 
-    public CategoryDTO getById(long id) {
+    public CategoryDTOResponseDetail getById(long id) {
         Category category = repo.findById(id).orElseThrow(() -> new RuntimeException("Category not found"));
-        return new CategoryDTO(category.getName(),category.getId());
+        return CategoryDTOResponseDetail.categoryToCategoryDTOResponse(category);
+//          CategoryDTO(category.getName(),category.getId());
     }
 
     public String createCategory(CategoryDTORequestCreate categoryCreate) {
@@ -60,17 +54,6 @@ public class CategoryService {
 
 
 
-
-
-
-//    public void modifyCategory(String name,long id){
-//        Category c;
-//        c = repo.findById(id).orElse(null);
-//        if (c != null) {
-//            c.setName(name);
-//            repo.save(c);
-//        }
-//    }
 
     public String modify(CategoryDTORequestEdit cDTO){
         Category cOld;

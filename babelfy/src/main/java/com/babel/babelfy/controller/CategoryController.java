@@ -22,11 +22,11 @@ public class CategoryController {
 
 
     @GetMapping("")
-    public List<Category> getAll(){
+    public List<CategoryDTOResponseList> getAll(){
         return categoryService.getAll();
     }
     @GetMapping("/{id}")
-    public CategoryDTO findId(@PathVariable long id){
+    public CategoryDTOResponseDetail findId(@PathVariable long id){
         return categoryService.getById(id);
     }
 
