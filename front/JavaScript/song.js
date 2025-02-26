@@ -96,10 +96,10 @@ document.addEventListener('click', function (event) {
   if (event.target && event.target.id.startsWith('song-btn-info-')) {
     index = parseInt(event.target.id.split('-')[3])
     console.log(index);
-    openInfo(index);
+    songOpenInfo(index);
   }
   if (event.target && event.target.id === 'song-close-info') {
-    closeInfo();
+    songCloseInfo();
   }
   if (event.target && event.target.id.startsWith('song-delete-')) {
     id = parseInt(event.target.id.split('-')[2])
@@ -139,12 +139,12 @@ function openAddPopup() {
 function closeAddPopup() {
   document.getElementById("add-overlay").style.display = "none";
 }
-function openInfo(index) {
+function songOpenInfo(index) {
   console.log(index)
   document.getElementById("song-info-overlay-" + index).style.display = "block";
   document.getElementById("song-info-form-" + index).style.display = "block";
 }
-function closeInfo() {
+function songCloseInfo() {
   document.getElementById("song-info-form-" + index).style.display = "none";
   console.log(index);
 }
