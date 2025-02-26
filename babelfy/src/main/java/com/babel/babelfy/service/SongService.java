@@ -19,24 +19,12 @@ public class SongService {
 
     @Autowired
     private SongRepository Srepository;
+
     @Autowired
     private CategoryRepository cRepository;
 
-
-<<<<<<< HEAD
-    public List<Song> getAll(){
-        return Srepository.findAll();
-    }
-
-    public Song getById(long id){
-        Song s;
-
-        s = Srepository.findById(id).orElse(null);
-
-        return s;
     public List<SongDTOResponseDetail> getAll(){
-
-        List<SongDTOResponseDetail>list = new ArrayList<>();
+        List<SongDTOResponseDetail> list = new ArrayList<>();
         for(Song s : Srepository.findAll()){
             list.add(SongDTOResponseDetail.songToSongDTOResponseDetail(s));
         }
@@ -44,8 +32,7 @@ public class SongService {
     }
 
     public SongDTOResponseDetail getById(long id){
-       Song s;
-        s = Srepository.findById(id).orElse(null);
+        Song s = Srepository.findById(id).orElse(null);
         return SongDTOResponseDetail.songToSongDTOResponseDetail(s);
     }
 
@@ -61,30 +48,17 @@ public class SongService {
         }
 
         // Convertir DTO en Song
-        Song s = SongDTORequestCreate.songDTOCreateToSong(songDTO, category);
+        Song s = Song.builder()
+                .name(songDTO.getName())
+                .duration(songDTO.getDuration())
+                .artistName(songDTO.getArtistName())
+                .albumName(songDTO.getAlbumName())
+                .releaseDate(songDTO.getReleaseDate())
+                .category(category) // Puede ser null
+                .build();
 
-        if (s != null) {
-            Srepository.save(s);
-        }
-
-        return s;
-=======
-    public List<SongDTOResponseDetail> getAll(){
-
-        List<SongDTOResponseDetail>list = new ArrayList<>();
-        for(Song s : repository.findAll()){
-            list.add(SongDTOResponseDetail.songToSongDTOResponseDetail(s));
-        }
-        return list;
+        return Srepository.save(s);
     }
-
-    public SongDTOResponseDetail getById(long id){
-       Song s;
-        s = repository.findById(id).orElse(null);
-        return SongDTOResponseDetail.songToSongDTOResponseDetail(s);
->>>>>>> origin/dev
-    }
-
 
     public Song updateSong(SongDTORequest request) {
         if (request == null) {
@@ -119,16 +93,11 @@ public class SongService {
         return Srepository.save(song); // Devolver el objeto Song actualizado
     }
 
-
-
     public void deleteSong(long id) {
         Song song = Srepository.findById(id).orElse(null);
-
         if (song == null) {
             throw new EntityNotFoundException("Song not found");
         }
-
         Srepository.delete(song);
     }
-
 }
