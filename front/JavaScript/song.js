@@ -53,7 +53,7 @@ function renderSongs(songs) {
 
     var warning = document.createElement('p')
 
-    warning.innerHTML = '<span> No hay canciones </span>'
+    warning.innerHTML = '<span class=empty-page> No hay canciones </span>'
 
     container.appendChild(warning)
 
@@ -69,8 +69,8 @@ function renderSongs(songs) {
         '<button id=song-delete-' + song.id + ' class=delete>Delete</button>' +
         '<button id =song-edit-' + song.id + ' class =edit>Edit</button>' +
         '<button id=song-btn-info-' + song.id + ' class = info>Info</button>' +
-        '<div id=song-info-overlay-' + song.id + ' class = song-info-overlay><div id =song-info-form-' + song.id + ' class = "song-info-form"> <button id="song-close-info" class=button>X</button><h2>Información</h2> <h3>Nombre:' + song.name + '</h3><h3>Duración:' + song.duration + ' minutos</h3><h3>Artista:' + song.artistName + '</h3><h3>Albúm: ' + song.albumName + '</h3><h3>Fecha Lanzamiento: ' + reverseText(song.releaseDate) + ' </h3></div></div>' +
-        '<div id = edit-overlay> <div id = edit-form> <button id = close-btn>X</button> <p>Modificar</p> <form><input type ="text" id = edit-name-input><input type="number" min="0" id="edit-duration-input" placeholder="Duration">   <input type="text" id="edit-artist-input" placeholder="Artist"> <input type="text" id="edit-album-input" placeholder="Album"><br>  <input type="date" class=date id="edit-date-input" placeholder="YYYY-MM-DD"> </form> <button type= "submit" id="submit-btn">Submit</button> </div></div>';
+        '<div id=song-info-overlay-' + song.id + ' class = song-info-overlay><div id =song-info-form-' + song.id + ' class = "song-info-form"> <button id="song-close-info" class=close-window>X</button><h2>Información</h2> <h3>Nombre:' + song.name + '</h3><h3>Duración:' + song.duration + ' minutos</h3><h3>Artista:' + song.artistName + '</h3><h3>Albúm: ' + song.albumName + '</h3><h3>Fecha Lanzamiento: ' + reverseText(song.releaseDate) + ' </h3></div></div>' +
+        '<div id = edit-overlay> <div id = edit-form> <button id = close-btn class=close-window>X</button> <h2>Modificar</h2> <form><input type ="text" id = edit-name-input><input type="number" min="0" id="edit-duration-input" placeholder="Duration">   <input type="text" id="edit-artist-input" placeholder="Artist"> <input type="text" id="edit-album-input" placeholder="Album"><br>  <input type="date" class=date id="edit-date-input" placeholder="YYYY-MM-DD"> </form> <button type= "submit" id="submit-btn">Submit</button> </div></div>';
 
       // Paso 8: Añadir la tarjeta al contenedor.
       container.appendChild(card);

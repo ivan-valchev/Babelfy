@@ -23,6 +23,7 @@ public class SongService {
 
     @Autowired
     private SongRepository Srepository;
+    @Autowired
     private CategoryRepository cRepository;
 
     public List<Song> getAll(){
@@ -38,19 +39,28 @@ public class SongService {
     }
 
     public Song addSong(SongDTORequestCreate songDTO) {
-
-        Song s;
-        s = SongDTORequestCreate.songDTOCreateToSong(songDTO);
-
-        if(s!= null) {
-            Srepository.save(s);
-            return s;
-        }else{
+        if (songDTO == null) {
             return null;
         }
+
+        // Buscar la categoría solo si categoryId no es nulo
+        Category category = null;
+        if (songDTO.getCategoryId() != null) {
+            category = cRepository.findById(songDTO.getCategoryId()).orElse(null);
+        }
+
+        // Convertir DTO en Song
+        Song s = SongDTORequestCreate.songDTOCreateToSong(songDTO, category);
+
+        if (s != null) {
+            Srepository.save(s);
+        }
+
+        return s;
     }
 
-    public SongDTOResponse updateSong(SongDTORequest request) {
+
+    public Song updateSong(SongDTORequest request) {
         if (request == null) {
             throw new IllegalArgumentException("Request cannot be null");
         }
@@ -80,10 +90,9 @@ public class SongService {
         }
 
         // Guardar cambios en la base de datos
-        Srepository.save(song);
-
-        return new SongDTOResponse(song);
+        return Srepository.save(song); // Devolver el objeto Song actualizado
     }
+
 
 
     public void deleteSong(long id) {
