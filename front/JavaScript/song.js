@@ -275,7 +275,7 @@ function addInputSong() {
     else{
       addSong(inputName, inputDuration, inputArtist, inputAlbum, inputDate,categoryId);
       closeAddPopup();
-      addMessage();
+      songAddMessage();
     }
 
   
@@ -301,7 +301,7 @@ function addSong(name, duration, artistName, albumName, releaseDate,categoryId) 
       // if(text == 'Found'){
       //   alert("No se puede crear la canción, ya existe una con ese nombre")
       // }else{
-      //   addMessage();
+      //   songAddMessage();
       // }
       getSongs();
     })
@@ -329,7 +329,7 @@ function editSong(id,name, duration, artistName, albumName, releaseDate) {
       // if(text == 'Found'){
       //   alert("No se puede crear la canción, ya existe una con ese nombre")
       // }else{
-      //   addMessage();
+      //   songAddMessage();
       // }
       getSongs();
     })
@@ -358,7 +358,7 @@ function deleteSong(id) {
       // if(text == 'Found'){
       //   alert("No se puede crear la canción, ya existe una con ese nombre")
       // }else{
-      //   addMessage();
+      //   songAddMessage();
       // }
       getSongs();
     })
@@ -383,7 +383,7 @@ async function getById(id, name = true) {
       if (name) {
         return text;
       } else {
-        addMessage();
+        songAddMessage();
       }
       getSongs();
     })
@@ -413,7 +413,7 @@ function editMessage(){
   document.getElementById("song-message-edit").style.display = "block"
 }
 
-function addMessage(){
+function songAddMessage(){
   document.getElementById("song-message-add").innerHTML = '<h2>La canción se ha creado correctamente</h2>' +'<button class=message-button id="close-message">Cerrar</button>'
   document.getElementById("message-overlay").style.display = "block"
   document.getElementById("song-message-delete").style.display = "none"
