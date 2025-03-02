@@ -121,7 +121,7 @@ function renderCategories(categories) {
 document.addEventListener('DOMContentLoaded', function () {
 
   // Paso 9: Llamar a la función getSongs para iniciar el proceso cuando se carga la página.
-  if(window.location.pathname === "Babelfy/front/categories.html"){
+  if(window.location.href === "file:///C:/Users/miguel.urquiza/Desktop/Babelfy/front/index%201.html"){
     getCategories();
   }
   // getCategories();
@@ -230,7 +230,7 @@ function acceptInput() {
 }
 
 function addInput() {
-  let inputName = document.getElementById("add-input")
+  let inputName = document.getElementById("add-input").value;
   var regex = /[A-Za-z-0-9]/;
   if(inputName ==""){
     alert("Introduce el nombre de la categoría")
