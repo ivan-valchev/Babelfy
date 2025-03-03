@@ -448,10 +448,10 @@ function fillList() {
     .then(function (data) {
       var optionFirst = document.createElement('option')
       console.log(data)
-      optionFirst.classList.add("categories-options")
-      optionFirst.value = -1
-      optionFirst.textContent = 'None'
-      list.appendChild(optionFirst)
+      // optionFirst.classList.add("categories-options")
+      // optionFirst.value = -1
+      // optionFirst.textContent = ''
+      // list.appendChild(optionFirst)
 
       data.forEach(function (category) {
         var option = document.createElement('option')
@@ -468,10 +468,10 @@ function fillEditList() {
     .then(function (data) {
       var firstOption = document.createElement('option')
       console.log(data)
-      firstOption.classList.add("categories-options")
-      firstOption.value = -1
-      firstOption.textContent = 'None'
-      list2.appendChild(firstOption)
+      // firstOption.classList.add("categories-options")
+      // firstOption.value = -1
+      // firstOption.textContent = 'None'
+      // list2.appendChild(firstOption)
 
       data.forEach(function (category) {
         var option2 = document.createElement('option')
