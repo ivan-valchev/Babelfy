@@ -33,8 +33,8 @@ public class SongDTOResponse {
     private String artistName;
     private String albumName;
     private LocalDate releaseDate;
+    private String categoryName;  // Solo el nombre de la categoría
 
-    // Constructor para convertir Song en SongDTOResponse
     public SongDTOResponse(Song song) {
         this.id = song.getId();
         this.name = song.getName();
@@ -42,6 +42,8 @@ public class SongDTOResponse {
         this.artistName = song.getArtistName();
         this.albumName = song.getAlbumName();
         this.releaseDate = song.getReleaseDate();
+        this.categoryName = song.getCategory() != null ? song.getCategory().getName() : null;
     }
 }
+
 

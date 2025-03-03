@@ -33,4 +33,5 @@ public class SongDTORequest {
     private String artistName;
     private String albumName;
     private LocalDate releaseDate;
+    private Long categoryId;
 }

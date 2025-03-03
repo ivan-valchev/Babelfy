@@ -32,7 +32,8 @@ function getSongs() {
     .then(function (songs) {
       // 'songs' es un array de objetos, donde cada objeto representa una canción.
       // Se llama a la función que se encarga de pintar (renderizar) los datos en el HTML.
-      renderSongs(songs);
+      renderSongs(songs)
+
     })
     .catch(function (error) {
       // Paso 4: Manejo de errores.
@@ -43,39 +44,41 @@ function getSongs() {
     });
 }
 
-function renderSongs(songs) {
+async function renderSongs(songs) {
   // Paso 5: Seleccionar el contenedor donde se mostrarán las tarjetas de canciones.
   var container = document.getElementById('songs-container');
   // Limpiar el contenedor por si ya tenía contenido previo.
   container.innerHTML = '';
 
   if (!songs || songs.length <= 0) {
-
-    var warning = document.createElement('p')
-
-    warning.innerHTML = '<span class=empty-page> No hay canciones </span>'
-
-    container.appendChild(warning)
-
+    var warning = document.createElement('p');
+    warning.innerHTML = '<span class=empty-page> No hay canciones </span>';
+    container.appendChild(warning);
   } else {
     // Paso 6: Recorrer el array de canciones.
-    songs.forEach(function (song) {
+    for (const song of songs) {
       // Crear un nuevo elemento <div> para la tarjeta de la canción.
       var card = document.createElement('div');
-      // Agregar la clase "song-card" para aplicar los estilos CSS definidos.
       card.classList.add('song-card');
       card.innerHTML = '<h2>' + song.name + '</h2>' +
         '<button id=song-delete-' + song.id + ' class=delete>Delete</button>' +
         '<button id =song-edit-' + song.id + ' class =edit>Edit</button>' +
         '<button id=song-btn-info-' + song.id + ' class = info>Info</button>' +
         '<div id=song-info-overlay-' + song.id + ' class = song-info-overlay><div id =song-info-form-' + song.id + ' class = "song-info-form"> <button id="song-close-info" class=close-window>X</button><h2>Información</h2> <h3>Nombre:' + song.name + '</h3><h3 id = song-duration>Duración:' + song.duration + ' minutos</h3><h3>Artista:' + song.artistName + '</h3><h3>Albúm: ' + song.albumName + '</h3><h3>Fecha Lanzamiento: ' + song.releaseDate + ' </h3></div></div>' +
-        '<div id = edit-overlay> <div id = edit-form> <button id = close-btn class=close-window>X</button> <h2>Modificar</h2> <form><input type ="text" id = edit-name-input><input type="number" min="0" id="edit-duration-input" placeholder="Duration">   <input type="text" id="edit-artist-input" placeholder="Artist"> <input type="text" id="edit-album-input" placeholder="Album"><br>  <input type="date" class=date id="edit-date-input" placeholder="YYYY-MM-DD"> </form> <button type= "submit" id="submit-btn">Submit</button> </div></div>';
+        '<div id = edit-overlay> <div class = "edit-form" id = edit-form-'+song.id+'> <button id = close-btn class=close-window>X</button> <h2>Modificar</h2> <form><input type ="text" id = edit-name-input><input type="number" min="0" id="edit-duration-input" placeholder="Duration">   <input type="text" id="edit-artist-input" placeholder="Artist"> <input type="text" id="edit-album-input" placeholder="Album"><br>  <input type="date" class=date id="edit-date-input" placeholder="YYYY-MM-DD"><select id="edit-selector-select"></select> </form> <button type= "submit" id="submit-btn">Submit</button> </div></div>';
 
       // Paso 8: Añadir la tarjeta al contenedor.
       container.appendChild(card);
-    });
+
+      // Retrieve the category data asynchronously
+    }
   }
+  
+  // Return a resolved promise to indicate that the rendering is done.
+  return Promise.resolve();
 }
+
+
 document.addEventListener('DOMContentLoaded', function () {
 
   getSongs();
@@ -156,6 +159,27 @@ function openEdit(id) {
       document.getElementById("edit-album-input").value = body.albumName;
       document.getElementById("edit-date-input").value = body.releaseDate;
 
+      getCategoryData()
+      .then(function (datos) {
+        for (let index = 0; index < datos.length; index++) {
+          const element = datos[index];
+          
+          // Create the option elements for the dropdown
+          const option = document.createElement("option");
+          option.value = element.id;
+          option.textContent = element.name;
+
+          // Append option to the select
+          document.getElementById("edit-selector-select").appendChild(option);
+          console.log(document.getElementById("edit-selector-select"));
+          
+        }})
+        .then(function () {
+          document.getElementById("edit-selector-select").value = body.categoryId;
+          console.log(document.getElementById("edit-selector-select").value);
+          
+        });
+      
       document.getElementById("edit-overlay").style.display = "block";
 
     })
@@ -414,4 +438,31 @@ function addMessage(){
 
 function closeMessage(){
   document.getElementById("message-overlay").style.display = "none";
+}
+
+async function getCategoryData() {
+  console.log("get");
+  
+  // URL del endpoint de la API que devuelve la lista de canciones.
+  // Cambia la URL a la de tu API real si es necesario.
+  const apiUrl = 'http://localhost:9000/categories';
+
+  // Se realiza la petición a la API utilizando fetch.
+  return fetch(apiUrl)
+    .then(function (response) {
+      // Paso 2: Verificar que la respuesta sea exitosa.
+      if (!response.ok) {
+        // Si no es exitosa, se lanza un error para que se capture en el catch.
+        throw new Error('Error en la respuesta de la API: ' + response.statusText);
+      }
+      // Paso 3: Convertir la respuesta a formato JSON para poder trabajar con ella.
+      return response.json();
+    })
+    .catch(function (error) {
+      // Paso 4: Manejo de errores.
+      // Si ocurre algún error durante la petición o la conversión, se muestra en la consola.
+      console.error('Error al cargar las categorias:', error);
+      // También se muestra un mensaje de error en el contenedor HTML.
+      document.getElementById('categories-container').innerHTML = '<p>Error al cargar las categorias.</p>';
+    });
 }
