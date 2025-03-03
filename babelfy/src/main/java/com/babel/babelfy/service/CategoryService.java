@@ -2,7 +2,9 @@ package com.babel.babelfy.service;
 
 import com.babel.babelfy.dto.*;
 import com.babel.babelfy.model.Category;
+import com.babel.babelfy.model.Song;
 import com.babel.babelfy.repository.CategoryRepository;
+import com.babel.babelfy.repository.SongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ public class CategoryService {
 
     @Autowired
     private CategoryRepository repo;
+    @Autowired
+    private SongRepository songRepo;
 
     public List<CategoryDTOResponseList> getAll() {
        List<Category> categories = repo.findAll();
@@ -31,7 +35,7 @@ public class CategoryService {
 
     public CategoryDTOResponseDetail getById(long id) {
         Category category = repo.findById(id).orElseThrow(() -> new RuntimeException("Category not found"));
-        return CategoryDTOResponseDetail.categoryToCategoryDTOResponse(category);
+        return categoryToCategoryDTOResponse(category);
 //          CategoryDTO(category.getName(),category.getId());
     }
 
@@ -78,6 +82,33 @@ public class CategoryService {
         if(c!=null){
             repo.delete(c);
         }
+
+    }
+
+    public List<SongDTOResponseDetail> findSongsCategory(long id){
+        List<Song> songs = songRepo.findAll();
+        List<SongDTOResponseDetail> songList =  new ArrayList<>();
+        for (Song s : songs){
+            if(s.getCategory().getId()== id){
+                songList.add( SongDTOResponseDetail.songToSongDTOResponseDetail(s));
+            }
+        }
+        return songList;
+    }
+
+    public  CategoryDTOResponseDetail categoryToCategoryDTOResponse(Category category){
+        CategoryDTOResponseDetail cDTO;
+        if(category !=null){
+            cDTO =  CategoryDTOResponseDetail.builder()
+                    .id(category.getId())
+                    .name(category.getName())
+                    .songs(findSongsCategory(category.getId()))
+                    .build();
+            return cDTO;
+        }else{
+            return null;
+        }
+
 
     }
 }

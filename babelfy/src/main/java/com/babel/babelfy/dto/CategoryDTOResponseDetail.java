@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @Builder
@@ -15,23 +17,23 @@ public class CategoryDTOResponseDetail {
 
     private long id;
     private String name;
-    //private List<Song>songs;
+    private List<SongDTOResponseDetail> songs;
 
 
-    public static CategoryDTOResponseDetail categoryToCategoryDTOResponse(Category category){
-        CategoryDTOResponseDetail cDTO;
-        if(category !=null){
-             cDTO =  CategoryDTOResponseDetail.builder()
-                     .id(category.getId())
-                     .name(category.getName())
-                     //.songs(category.getSongs())
-                     .build();
-            return cDTO;
-        }else{
-            return null;
-        }
-
-
-    }
+//    public static CategoryDTOResponseDetail categoryToCategoryDTOResponse(Category category){
+//        CategoryDTOResponseDetail cDTO;
+//        if(category !=null){
+//             cDTO =  CategoryDTOResponseDetail.builder()
+//                     .id(category.getId())
+//                     .name(category.getName())
+//                     .songs(category.)
+//                     .build();
+//            return cDTO;
+//        }else{
+//            return null;
+//        }
+//
+//
+//    }
 
 }
