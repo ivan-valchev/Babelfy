@@ -19,20 +19,7 @@ public class SongDTORequestCreate {
     private String albumName;
     private LocalDate releaseDate;
     private Long categoryId;
+}
 
     // Convierte DTO a Song sin depender de la base de datos
-    public static Song songDTOCreateToSong(SongDTORequestCreate songDTO, Category category) {
-        if (songDTO == null) {
-            return null;
-        }
 
-        return Song.builder()
-                .name(songDTO.getName())
-                .duration(songDTO.getDuration())
-                .artistName(songDTO.getArtistName())
-                .albumName(songDTO.getAlbumName())
-                .releaseDate(songDTO.getReleaseDate())
-                .category(category)  // Puede ser null sin problemas
-                .build();
-    }
-}

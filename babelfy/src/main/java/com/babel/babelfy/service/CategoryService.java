@@ -83,6 +83,8 @@ public class CategoryService {
             repo.delete(c);
         }
 
+
+
     }
 
     public List<SongDTOResponseDetail> findSongsCategory(long id){
@@ -98,11 +100,18 @@ public class CategoryService {
 
     public  CategoryDTOResponseDetail categoryToCategoryDTOResponse(Category category){
         CategoryDTOResponseDetail cDTO;
+        List<SongDTOResponseToCategoryDetails> list =  new ArrayList<>();
+        for(Song s : category.getSongs()){
+            list.add(SongDTOResponseToCategoryDetails.SongToSongDTO(s));
+        }
+
+
+
         if(category !=null){
             cDTO =  CategoryDTOResponseDetail.builder()
                     .id(category.getId())
                     .name(category.getName())
-                    .songs(findSongsCategory(category.getId()))
+                    .songs(list)
                     .build();
             return cDTO;
         }else{

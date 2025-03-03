@@ -108,7 +108,7 @@ document.addEventListener('click', function (event) {
     id = parseInt(event.target.id.split('-')[2])
     console.log(id);
     deleteSong(id);
-    deleteMessage();
+    deleteSongMessage();
 
   }
   if (event.target && event.target.id.startsWith('song-edit-')) {
@@ -231,6 +231,7 @@ function submitEdit() {
   }
   else {
     editSongMessage();
+    console.log("Nueva cat: "+editCategory)
     editSong(idEdit, editName, editDuration, editArtist, editAlbum, editDate, editCategory);
 
   }
@@ -310,7 +311,7 @@ function addSong(name, duration, artistName, albumName, releaseDate, categoryId)
       if (!response.ok) {
         throw new Error('Error en la respuesta de la API: ' + response.statusText);
       }
-      return response.json();
+      return response.text();
     })
     .then(function (text) {
       // if(text == 'Found'){
@@ -338,7 +339,7 @@ function editSong(id, name, duration, artistName, albumName, releaseDate, catego
       if (!response.ok) {
         throw new Error('Error en la respuesta de la API: ' + response.statusText);
       }
-      return response.json();
+      return response.text();
     })
     .then(function (text) {
       // if(text == 'Found'){
@@ -412,7 +413,7 @@ function reverseText(text) {
 
 }
 
-function deleteMessage() {
+function deleteSongMessage() {
   console.log("DELETE MESSAGE");
 
   document.getElementById("message-overlay").style.display = "block"
@@ -486,7 +487,6 @@ function fillEditList() {
 
 function cleanOptions() {
   let list = document.getElementById("categories-list");
-  let list2 = document.getElementById("edit-selector-select")
   let options = list.getElementsByTagName("option")
   for (var i = options.length; i--;) {
     list.removeChild(options[i])

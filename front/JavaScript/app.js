@@ -28,9 +28,9 @@ function toggleMenu() {
   }
 }
 
-async function getCategories(onlydata=false) {
+async function getCategories(onlydata = false) {
   console.log("get");
-  
+
   // URL del endpoint de la API que devuelve la lista de canciones.
   // Cambia la URL a la de tu API real si es necesario.
   const apiUrl = 'http://localhost:9000/categories';
@@ -74,7 +74,7 @@ async function getCategories(onlydata=false) {
  */
 function renderCategories(categories) {
   console.log("render");
-  
+
   // Paso 5: Seleccionar el contenedor donde se mostrarán las tarjetas de canciones.
   var container = document.getElementById('categories-container');
   // Limpiar el contenedor por si ya tenía contenido previo.
@@ -106,9 +106,9 @@ function renderCategories(categories) {
         // '<i>Modificar</i>'
         '<button id = delete-' + category.id + ' class = "delete"> Delete </button>' +
         '<button id = cat-edit-' + category.id + ' class = "edit"> Edit </button>' +
-        '<button id = info-'+category.id+' class = "info">Info</button>'+
-        '<div id = popup-overlay> <div id = popup-form> <button id = cat-close-btn class = close-window>X</button> <h2>Modificar</h2> <form><input type ="text" id = popup-input> </form> <button type= "submit" id="submit-btn">Submit</button> </div></div>'+
-        '<div id = overlay-info'+category.id+'> <div class = "form-info" id = form-info-'+category.id+'> <button id = close-info class=close-window>X</button> <h2>Información</h2> <h3> Nombre: '+category.name+'</h3></div></div>';
+        '<button id = info-' + category.id + ' class = "info">Info</button>' +
+        '<div id = popup-overlay> <div id = popup-form> <button id = cat-close-btn class = close-window>X</button> <h2>Modificar</h2> <form><input type ="text" id = popup-input> </form> <button type= "submit" id="submit-btn">Submit</button> </div></div>' +
+        '<div id = overlay-info' + category.id + '> <div class = "form-info" id = form-info-' + category.id + '> <button id = close-info class=close-window>X</button> <h2>Información</h2> <h3> Nombre: ' + category.name + '</h3></div></div>';
 
       container.appendChild(card);
 
@@ -121,7 +121,7 @@ function renderCategories(categories) {
 document.addEventListener('DOMContentLoaded', function () {
 
   // Paso 9: Llamar a la función getSongs para iniciar el proceso cuando se carga la página.
-  if(window.location.href === "file:///C:/Users/miguel.urquiza/Desktop/Babelfy/front/index%201.html"){
+  if (window.location.href === "file:///C:/Users/miguel.urquiza/Desktop/Babelfy/front/index%201.html") {
     getCategories();
   }
   // getCategories();
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-document.addEventListener('click', function (event) {    
+document.addEventListener('click', function (event) {
   if (event.target && event.target.id.startsWith('delete-')) {
     const categoryId = parseInt(event.target.id.split('-')[1])
     deleteCategory(categoryId);
@@ -139,17 +139,17 @@ document.addEventListener('click', function (event) {
     currentId = parseInt(event.target.id.split('-')[2])
     console.log(currentId);
     openPopup(currentId);
-    
+
   }
   if (event.target && event.target.id === 'submit-btn') {
     acceptInput();
-    
+
   }
   if (event.target && event.target.id === 'cat-close-btn') {
     closePopup();
   }
   if (event.target && event.target.id === 'add') {
-    
+
     openAdd();
   }
   if (event.target && event.target.id === 'add-submit') {
@@ -159,30 +159,31 @@ document.addEventListener('click', function (event) {
   if (event.target && event.target.id === 'add-close-btn') {
     closeAdd();
   }
- 
-  if(event.target &&  event.target.id.startsWith('info-')){
+
+  if (event.target && event.target.id.startsWith('info-')) {
     console.log(event.target.id);
     currentCat = parseInt(event.target.id.split('-')[1])
     console.log(currentCat);
     openInfo(currentCat);
+    CategoriesList(currentCat);
   }
 
 
-  if(event.target && event.target.id === 'close-info'){      
+  if (event.target && event.target.id === 'close-info') {
     closeInfo();
-  } 
+  }
 
-  if(event.target && event.target.id === 'close-message'){
+  if (event.target && event.target.id === 'close-message') {
     closeMessage();
   }
 });
 
 function openPopup(id) {
-  getCategoryId(id,true)
-  .then(function(value) {
-    document.getElementById("popup-input").value = value;
-    document.getElementById("popup-overlay").style.display = "block";
-  })
+  getCategoryId(id, true)
+    .then(function (value) {
+      document.getElementById("popup-input").value = value;
+      document.getElementById("popup-overlay").style.display = "block";
+    })
 }
 
 function openAdd() {
@@ -190,9 +191,10 @@ function openAdd() {
   document.getElementById("add-overlay").style.display = "block";
 }
 
-function openInfo(currentCat){    
-  document.getElementById("overlay-info"+currentCat).style.display = "block";
-  document.getElementById("form-info-"+currentCat).style.display = "block";
+function openInfo(currentCat) {
+  document.getElementById("overlay-info" + currentCat).style.display = "block";
+  document.getElementById("form-info-" + currentCat).style.display = "block";
+  // CategoriesList(currentCat);
 }
 
 function closePopup() {
@@ -203,42 +205,42 @@ function closeAdd() {
   document.getElementById("add-overlay").style.display = "none";
 }
 
-function closeInfo(){
+function closeInfo() {
   //document.getElementById("overlay-info").style.display = "none";
-  document.getElementById("form-info-"+currentCat).style.display = "none";
+  document.getElementById("form-info-" + currentCat).style.display = "none";
   console.log(currentCat);
 }
 
 function acceptInput() {
   let inputValue = document.getElementById("popup-input").value;
   var regex = /[A-Za-z-0-9]/;
-  if(inputValue == ""){
+  if (inputValue == "") {
     alert("Introduce el nombre de la categoría")
     // closePopup();
     // editMessage(false)
-  }else if(!regex.test(inputValue)){
+  } else if (!regex.test(inputValue)) {
     alert("Solo se permiten letras a la hora de modificar una clase")
-  } else{
+  } else {
     editCategory(currentId, inputValue);
     closePopup();
     // editMessage();
-  
+
   }
-  
- 
-  
+
+
+
 }
 
 function addInput() {
   let inputName = document.getElementById("add-input").value;
   var regex = /[A-Za-z-0-9]/;
-  if(inputName ==""){
+  if (inputName == "") {
     alert("Introduce el nombre de la categoría")
     // closeAdd();
     // addMessage(false)
-  }else if(!regex.test(inputName)){
+  } else if (!regex.test(inputName)) {
     alert("Solo se permiten letras a la hora de crear una clase.")
-  }else{
+  } else {
     addCategory(inputName);
     closeAdd();
   }
@@ -247,38 +249,38 @@ function addInput() {
 }
 
 
-function addMessage(funcionando = true){
-  if(!funcionando){
-    document.getElementById("message-add").innerHTML = '<h2>La categoría no se ha podido crear</h2>' +'<button id="close-message">Cerrar</button>'
-  }else{
-    document.getElementById("message-add").innerHTML = '<h2>La categoría se ha podido crear correctamente</h2>' +'<button id="close-message">Cerrar</button>'
+function addMessage(funcionando = true) {
+  if (!funcionando) {
+    document.getElementById("message-add").innerHTML = '<h2>La categoría no se ha podido crear</h2>' + '<button id="close-message">Cerrar</button>'
+  } else {
+    document.getElementById("message-add").innerHTML = '<h2>La categoría se ha podido crear correctamente</h2>' + '<button id="close-message">Cerrar</button>'
   }
   document.getElementById("message-overlay").style.display = "block"
   document.getElementById("message-add").style.display = "block"
   document.getElementById("message-delete").style.display = "none"
   document.getElementById("message-edit").style.display = "none"
 }
-function deleteMessage(){
+function deleteMessage() {
   console.log("DELETE MESSAGE");
-  
+
   document.getElementById("message-overlay").style.display = "block"
   document.getElementById("message-delete").style.display = "block"
   document.getElementById("message-add").style.display = "none"
   document.getElementById("message-edit").style.display = "none"
 }
 
-function editMessage(funcionando = true){
-  if(!funcionando){
-    document.getElementById("message-edit").innerHTML = '<h2>La categoría no se ha podido modificar</h2>' +'<button id="close-message" class="message-button">Cerrar</button>'
-  }else{
-    document.getElementById("message-edit").innerHTML = '<h2>Se ha modificado correctamente.</h2> '+'<button id="close-message" class="message-button">Cerrar</button>'
+function editMessage(funcionando = true) {
+  if (!funcionando) {
+    document.getElementById("message-edit").innerHTML = '<h2>La categoría no se ha podido modificar</h2>' + '<button id="close-message" class="message-button">Cerrar</button>'
+  } else {
+    document.getElementById("message-edit").innerHTML = '<h2>Se ha modificado correctamente.</h2> ' + '<button id="close-message" class="message-button">Cerrar</button>'
   }
   document.getElementById("message-overlay").style.display = "block"
   document.getElementById("message-edit").style.display = "block"
   document.getElementById("message-delete").style.display = "none"
   document.getElementById("message-add").style.display = "none"
 }
-function closeMessage(){
+function closeMessage() {
 
   document.getElementById("message-overlay").style.display = "none";
 
@@ -302,9 +304,9 @@ function addCategory(name) {
       return response.text();
     })
     .then(function (text) {
-      if(text == 'Found'){
+      if (text == 'Found') {
         alert("Ya existe una categoría con ese nombre")
-      }else{
+      } else {
         addMessage();
       }
       getCategories();
@@ -353,7 +355,7 @@ function editCategory(id, name) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ "name": name, "id":id })
+    body: JSON.stringify({ "name": name, "id": id })
 
   })
     .then(function (response) {
@@ -364,9 +366,9 @@ function editCategory(id, name) {
     })
     .then(function (text) {
       console.log(text);
-      if(text == "Found"){
+      if (text == "Found") {
         alert("Ya existe una categoría con ese nombre")
-      }else{
+      } else {
         editMessage();
       }
       getCategories();
@@ -376,8 +378,8 @@ function editCategory(id, name) {
     })
 }
 
-function getCategoryId(id,name = true){
-  const apiUrl = 'http://localhost:9000/categories/' + id ;
+function getCategoryId(id, name = true) {
+  const apiUrl = 'http://localhost:9000/categories/' + id;
   var value;
   value = fetch(apiUrl, {
     method: 'GET',
@@ -398,7 +400,43 @@ function getCategoryId(id,name = true){
     })
     .catch(function (error) {
       console.error('Error editing category', error)
-    })    
+    })
   return value
-} 
+}
+
+function CategoriesList(category) {
+
+  fetch('http://localhost:9000/categories/' + category)
+    .then(function (response) {
+      if (!response.ok) {
+        throw new Error('No se pudo obtener la categoría: ' + response.statusText);
+      }
+      return response.json();  // Suponiendo que la respuesta está en formato JSON
+    })
+    .then(function (category) {
+      var table = document.createElement(table)
+      var tbody = document.createElement(tbody)
+      console.log(category)
+      table.innerHTML =
+        '<thead> <th>Nombre</th> <th>Duración</th> <th>Artista</th><th> Albúm</th> <th>Fecha</th></thead>';
+
+      category.songs.forEach(function (song) {
+
+        var tr = document.createElement(tr);
+        tr.innerHTML =`
+          <td>${song.name}</td>
+          <td>${song.duration}</td>`
+        tbody.appendChild(tr);
+      });
+      table.appendChild(tbody)
+      document.getElementById("form-info-" + category.id).appendChild(table);
+    })
+
+}
+
+
+
+
+
+
 

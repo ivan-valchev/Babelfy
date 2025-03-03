@@ -36,7 +36,7 @@ public class SongService {
         return SongDTOResponseDetail.songToSongDTOResponseDetail(s);
     }
 
-    public Song addSong(SongDTORequestCreate songDTO) {
+    public String addSong(SongDTORequestCreate songDTO) {
         if (songDTO == null) {
             return null;
         }
@@ -48,19 +48,17 @@ public class SongService {
         }
 
         // Convertir DTO en Song
-        Song s = Song.builder()
-                .name(songDTO.getName())
-                .duration(songDTO.getDuration())
-                .artistName(songDTO.getArtistName())
-                .albumName(songDTO.getAlbumName())
-                .releaseDate(songDTO.getReleaseDate())
-                .category(category) // Puede ser null
-                .build();
+        Song s;
+        s = songDTOCreateToSong(songDTO);
 
-        return Srepository.save(s);
+        Srepository.save(s);
+        s.getCategory().getSongs().add(s);
+        categoryRepo.save(s.getCategory());
+
+        return "Funcionoooo";
     }
 
-    public Song updateSong(SongDTORequest request) {
+    public String updateSong(SongDTORequest request) {
         if (request == null) {
             throw new IllegalArgumentException("Request cannot be null");
         }
@@ -89,9 +87,9 @@ public class SongService {
         } else {
             song.setCategory(null); // ✅ Ahora sí elimina la categoría correctamente
         }
-
+        Srepository.save(song);
         // Guardar cambios en la base de datos
-        return Srepository.save(song); // Devolver el objeto Song actualizado
+        return "Editoo" ; // Devolver el objeto Song actualizado
     }
 
     public void deleteSong(long id) {
@@ -101,7 +99,7 @@ public class SongService {
         }
         Srepository.delete(song);
     }
-    public  Song songDTOCreateToSong(SongDTORequestCreate song){
+    public Song songDTOCreateToSong(SongDTORequestCreate song){
         Song s;
         if(song!=null){
             s = Song.builder()
@@ -117,4 +115,6 @@ public class SongService {
             return null;
         }
     }
+
 }
+

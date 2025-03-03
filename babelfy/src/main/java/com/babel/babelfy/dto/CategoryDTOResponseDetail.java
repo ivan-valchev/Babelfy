@@ -17,7 +17,7 @@ public class CategoryDTOResponseDetail {
 
     private long id;
     private String name;
-    private List<SongDTOResponseDetail> songs;
+    private List<SongDTOResponseToCategoryDetails> songs;
 
 
 //    public static CategoryDTOResponseDetail categoryToCategoryDTOResponse(Category category){
