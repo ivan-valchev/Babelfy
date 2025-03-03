@@ -21,7 +21,7 @@ public class SongService {
     private SongRepository Srepository;
 
     @Autowired
-    private CategoryRepository cRepository;
+    private CategoryRepository categoryRepo;
 
     public List<SongDTOResponseDetail> getAll(){
         List<SongDTOResponseDetail> list = new ArrayList<>();
@@ -44,7 +44,7 @@ public class SongService {
         // Buscar la categoría solo si categoryId no es nulo
         Category category = null;
         if (songDTO.getCategoryId() != null) {
-            category = cRepository.findById(songDTO.getCategoryId()).orElse(null);
+            category = categoryRepo.findById(songDTO.getCategoryId()).orElse(null);
         }
 
         // Convertir DTO en Song
@@ -77,10 +77,11 @@ public class SongService {
         song.setArtistName(request.getArtistName());
         song.setAlbumName(request.getAlbumName());
         song.setReleaseDate(request.getReleaseDate());
+        song.setCategory(categoryRepo.findById(request.getCategoryId()).orElse(null));
 
         // Manejar correctamente la categoría:
         if (request.getCategoryId() != null) {
-            Category category = cRepository.findById(request.getCategoryId()).orElse(null);
+            Category category = categoryRepo.findById(request.getCategoryId()).orElse(null);
             if (category == null) {
                 throw new EntityNotFoundException("Category not found");
             }

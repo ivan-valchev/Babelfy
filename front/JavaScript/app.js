@@ -105,9 +105,9 @@ function renderCategories(categories) {
         '<h2><strong>' + category.name + '</strong></h2>' +
         // '<i>Modificar</i>'
         '<button id = delete-' + category.id + ' class = "delete"> Delete </button>' +
-        '<button id = edit-' + category.id + ' class = "edit"> Edit </button>' +
+        '<button id = cat-edit-' + category.id + ' class = "edit"> Edit </button>' +
         '<button id = info-'+category.id+' class = "info">Info</button>'+
-        '<div id = popup-overlay> <div id = popup-form> <button id = close-btn class = close-window>X</button> <h2>Modificar</h2> <form><input type ="text" id = popup-input> </form> <button type= "submit" id="submit-btn">Submit</button> </div></div>'+
+        '<div id = popup-overlay> <div id = popup-form> <button id = cat-close-btn class = close-window>X</button> <h2>Modificar</h2> <form><input type ="text" id = popup-input> </form> <button type= "submit" id="submit-btn">Submit</button> </div></div>'+
         '<div id = overlay-info'+category.id+'> <div class = "form-info" id = form-info-'+category.id+'> <button id = close-info class=close-window>X</button> <h2>Información</h2> <h3> Nombre: '+category.name+'</h3></div></div>';
 
       container.appendChild(card);
@@ -135,8 +135,8 @@ document.addEventListener('click', function (event) {
     deleteCategory(categoryId);
     deleteMessage();
   }
-  if (event.target && event.target.id.startsWith('edit-')) {
-    currentId = parseInt(event.target.id.split('-')[1])
+  if (event.target && event.target.id.startsWith('cat-edit-')) {
+    currentId = parseInt(event.target.id.split('-')[2])
     console.log(currentId);
     openPopup(currentId);
     
@@ -145,7 +145,7 @@ document.addEventListener('click', function (event) {
     acceptInput();
     
   }
-  if (event.target && event.target.id === 'close-btn') {
+  if (event.target && event.target.id === 'cat-close-btn') {
     closePopup();
   }
   if (event.target && event.target.id === 'add') {
