@@ -208,6 +208,7 @@ function closeAdd() {
 function closeInfo() {
   //document.getElementById("overlay-info").style.display = "none";
   document.getElementById("form-info-" + currentCat).style.display = "none";
+  document.getElementById("table").remove();
   console.log(currentCat);
 }
 
@@ -414,18 +415,22 @@ function CategoriesList(category) {
       return response.json();  // Suponiendo que la respuesta está en formato JSON
     })
     .then(function (category) {
-      var table = document.createElement(table)
-      var tbody = document.createElement(tbody)
+      var table = document.createElement('table')
+      var tbody = document.createElement('tbody')
       console.log(category)
+      table.setAttribute('id','table')
       table.innerHTML =
         '<thead> <th>Nombre</th> <th>Duración</th> <th>Artista</th><th> Albúm</th> <th>Fecha</th></thead>';
 
       category.songs.forEach(function (song) {
 
-        var tr = document.createElement(tr);
-        tr.innerHTML =`
+        var tr = document.createElement('tr');
+        tr.innerHTML = `
           <td>${song.name}</td>
-          <td>${song.duration}</td>`
+          <td>${song.duration}</td>
+          <td>${song.artistName}</td>
+          <td>${song.albumName}</td>
+          <td>${song.releaseDate}</td>`
         tbody.appendChild(tr);
       });
       table.appendChild(tbody)
@@ -433,6 +438,8 @@ function CategoriesList(category) {
     })
 
 }
+
+
 
 
 
