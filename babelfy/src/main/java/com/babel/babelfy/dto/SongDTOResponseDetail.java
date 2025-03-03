@@ -20,9 +20,20 @@ public class SongDTOResponseDetail {
     private String albumName;
     private LocalDate releaseDate;
     private String categoryName;
+    private long categoryId;
 
     public static SongDTOResponseDetail songToSongDTOResponseDetail(Song s){
         SongDTOResponseDetail sDTO;
+
+        long idCat;
+        String namCat;
+        if (s.getCategory() != null) {
+            idCat = s.getCategory().getId();
+            namCat = s.getCategory().getName();
+        } else {
+            idCat = 0;
+            namCat = "ninguna";
+        }
 
         if(s!=null){
             sDTO = SongDTOResponseDetail.builder()
@@ -32,7 +43,8 @@ public class SongDTOResponseDetail {
                     .artistName(s.getArtistName())
                     .albumName(s.getAlbumName())
                     .releaseDate(s.getReleaseDate())
-                    .categoryName(s.getCategory().getName())
+                    .categoryName(namCat)
+                    .categoryId(idCat)
                     .build();
             return sDTO;
         }else{

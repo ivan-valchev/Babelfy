@@ -28,6 +28,6 @@ public class Song {
     private LocalDate releaseDate;
 
     @ManyToOne
-    private Category category;
+   private Category category;
 
 }

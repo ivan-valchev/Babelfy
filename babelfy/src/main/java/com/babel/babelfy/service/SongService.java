@@ -18,63 +18,87 @@ import java.util.List;
 public class SongService {
 
     @Autowired
-    private SongRepository repository;
+    private SongRepository Srepository;
+
     @Autowired
-    private CategoryRepository categoryRepo;
+    private CategoryRepository cRepository;
 
     public List<SongDTOResponseDetail> getAll(){
-
-        List<SongDTOResponseDetail>list = new ArrayList<>();
-        for(Song s : repository.findAll()){
+        List<SongDTOResponseDetail> list = new ArrayList<>();
+        for(Song s : Srepository.findAll()){
             list.add(SongDTOResponseDetail.songToSongDTOResponseDetail(s));
         }
         return list;
     }
 
     public SongDTOResponseDetail getById(long id){
-       Song s;
-        s = repository.findById(id).orElse(null);
+        Song s = Srepository.findById(id).orElse(null);
         return SongDTOResponseDetail.songToSongDTOResponseDetail(s);
     }
 
     public Song addSong(SongDTORequestCreate songDTO) {
-
-        Song s;
-        s = songDTOCreateToSong(songDTO);
-
-        if(s!= null) {
-            repository.save(s);
-            return s;
-        }else{
+        if (songDTO == null) {
             return null;
         }
+
+        // Buscar la categoría solo si categoryId no es nulo
+        Category category = null;
+        if (songDTO.getCategoryId() != null) {
+            category = cRepository.findById(songDTO.getCategoryId()).orElse(null);
+        }
+
+        // Convertir DTO en Song
+        Song s = Song.builder()
+                .name(songDTO.getName())
+                .duration(songDTO.getDuration())
+                .artistName(songDTO.getArtistName())
+                .albumName(songDTO.getAlbumName())
+                .releaseDate(songDTO.getReleaseDate())
+                .category(category) // Puede ser null
+                .build();
+
+        return Srepository.save(s);
     }
 
     public Song updateSong(SongDTORequest request) {
-        Song song = repository.findById(request.getId()).orElse(null);
+        if (request == null) {
+            throw new IllegalArgumentException("Request cannot be null");
+        }
 
+        // Buscar la canción en la base de datos
+        Song song = Srepository.findById(request.getId()).orElse(null);
         if (song == null) {
             throw new EntityNotFoundException("Song not found");
         }
 
+        // Actualizar los datos de la canción
         song.setName(request.getName());
         song.setDuration(request.getDuration());
         song.setArtistName(request.getArtistName());
         song.setAlbumName(request.getAlbumName());
         song.setReleaseDate(request.getReleaseDate());
 
-        repository.save(song);
-        return song;
+        // Manejar correctamente la categoría:
+        if (request.getCategoryId() != null) {
+            Category category = cRepository.findById(request.getCategoryId()).orElse(null);
+            if (category == null) {
+                throw new EntityNotFoundException("Category not found");
+            }
+            song.setCategory(category);
+        } else {
+            song.setCategory(null); // ✅ Ahora sí elimina la categoría correctamente
+        }
+
+        // Guardar cambios en la base de datos
+        return Srepository.save(song); // Devolver el objeto Song actualizado
     }
 
     public void deleteSong(long id) {
-        Song song = repository.findById(id).orElse(null);
-
+        Song song = Srepository.findById(id).orElse(null);
         if (song == null) {
             throw new EntityNotFoundException("Song not found");
         }
-
-        repository.delete(song);
+        Srepository.delete(song);
     }
     public  Song songDTOCreateToSong(SongDTORequestCreate song){
         Song s;
