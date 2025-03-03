@@ -161,6 +161,9 @@ function openEdit(id) {
 
       getCategoryData()
       .then(function (datos) {
+        console.log(document.getElementById("edit-selector-select"));
+        
+        document.getElementById("edit-selector-select").innerHTML = "";
         for (let index = 0; index < datos.length; index++) {
           const element = datos[index];
           
@@ -171,7 +174,6 @@ function openEdit(id) {
 
           // Append option to the select
           document.getElementById("edit-selector-select").appendChild(option);
-          console.log(document.getElementById("edit-selector-select"));
           
         }})
         .then(function () {
@@ -197,6 +199,7 @@ function submitEdit(){
   let editArtist = document.getElementById("edit-artist-input").value;
   let editAlbum = document.getElementById("edit-album-input").value;
   let editDate = document.getElementById("edit-date-input").value;
+  let editCategory= document.getElementById("edit-selector-select").value;
 
 if(editName == ""){
   num =0;
@@ -207,7 +210,9 @@ if(editName == ""){
 }else if(editAlbum == ""){
   num = 3;
 }else if(editDate == ""){
-  num =4
+  num =4;
+}else if (editCategory == ""){
+  num=5
 }
 
  if(num>=0){
@@ -227,6 +232,9 @@ if(editName == ""){
       case 4:
         alert("Rellene la fecha de lanzamiento")
         break;
+      case 5: 
+          alert("Rellene la categoria")
+          break;
       default:
         alert("Falla")
         break;
@@ -236,7 +244,7 @@ if(editName == ""){
   }
   else{
     editMessage();
-    editSong(idEdit,editName,editDuration,editArtist,editAlbum,editDate);
+    editSong(idEdit,editName,editDuration,editArtist,editAlbum,editDate,editCategory);
     
   }
   
@@ -324,14 +332,14 @@ function addSong(name, duration, artistName, albumName, releaseDate) {
       console.error('Error editing category', error)
     })
 }
-function editSong(id,name, duration, artistName, albumName, releaseDate) {
+function editSong(id,name, duration, artistName, albumName, releaseDate, category) {
   const apiUrl = 'http://localhost:9000/songs';
   fetch(apiUrl, {
     method: 'PUT',
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({"id":id, "name": name, "duration": duration, "artistName": artistName, "albumName": albumName, "releaseDate": releaseDate })
+    body: JSON.stringify({"id":id, "name": name, "duration": duration, "artistName": artistName, "albumName": albumName, "releaseDate": releaseDate, "categoryId": category })
 
   })
     .then(function (response) {
