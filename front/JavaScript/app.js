@@ -448,19 +448,24 @@ function CategoriesList(category) {
         '<thead> <th>Nombre</th> <th>Duración</th> <th>Artista</th><th> Albúm</th> <th>Fecha</th></thead>';
 
       category.songs.forEach(function (song) {
-
+        
         var tr = document.createElement('tr');
         tr.innerHTML = `
           <td>${song.name}</td>
           <td>${song.duration}</td>
           <td>${song.artistName}</td>
           <td>${song.albumName}</td>
-          <td>${song.releaseDate}</td>`
+          <td>${reverseText(song.releaseDate)}</td>`
         tbody.appendChild(tr);
       });
       table.appendChild(tbody)
       document.getElementById("form-info-" + category.id).appendChild(table);
     })
+
+}
+
+function reverseText(text) {
+  return text.split('-').reverse().join('-');
 
 }
 
