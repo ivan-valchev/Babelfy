@@ -65,7 +65,8 @@ async function renderSongs(songs) {
         '<button id =song-edit-' + song.id + ' class =edit>Edit</button>' +
         '<button id=song-btn-info-' + song.id + ' class = info>Info</button>' +
         '<div id=song-info-overlay-' + song.id + ' class = song-info-overlay><div id =song-info-form-' + song.id + ' class = "song-info-form"> <button id="song-close-info" class=close-window>X</button><h2>Información</h2> <h3>Nombre:' + song.name + '</h3><h3 id = song-duration>Duración:' + song.duration + ' minutos</h3><h3>Artista:' + song.artistName + '</h3><h3>Albúm: ' + song.albumName + '</h3><h3>Fecha Lanzamiento: ' + reverseText(song.releaseDate ) + ' </h3><h3>Categoría: ' + song.categoryName + '</h3></div></div>' +
-        '<div id = edit-overlay> <div class = "edit-form" id = edit-form-' + song.id + '> <button id = close-btn class=close-window>X</button> <h2>Modificar</h2> <form><input type ="text" id = edit-name-input><input type="number" min="0" id="edit-duration-input" placeholder="Duration">   <input type="text" id="edit-artist-input" placeholder="Artist"> <input type="text" id="edit-album-input" placeholder="Album"><br>  <input type="date" class=date id="edit-date-input" placeholder="YYYY-MM-DD"> <br> <select id="edit-selector-select"></select> </form> <button type= "submit" id="song-btn-submit">Submit</button> </div></div>';
+        '<div id = edit-overlay> <div class = "edit-form" id = edit-form-' + song.id + '> <button id = close-btn class=close-window>X</button> <h2>Modificar</h2> <form><input type ="text"  maxlength="20" id = edit-name-input><input type="number" min="1" id="edit-duration-input"  placeholder="Duration">   <input type="text"  maxlength="20" id="edit-artist-input" placeholder="Artist"> <input type="text"  maxlength="20" id="edit-album-input" placeholder="Album"><br>  <input type="date" class=date id="edit-date-input" placeholder="YYYY-MM-DD"> <br> <select id="edit-selector-select"></select> </form> <button type= "submit" id="song-btn-submit">Submit</button> </div></div>';
+        
 
       // Paso 8: Añadir la tarjeta al contenedor.
       container.appendChild(card);
@@ -114,6 +115,14 @@ document.addEventListener('click', function (event) {
   if (event.target && event.target.id.startsWith('song-edit-')) {
     idEdit = parseInt(event.target.id.split('-')[2])
     openEdit(idEdit);
+    var currenDate = new Date();
+    var year = currenDate.getFullYear();
+    var month = String(currenDate.getMonth()+1).padStart(2,'0')
+    var day = String(currenDate.getDate()).padStart(2,'0')
+
+    var formattedDate = year + '-' + month +'-'+ day;
+
+    document.getElementById('edit-date-input').setAttribute('max',formattedDate)
   }
   if (event.target && event.target.id === "close-btn") {
     closeEdit();
