@@ -162,10 +162,14 @@ function openEdit(id) {
       document.getElementById("edit-artist-input").value = body.artistName;
       document.getElementById("edit-album-input").value = body.albumName;
       document.getElementById("edit-date-input").value = body.releaseDate;
+      
       console.log(body.categoryId)
       cleanEdit();
-      fillEditList();
-      document.getElementById("edit-selector-select").value = body.categoryId;
+      fillEditList()
+      .then(function () {
+        console.log("HOLAA");
+        document.getElementById("edit-selector-select").value = body.categoryId;
+      })
       console.log(document.getElementById("edit-selector-select").value);
 
       document.getElementById("edit-overlay").style.display = "block";
@@ -463,9 +467,9 @@ function fillList() {
       })
     })
 }
-function fillEditList() {
+async function fillEditList() {
   var list2 = document.getElementById("edit-selector-select");
-  getCategories(true)
+  return getCategories(true)
     .then(function (data) {
       var firstOption = document.createElement('option')
       console.log(data)
@@ -481,6 +485,7 @@ function fillEditList() {
         option2.textContent = category.name
         list2.appendChild(option2)
       })
+      return true;
     })
 }
 
