@@ -107,21 +107,22 @@ function renderCategories(categories) {
         '<button id = info-' + category.id + ' class = "info">Info</button>' +
         '<div id = popup-overlay> <div id = popup-form> <button id = cat-close-btn class = close-window>X</button> <h2>Modificar</h2> <form><input type ="text" id = popup-input> </form> <button type= "submit" id="submit-btn">Submit</button> </div></div>' +
         '<div id = overlay-info' + category.id + '> <div class = "form-info" id = form-info-' + category.id + '> <button id = close-info class=close-window>X</button> <h2>Información</h2> <h3> Nombre: ' + category.name + '</h3></div></div>';
-
+        console.log("Distinto de 1")
       
     
-      }else{
+      }else if(category.id==1){
         card.innerHTML =
         '<h2><strong>' + category.name + '</strong></h2>' +
         // '<i>Modificar</i>'
-        '<button id = cat-edit-' + category.id + ' class = "edit"> Edit </button>' +
         '<button id = info-' + category.id + ' class = "info">Info</button>' +
-        '<div id = popup-overlay> <div id = popup-form> <button id = cat-close-btn class = close-window>X</button> <h2>Modificar</h2> <form><input type ="text" id = popup-input> </form> <button type= "submit" id="submit-btn">Submit</button> </div></div>' +
+        '<div id = popup-overlay> <div id = popup-form> <button id = cat-close-btn class = close-window>X</button> <h2>Modificar</h2> <form><input type ="text"   id = popup-input> </form> <button type= "submit" id="submit-btn">Submit</button> </div></div>' +
         '<div id = overlay-info' + category.id + '> <div class = "form-info" id = form-info-' + category.id + '> <button id = close-info class=close-window>X</button> <h2>Información</h2> <h3> Nombre: ' + category.name + '</h3></div></div>';
 
-      
+        console.log("Soy el 1");
+        
     
       }
+      
 
       // card.innerHTML =
       //   '<h2><strong>' + category.name + '</strong></h2>' +
@@ -164,10 +165,12 @@ document.addEventListener('click', function (event) {
     currentId = parseInt(event.target.id.split('-')[2])
     console.log(currentId);
     openPopup(currentId);
+    document.getElementById("popup-input").setAttribute("maxlength",20)
 
   }
   if (event.target && event.target.id === 'submit-btn') {
     acceptInput();
+    document.getElementById("add-input").setAttribute("maxlength",20)
 
   }
   if (event.target && event.target.id === 'cat-close-btn') {
