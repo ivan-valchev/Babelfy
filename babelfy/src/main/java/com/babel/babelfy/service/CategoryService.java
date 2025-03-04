@@ -78,7 +78,12 @@ public class CategoryService {
 
     public void delete(CategoryDTORequestDelete cDTO){
         Category c;
+        Long num = 1L;
         c = repo.findById(cDTO.getId()).orElse(null);
+        List<Song> list=c.getSongs();
+        for (Song s:list){
+            s.setCategory(repo.findById(num).orElse(null));
+        }
         if(c!=null){
             repo.delete(c);
         }

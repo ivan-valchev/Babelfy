@@ -98,10 +98,8 @@ function renderCategories(categories) {
       // Agregar la clase "song-card" para aplicar los estilos CSS definidos.
       card.classList.add('category-card');
 
-
-      // Paso 7: Asignar el contenido HTML de la tarjeta.
-      // Se muestran los datos: título, artista, año y categoría.
-      card.innerHTML =
+      if(category.id!=1){
+        card.innerHTML =
         '<h2><strong>' + category.name + '</strong></h2>' +
         // '<i>Modificar</i>'
         '<button id = delete-' + category.id + ' class = "delete"> Delete </button>' +
@@ -110,8 +108,32 @@ function renderCategories(categories) {
         '<div id = popup-overlay> <div id = popup-form> <button id = cat-close-btn class = close-window>X</button> <h2>Modificar</h2> <form><input type ="text" id = popup-input> </form> <button type= "submit" id="submit-btn">Submit</button> </div></div>' +
         '<div id = overlay-info' + category.id + '> <div class = "form-info" id = form-info-' + category.id + '> <button id = close-info class=close-window>X</button> <h2>Información</h2> <h3> Nombre: ' + category.name + '</h3></div></div>';
 
-      container.appendChild(card);
+      
+    
+      }else{
+        card.innerHTML =
+        '<h2><strong>' + category.name + '</strong></h2>' +
+        // '<i>Modificar</i>'
+        '<button id = cat-edit-' + category.id + ' class = "edit"> Edit </button>' +
+        '<button id = info-' + category.id + ' class = "info">Info</button>' +
+        '<div id = popup-overlay> <div id = popup-form> <button id = cat-close-btn class = close-window>X</button> <h2>Modificar</h2> <form><input type ="text" id = popup-input> </form> <button type= "submit" id="submit-btn">Submit</button> </div></div>' +
+        '<div id = overlay-info' + category.id + '> <div class = "form-info" id = form-info-' + category.id + '> <button id = close-info class=close-window>X</button> <h2>Información</h2> <h3> Nombre: ' + category.name + '</h3></div></div>';
 
+      
+    
+      }
+
+      // card.innerHTML =
+      //   '<h2><strong>' + category.name + '</strong></h2>' +
+      //   // '<i>Modificar</i>'
+      //   '<button id = delete-' + category.id + ' class = "delete"> Delete </button>' +
+      //   '<button id = cat-edit-' + category.id + ' class = "edit"> Edit </button>' +
+      //   '<button id = info-' + category.id + ' class = "info">Info</button>' +
+      //   '<div id = popup-overlay> <div id = popup-form> <button id = cat-close-btn class = close-window>X</button> <h2>Modificar</h2> <form><input type ="text" id = popup-input> </form> <button type= "submit" id="submit-btn">Submit</button> </div></div>' +
+      //   '<div id = overlay-info' + category.id + '> <div class = "form-info" id = form-info-' + category.id + '> <button id = close-info class=close-window>X</button> <h2>Información</h2> <h3> Nombre: ' + category.name + '</h3></div></div>';
+
+      
+      container.appendChild(card);
 
     });
   }
@@ -132,8 +154,11 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener('click', function (event) {
   if (event.target && event.target.id.startsWith('delete-')) {
     const categoryId = parseInt(event.target.id.split('-')[1])
-    deleteCategory(categoryId);
-    deleteMessage();
+    if (categoryId != 1) {
+      deleteCategory(categoryId);
+      deleteMessage();
+    }
+
   }
   if (event.target && event.target.id.startsWith('cat-edit-')) {
     currentId = parseInt(event.target.id.split('-')[2])
@@ -418,7 +443,7 @@ function CategoriesList(category) {
       var table = document.createElement('table')
       var tbody = document.createElement('tbody')
       console.log(category)
-      table.setAttribute('id','table')
+      table.setAttribute('id', 'table')
       table.innerHTML =
         '<thead> <th>Nombre</th> <th>Duración</th> <th>Artista</th><th> Albúm</th> <th>Fecha</th></thead>';
 
