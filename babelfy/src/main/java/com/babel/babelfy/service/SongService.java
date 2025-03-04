@@ -21,7 +21,7 @@ public class SongService {
     private SongRepository Srepository;
 
     @Autowired
-    private CategoryRepository cRepository;
+    private CategoryRepository categoryRepo;
 
     public List<SongDTOResponseDetail> getAll(){
         List<SongDTOResponseDetail> list = new ArrayList<>();
@@ -36,7 +36,7 @@ public class SongService {
         return SongDTOResponseDetail.songToSongDTOResponseDetail(s);
     }
 
-    public Song addSong(SongDTORequestCreate songDTO) {
+    public String addSong(SongDTORequestCreate songDTO) {
         if (songDTO == null) {
             return null;
         }
@@ -44,23 +44,21 @@ public class SongService {
         // Buscar la categoría solo si categoryId no es nulo
         Category category = null;
         if (songDTO.getCategoryId() != null) {
-            category = cRepository.findById(songDTO.getCategoryId()).orElse(null);
+            category = categoryRepo.findById(songDTO.getCategoryId()).orElse(null);
         }
 
         // Convertir DTO en Song
-        Song s = Song.builder()
-                .name(songDTO.getName())
-                .duration(songDTO.getDuration())
-                .artistName(songDTO.getArtistName())
-                .albumName(songDTO.getAlbumName())
-                .releaseDate(songDTO.getReleaseDate())
-                .category(category) // Puede ser null
-                .build();
+        Song s;
+        s = songDTOCreateToSong(songDTO);
 
-        return Srepository.save(s);
+        Srepository.save(s);
+        s.getCategory().getSongs().add(s);
+        categoryRepo.save(s.getCategory());
+
+        return "Funcionoooo";
     }
 
-    public Song updateSong(SongDTORequest request) {
+    public String updateSong(SongDTORequest request) {
         if (request == null) {
             throw new IllegalArgumentException("Request cannot be null");
         }
@@ -77,10 +75,11 @@ public class SongService {
         song.setArtistName(request.getArtistName());
         song.setAlbumName(request.getAlbumName());
         song.setReleaseDate(request.getReleaseDate());
+        song.setCategory(categoryRepo.findById(request.getCategoryId()).orElse(null));
 
         // Manejar correctamente la categoría:
         if (request.getCategoryId() != null) {
-            Category category = cRepository.findById(request.getCategoryId()).orElse(null);
+            Category category = categoryRepo.findById(request.getCategoryId()).orElse(null);
             if (category == null) {
                 throw new EntityNotFoundException("Category not found");
             }
@@ -88,9 +87,9 @@ public class SongService {
         } else {
             song.setCategory(null); // ✅ Ahora sí elimina la categoría correctamente
         }
-
+        Srepository.save(song);
         // Guardar cambios en la base de datos
-        return Srepository.save(song); // Devolver el objeto Song actualizado
+        return "Editoo" ; // Devolver el objeto Song actualizado
     }
 
     public void deleteSong(long id) {
@@ -100,4 +99,22 @@ public class SongService {
         }
         Srepository.delete(song);
     }
+    public Song songDTOCreateToSong(SongDTORequestCreate song){
+        Song s;
+        if(song!=null){
+            s = Song.builder()
+                    .name(song.getName())
+                    .duration(song.getDuration())
+                    .artistName(song.getArtistName())
+                    .albumName(song.getAlbumName())
+                    .releaseDate(song.getReleaseDate())
+                    .category(categoryRepo.findById(song.getCategoryId()).orElse(null))
+                    .build();
+            return s;
+        }else{
+            return null;
+        }
+    }
+
 }
+

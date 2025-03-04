@@ -27,12 +27,12 @@ public SongDTOResponseDetail getById(@PathVariable long id){
     return songService.getById(id);
 }
   @PostMapping("")
-  public Song create (@RequestBody SongDTORequestCreate songDTO) {
+  public String create (@RequestBody SongDTORequestCreate songDTO) {
       return songService.addSong(songDTO);
 
   }
     @PutMapping("")
-    public Song updateSong(@RequestBody SongDTORequest request) {
+    public String updateSong(@RequestBody SongDTORequest request) {
         return songService.updateSong(request);
     }
 
