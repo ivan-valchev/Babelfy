@@ -37,6 +37,9 @@ public class SongService {
     }
 
     public String addSong(SongDTORequestCreate songDTO) {
+
+        String text ="Found";
+
         if (songDTO == null) {
             return null;
         }
@@ -47,18 +50,30 @@ public class SongService {
             category = categoryRepo.findById(songDTO.getCategoryId()).orElse(null);
         }
 
+
         // Convertir DTO en Song
         Song s;
         s = songDTOCreateToSong(songDTO);
 
-        Srepository.save(s);
-        s.getCategory().getSongs().add(s);
-        categoryRepo.save(s.getCategory());
+        List<Song>songList;
 
-        return "Funcionoooo";
+        songList = Srepository.findSongByName(songDTO.getName());
+        if(s!=null){
+            if(songList.isEmpty()){
+                Srepository.save(s);
+                s.getCategory().getSongs().add(s);
+                categoryRepo.save(s.getCategory());
+                text = "";
+            }
+        }
+
+
+
+        return text;
     }
 
     public String updateSong(SongDTORequest request) {
+        String text ="Found";
         if (request == null) {
             throw new IllegalArgumentException("Request cannot be null");
         }
@@ -69,13 +84,22 @@ public class SongService {
             throw new EntityNotFoundException("Song not found");
         }
 
+        List<Song> songList = Srepository.findSongByName(request.getName());
+        if(song!=null){
+            if(songList.isEmpty()){
+                song.setName(request.getName());
+                song.setDuration(request.getDuration());
+                song.setArtistName(request.getArtistName());
+                song.setAlbumName(request.getAlbumName());
+                song.setReleaseDate(request.getReleaseDate());
+                song.setCategory(categoryRepo.findById(request.getCategoryId()).orElse(null));
+                Srepository.save(song);
+                text ="";
+            }
+        }
+
         // Actualizar los datos de la canción
-        song.setName(request.getName());
-        song.setDuration(request.getDuration());
-        song.setArtistName(request.getArtistName());
-        song.setAlbumName(request.getAlbumName());
-        song.setReleaseDate(request.getReleaseDate());
-        song.setCategory(categoryRepo.findById(request.getCategoryId()).orElse(null));
+
 
         // Manejar correctamente la categoría:
         if (request.getCategoryId() != null) {
@@ -87,9 +111,9 @@ public class SongService {
         } else {
             song.setCategory(null); // ✅ Ahora sí elimina la categoría correctamente
         }
-        Srepository.save(song);
+
         // Guardar cambios en la base de datos
-        return "Editoo" ; // Devolver el objeto Song actualizado
+        return text ; // Devolver el objeto Song actualizado
     }
 
     public void deleteSong(long id) {

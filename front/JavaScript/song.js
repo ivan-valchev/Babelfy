@@ -243,7 +243,6 @@ function submitEdit() {
     alert("Introduzca un caracter válido");
   }
   else {
-    editSongMessage();
     console.log("Nueva cat: "+editCategory)
     editSong(idEdit, editName, editDuration, editArtist, editAlbum, editDate, editCategory);
 
@@ -304,7 +303,7 @@ function addInputSong() {
   else {
     addSong(inputName, inputDuration, inputArtist, inputAlbum, inputDate, categoryId);
     closeAddPopup();
-    songAddMessage();
+    // songAddMessage();
   }
 
 
@@ -327,11 +326,11 @@ function addSong(name, duration, artistName, albumName, releaseDate, categoryId)
       return response.text();
     })
     .then(function (text) {
-      // if(text == 'Found'){
-      //   alert("No se puede crear la canción, ya existe una con ese nombre")
-      // }else{
-      //   songAddMessage();
-      // }
+      if(text == 'Found'){
+        alert("No se puede crear la canción, ya existe una con ese nombre")
+      }else{
+        songAddMessage();
+      }
       getSongs();
     })
     .catch(function (error) {
@@ -356,9 +355,9 @@ function editSong(id, name, duration, artistName, albumName, releaseDate, catego
     })
     .then(function (text) {
       // if(text == 'Found'){
-      //   alert("No se puede crear la canción, ya existe una con ese nombre")
+      //   alert("No se puede modificar la canción, ya existe una con ese nombre")
       // }else{
-      //   songAddMessage();
+      //   editSongMessage();
       // }
       getSongs();
     })
@@ -384,11 +383,7 @@ function deleteSong(id) {
       return response.text();
     })
     .then(function (text) {
-      // if(text == 'Found'){
-      //   alert("No se puede crear la canción, ya existe una con ese nombre")
-      // }else{
-      //   songAddMessage();
-      // }
+     
       getSongs();
     })
     .catch(function (error) {
@@ -412,7 +407,7 @@ async function getById(id, name = true) {
       if (name) {
         return text;
       } else {
-        songAddMessage();
+        // songAddMessage();
       }
       getSongs();
     })
