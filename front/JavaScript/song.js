@@ -162,10 +162,10 @@ function openEdit(id) {
       document.getElementById("edit-artist-input").value = body.artistName;
       document.getElementById("edit-album-input").value = body.albumName;
       document.getElementById("edit-date-input").value = body.releaseDate;
-      document.getElementById("edit-selector-select").value = body.categoryId;
       console.log(body.categoryId)
       cleanEdit();
       fillEditList();
+      document.getElementById("edit-selector-select").value = body.categoryId;
       console.log(document.getElementById("edit-selector-select").value);
 
       document.getElementById("edit-overlay").style.display = "block";
