@@ -111,7 +111,7 @@
       position: fixed;
       top: -10px;
       left: 50%;
-      transform: translate(-50%, 50%);
+      transform: translate(-50%, 25%);
       background-color: rgb(0, 0, 0);
       padding: 30px;
       border-radius: 10px;
@@ -197,7 +197,7 @@
       position: fixed;
       top: -10px;
       left: 50%;
-      transform: translate(-50%, 50%);
+      transform: translate(-50%, 25%);
       background-color: rgb(0, 0, 0);
       padding: 30px;
       border-radius: 10px;
@@ -394,11 +394,17 @@
       <button id="song-add-close-btn" class="close-window">X</button>
       <h2>Add Song</h2>
       <form>
-        <input type="text" id="add-name-input" maxlength="20" placeholder="Song name" >
-        <input type="number" min="1" id="add-duration-input" placeholder="Duration">
-        <input type="text" id="add-artist-input"  maxlength="20" placeholder="Artist">
-        <input type="text" id="add-album-input"  maxlength="20" placeholder="Album">
+        <span>Nombre</span> <br>
+        <input type="text" id="add-name-input" maxlength="20" placeholder="Song name" ><br>
+        <span>Duración</span><br>
+        <input type="number" min="1" id="add-duration-input" placeholder="Duration"> <br>
+        <span>Artista</span><br>
+        <input type="text" id="add-artist-input"  maxlength="20" placeholder="Artist"> <br>
+        <span>Album</span> <br>
+        <input type="text" id="add-album-input"  maxlength="20" placeholder="Album"><br>
+        <span>Fecha</span><br>
         <input type="date" id="add-date-input"class="date" placeholder="YYYY-MM-DD"><br>
+        <span>Categoria</span><br>
         <select id="categories-list">
         </select>
       </form>

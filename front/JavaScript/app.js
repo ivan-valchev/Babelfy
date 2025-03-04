@@ -110,12 +110,12 @@ function renderCategories(categories) {
         console.log("Distinto de 1")
       
     
-      }else if(category.id==1){
+      }else {
         card.innerHTML =
         '<h2><strong>' + category.name + '</strong></h2>' +
         // '<i>Modificar</i>'
         '<button id = info-' + category.id + ' class = "info">Info</button>' +
-        '<div id = popup-overlay> <div id = popup-form> <button id = cat-close-btn class = close-window>X</button> <h2>Modificar</h2> <form><input type ="text"   id = popup-input> </form> <button type= "submit" id="submit-btn">Submit</button> </div></div>' +
+        '<div id = popup-overlay> <div id = popup-form> <button id = cat-close-btn class = close-window>X</button> <h2>Modificar</h2> <form><span>Nombre</span><br><input type ="text"   id = popup-input> </form> <button type= "submit" id="submit-btn">Submit</button> </div></div>' +
         '<div id = overlay-info' + category.id + '> <div class = "form-info" id = form-info-' + category.id + '> <button id = close-info class=close-window>X</button> <h2>Información</h2> <h3> Nombre: ' + category.name + '</h3></div></div>';
 
         console.log("Soy el 1");
