@@ -65,7 +65,8 @@ async function renderSongs(songs) {
         '<button id =song-edit-' + song.id + ' class =edit>Edit</button>' +
         '<button id=song-btn-info-' + song.id + ' class = info>Info</button>' +
         '<div id=song-info-overlay-' + song.id + ' class = song-info-overlay><div id =song-info-form-' + song.id + ' class = "song-info-form"> <button id="song-close-info" class=close-window>X</button><h2>Información</h2> <h3>Nombre:' + song.name + '</h3><h3 id = song-duration>Duración:' + song.duration + ' minutos</h3><h3>Artista:' + song.artistName + '</h3><h3>Albúm: ' + song.albumName + '</h3><h3>Fecha Lanzamiento: ' + reverseText(song.releaseDate ) + ' </h3><h3>Categoría: ' + song.categoryName + '</h3></div></div>' +
-        '<div id = edit-overlay> <div class = "edit-form" id = edit-form-' + song.id + '> <button id = close-btn class=close-window>X</button> <h2>Modificar</h2> <form><input type ="text" id = edit-name-input><input type="number" min="0" id="edit-duration-input" placeholder="Duration">   <input type="text" id="edit-artist-input" placeholder="Artist"> <input type="text" id="edit-album-input" placeholder="Album"><br>  <input type="date" class=date id="edit-date-input" placeholder="YYYY-MM-DD"> <br> <select id="edit-selector-select"></select> </form> <button type= "submit" id="song-btn-submit">Submit</button> </div></div>';
+        '<div id = edit-overlay> <div class = "edit-form" id = edit-form-' + song.id + '> <button id = close-btn class=close-window>X</button> <h2>Modificar</h2> <form><span>Nombre</span><br><input type ="text"  maxlength="20" id = edit-name-input><br><span>Duración</span><br><input type="number" min="1" id="edit-duration-input"  placeholder="Duration"> <br><span>Artista</span><br>  <input type="text"  maxlength="20" id="edit-artist-input" placeholder="Artist"><br><span>Album</span><br> <input type="text"  maxlength="20" id="edit-album-input" placeholder="Album"><br><span>Fecha</span><br> <input type="date" class=date id="edit-date-input" placeholder="YYYY-MM-DD"> <br><span>Categoría</span><br> <select id="edit-selector-select"></select> </form> <button type= "submit" id="song-btn-submit">Submit</button> </div></div>';
+        
 
       // Paso 8: Añadir la tarjeta al contenedor.
       container.appendChild(card);
@@ -114,6 +115,14 @@ document.addEventListener('click', function (event) {
   if (event.target && event.target.id.startsWith('song-edit-')) {
     idEdit = parseInt(event.target.id.split('-')[2])
     openEdit(idEdit);
+    var currenDate = new Date();
+    var year = currenDate.getFullYear();
+    var month = String(currenDate.getMonth()+1).padStart(2,'0')
+    var day = String(currenDate.getDate()).padStart(2,'0')
+
+    var formattedDate = year + '-' + month +'-'+ day;
+
+    document.getElementById('edit-date-input').setAttribute('max',formattedDate)
   }
   if (event.target && event.target.id === "close-btn") {
     closeEdit();
@@ -152,20 +161,26 @@ function songCloseInfo() {
   document.getElementById("song-info-form-" + index).style.display = "none";
   console.log(index);
 }
+var nameData;
 function openEdit(id) {
   console.log(id);
   body = getById(id, true)
     .then(function (body) {
       console.log(body)
       document.getElementById("edit-name-input").value = body.name;
+      nameData = body.name;
       document.getElementById("edit-duration-input").value = body.duration;
       document.getElementById("edit-artist-input").value = body.artistName;
       document.getElementById("edit-album-input").value = body.albumName;
       document.getElementById("edit-date-input").value = body.releaseDate;
-      document.getElementById("edit-selector-select").value = body.categoryId;
+      
       console.log(body.categoryId)
       cleanEdit();
-      fillEditList();
+      fillEditList()
+      .then(function () {
+        console.log("HOLAA");
+        document.getElementById("edit-selector-select").value = body.categoryId;
+      })
       console.log(document.getElementById("edit-selector-select").value);
 
       document.getElementById("edit-overlay").style.display = "block";
@@ -177,7 +192,7 @@ function openEdit(id) {
 function closeEdit() {
   document.getElementById('edit-overlay').style.display = "none";
 }
-function submitEdit() {
+function submitEdit(edited = false) {
   var regex = /[A-Za-z-0-9]/;
   var num = -1;
 
@@ -187,6 +202,9 @@ function submitEdit() {
   let editAlbum = document.getElementById("edit-album-input").value;
   let editDate = document.getElementById("edit-date-input").value;
   let editCategory = document.getElementById("edit-selector-select").value;
+  var oldName = manageEditInput(nameData)
+  console.log("Name 1: "+oldName);
+  
 
   if (editName == "") {
     num = 0;
@@ -230,9 +248,8 @@ function submitEdit() {
     alert("Introduzca un caracter válido");
   }
   else {
-    editSongMessage();
     console.log("Nueva cat: "+editCategory)
-    editSong(idEdit, editName, editDuration, editArtist, editAlbum, editDate, editCategory);
+    editSong(idEdit, editName, editDuration, editArtist, editAlbum, editDate, editCategory,edited,oldName);
 
   }
 
@@ -291,7 +308,7 @@ function addInputSong() {
   else {
     addSong(inputName, inputDuration, inputArtist, inputAlbum, inputDate, categoryId);
     closeAddPopup();
-    songAddMessage();
+    // songAddMessage();
   }
 
 
@@ -314,18 +331,18 @@ function addSong(name, duration, artistName, albumName, releaseDate, categoryId)
       return response.text();
     })
     .then(function (text) {
-      // if(text == 'Found'){
-      //   alert("No se puede crear la canción, ya existe una con ese nombre")
-      // }else{
-      //   songAddMessage();
-      // }
+      if(text == 'Found'){
+        alert("No se puede crear la canción, ya existe una con ese nombre")
+      }else{
+        songAddMessage();
+      }
       getSongs();
     })
     .catch(function (error) {
       console.error('Error editing category', error)
     })
 }
-function editSong(id, name, duration, artistName, albumName, releaseDate, category) {
+function editSong(id, name, duration, artistName, albumName, releaseDate, category,edited,oldName) {
   const apiUrl = 'http://localhost:9000/songs';
   fetch(apiUrl, {
     method: 'PUT',
@@ -342,11 +359,14 @@ function editSong(id, name, duration, artistName, albumName, releaseDate, catego
       return response.text();
     })
     .then(function (text) {
-      // if(text == 'Found'){
-      //   alert("No se puede crear la canción, ya existe una con ese nombre")
-      // }else{
-      //   songAddMessage();
-      // }
+      if(text == 'Found'&& oldName == ""){
+        console.log("Alertaaa");
+        console.log("Nombre:"+oldName);
+        
+        alert("No se puede modificar la canción, ya existe una con ese nombre")
+      }else if(text == 'Found'&& oldName == "Same"){
+        editSongMessage();
+      }
       getSongs();
     })
     .catch(function (error) {
@@ -371,11 +391,7 @@ function deleteSong(id) {
       return response.text();
     })
     .then(function (text) {
-      // if(text == 'Found'){
-      //   alert("No se puede crear la canción, ya existe una con ese nombre")
-      // }else{
-      //   songAddMessage();
-      // }
+     
       getSongs();
     })
     .catch(function (error) {
@@ -399,7 +415,7 @@ async function getById(id, name = true) {
       if (name) {
         return text;
       } else {
-        songAddMessage();
+        // songAddMessage();
       }
       getSongs();
     })
@@ -463,9 +479,9 @@ function fillList() {
       })
     })
 }
-function fillEditList() {
+async function fillEditList() {
   var list2 = document.getElementById("edit-selector-select");
-  getCategories(true)
+  return getCategories(true)
     .then(function (data) {
       var firstOption = document.createElement('option')
       console.log(data)
@@ -481,6 +497,7 @@ function fillEditList() {
         option2.textContent = category.name
         list2.appendChild(option2)
       })
+      return true;
     })
 }
 
@@ -502,4 +519,36 @@ function cleanEdit(){
     list2.removeChild(options[i]);
   }
 }
+
+
+
+
+function manageEditInput(text){
+    var result ="";
+    // var textBox = document.getElementById("edit-name-input");
+    // var oldText = textBox.value;
+
+    if(text == document.getElementById("edit-name-input").value){
+      result = "Same"
+    }
+    
+    console.log("Result: "+result);
+    
+
+    return result;
+  
+}
+
+// document.addEventListener("input",function (event){
+//   var result =false;
+//   var textBox = document.getElementById("edit-name-input");
+//   var oldText = textBox.value;
+//   if(event.target && event.target.id === "edit-name-input" &&(textBox!==oldText) ){
+//     alert("Modified")
+//     result = true;
+    
+//   }
+
+//   return result;
+// })
 

@@ -107,21 +107,22 @@ function renderCategories(categories) {
         '<button id = info-' + category.id + ' class = "info">Info</button>' +
         '<div id = popup-overlay> <div id = popup-form> <button id = cat-close-btn class = close-window>X</button> <h2>Modificar</h2> <form><input type ="text" id = popup-input> </form> <button type= "submit" id="submit-btn">Submit</button> </div></div>' +
         '<div id = overlay-info' + category.id + '> <div class = "form-info" id = form-info-' + category.id + '> <button id = close-info class=close-window>X</button> <h2>Información</h2> <h3> Nombre: ' + category.name + '</h3></div></div>';
-
+        console.log("Distinto de 1")
       
     
-      }else{
+      }else {
         card.innerHTML =
         '<h2><strong>' + category.name + '</strong></h2>' +
         // '<i>Modificar</i>'
-        '<button id = cat-edit-' + category.id + ' class = "edit"> Edit </button>' +
         '<button id = info-' + category.id + ' class = "info">Info</button>' +
-        '<div id = popup-overlay> <div id = popup-form> <button id = cat-close-btn class = close-window>X</button> <h2>Modificar</h2> <form><input type ="text" id = popup-input> </form> <button type= "submit" id="submit-btn">Submit</button> </div></div>' +
+        '<div id = popup-overlay> <div id = popup-form> <button id = cat-close-btn class = close-window>X</button> <h2>Modificar</h2> <form><span>Nombre</span><br><input type ="text"   id = popup-input> </form> <button type= "submit" id="submit-btn">Submit</button> </div></div>' +
         '<div id = overlay-info' + category.id + '> <div class = "form-info" id = form-info-' + category.id + '> <button id = close-info class=close-window>X</button> <h2>Información</h2> <h3> Nombre: ' + category.name + '</h3></div></div>';
 
-      
+        console.log("Soy el 1");
+        
     
       }
+      
 
       // card.innerHTML =
       //   '<h2><strong>' + category.name + '</strong></h2>' +
@@ -164,10 +165,12 @@ document.addEventListener('click', function (event) {
     currentId = parseInt(event.target.id.split('-')[2])
     console.log(currentId);
     openPopup(currentId);
+    document.getElementById("popup-input").setAttribute("maxlength",20)
 
   }
   if (event.target && event.target.id === 'submit-btn') {
     acceptInput();
+    document.getElementById("add-input").setAttribute("maxlength",20)
 
   }
   if (event.target && event.target.id === 'cat-close-btn') {
@@ -233,7 +236,10 @@ function closeAdd() {
 function closeInfo() {
   //document.getElementById("overlay-info").style.display = "none";
   document.getElementById("form-info-" + currentCat).style.display = "none";
-  document.getElementById("table").remove();
+  if(document.getElementById("table")!= null){
+    document.getElementById("table").remove();
+  }
+  
   console.log(currentCat);
 }
 
@@ -446,20 +452,36 @@ function CategoriesList(category) {
       table.setAttribute('id', 'table')
       table.innerHTML =
         '<thead> <th>Nombre</th> <th>Duración</th> <th>Artista</th><th> Albúm</th> <th>Fecha</th></thead>';
-
-      category.songs.forEach(function (song) {
         
-        var tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${song.name}</td>
-          <td>${song.duration}</td>
-          <td>${song.artistName}</td>
-          <td>${song.albumName}</td>
-          <td>${reverseText(song.releaseDate)}</td>`
-        tbody.appendChild(tr);
-      });
-      table.appendChild(tbody)
-      document.getElementById("form-info-" + category.id).appendChild(table);
+      if(category.songs.length>0){
+        category.songs.forEach(function (song) {
+        
+        
+          var tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${song.name}</td>
+            <td>${song.duration}</td>
+            <td>${song.artistName}</td>
+            <td>${song.albumName}</td>
+            <td>${reverseText(song.releaseDate)}</td>`
+          tbody.appendChild(tr);
+        });
+        table.appendChild(tbody)
+        document.getElementById("form-info-" + category.id).appendChild(table);
+      }else{
+        var message;
+        if (document.getElementById("asd") == null) {
+          message = document.createElement('h3')
+          message.id = "asd"
+        } else {
+          message = document.getElementById("asd")
+        }
+        message.innerHTML='';
+        message.innerHTML='Esta categoría no contiene canciones';
+        document.getElementById("form-info-" + category.id).appendChild(message);
+      }
+      
+      
     })
 
 }
