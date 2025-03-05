@@ -29,7 +29,7 @@
     }
 
     /* Contenedor para las tarjetas de canciones */
-    #categories-container {
+    #artists-container {
       margin: 20px;
       display: flex;
       flex-wrap: wrap;
@@ -37,7 +37,7 @@
     }
 
     /* Estilo para cada tarjeta de canción */
-    .category-card {
+    .artist-card {
       background-color: rgb(29, 185, 84);
       border: 1px solid rgb(33, 33, 33)#ccc;
       border-radius: 5px;
@@ -77,7 +77,7 @@
       display: none;
     }
 
-    #popup-overlay {
+    #artist-popup-overlay {
       display: none;
       position: fixed;
       top: 0;
@@ -102,7 +102,7 @@
       color: rgb(29, 185, 84);
     }
 
-    #popup-form {
+    #artist-popup-form {
       position: fixed;
       top: -10px;
       left: 50%;
@@ -114,7 +114,7 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
-    #popup-form button {
+    #artist-popup-form button {
       
       padding: 12px;
       background-color: white;
@@ -128,7 +128,7 @@
       background-color: rgb(29, 185, 84);
     } */
 
-    #popup-input {
+    #artist-popup-input {
       width: 100%;
       padding: 10px;
       margin-bottom: 15px;
@@ -145,12 +145,12 @@
       color: white;
     }
 
-    #close-btn {
+    #artist-close-btn {
       background-color: white;
       color: black;
       font-weight: 100;
     }
-    #close-btn:hover{
+    #artist-close-btn:hover{
       background-color: rgb(29, 185, 84);
       color: white;
     }
@@ -387,7 +387,7 @@
     <a href="songs.html">Songs</a>
     <a href="artists.html">Artists</a>
   </div>
-  <h1 class="titulo">Categories</h1>
+  <h1 class="titulo">Artists</h1>
   <button id="add" class="add">Add Category</button>
   <div id="add-overlay">
     <div id="add-form">
@@ -416,10 +416,10 @@
     </div>
   </div>
   <!-- Este div es el contenedor donde se mostrarán las tarjetas de canciones -->
-  <div id="categories-container"></div>
+  <div id="artists-container"></div>
 
   <!-- Enlace al archivo JavaScript que contiene la lógica para llamar a la API y pintar los datos -->
-  <script src="JavaScript/app.js"></script>
+  <script src="JavaScript/artist.js"></script>
 </body>
 
 </html>
