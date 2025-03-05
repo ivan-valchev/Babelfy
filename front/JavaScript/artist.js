@@ -256,7 +256,7 @@ function acceptInput() {
 }
 
 function addInput() {
-  let inputName = document.getElementById("add-input").value;
+  let inputName = document.getElementById("artist-add-input").value;
   var regex = /[A-Za-z-0-9]/;
   if (inputName == "") {
     alert("Introduce el nombre de la categoría")
@@ -265,10 +265,10 @@ function addInput() {
   } else if (!regex.test(inputName)) {
     alert("Solo se permiten letras a la hora de crear una clase.")
   } else {
-    addCategory(inputName);
+    addArtist(inputName);
     closeAdd();
   }
-  // addCategory(inputName)
+  // addArtist(inputName)
   // closeAdd();
 }
 
@@ -310,7 +310,7 @@ function closeMessage() {
 
 }
 
-function addCategory(name) {
+function addArtist(name) {
   console.log(name);
   const apiUrl = 'http://localhost:9000/artists';
   fetch(apiUrl, {
