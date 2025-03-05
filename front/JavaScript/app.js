@@ -236,7 +236,10 @@ function closeAdd() {
 function closeInfo() {
   //document.getElementById("overlay-info").style.display = "none";
   document.getElementById("form-info-" + currentCat).style.display = "none";
-  document.getElementById("table").remove();
+  if(document.getElementById("table")!= null){
+    document.getElementById("table").remove();
+  }
+  
   console.log(currentCat);
 }
 
@@ -449,20 +452,36 @@ function CategoriesList(category) {
       table.setAttribute('id', 'table')
       table.innerHTML =
         '<thead> <th>Nombre</th> <th>Duración</th> <th>Artista</th><th> Albúm</th> <th>Fecha</th></thead>';
-
-      category.songs.forEach(function (song) {
         
-        var tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${song.name}</td>
-          <td>${song.duration}</td>
-          <td>${song.artistName}</td>
-          <td>${song.albumName}</td>
-          <td>${reverseText(song.releaseDate)}</td>`
-        tbody.appendChild(tr);
-      });
-      table.appendChild(tbody)
-      document.getElementById("form-info-" + category.id).appendChild(table);
+      if(category.songs.length>0){
+        category.songs.forEach(function (song) {
+        
+        
+          var tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${song.name}</td>
+            <td>${song.duration}</td>
+            <td>${song.artistName}</td>
+            <td>${song.albumName}</td>
+            <td>${reverseText(song.releaseDate)}</td>`
+          tbody.appendChild(tr);
+        });
+        table.appendChild(tbody)
+        document.getElementById("form-info-" + category.id).appendChild(table);
+      }else{
+        var message;
+        if (document.getElementById("asd") == null) {
+          message = document.createElement('h3')
+          message.id = "asd"
+        } else {
+          message = document.getElementById("asd")
+        }
+        message.innerHTML='';
+        message.innerHTML='Esta categoría no contiene canciones';
+        document.getElementById("form-info-" + category.id).appendChild(message);
+      }
+      
+      
     })
 
 }
