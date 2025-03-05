@@ -161,12 +161,14 @@ function songCloseInfo() {
   document.getElementById("song-info-form-" + index).style.display = "none";
   console.log(index);
 }
+var nameData;
 function openEdit(id) {
   console.log(id);
   body = getById(id, true)
     .then(function (body) {
       console.log(body)
       document.getElementById("edit-name-input").value = body.name;
+      nameData = body.name;
       document.getElementById("edit-duration-input").value = body.duration;
       document.getElementById("edit-artist-input").value = body.artistName;
       document.getElementById("edit-album-input").value = body.albumName;
@@ -190,7 +192,7 @@ function openEdit(id) {
 function closeEdit() {
   document.getElementById('edit-overlay').style.display = "none";
 }
-function submitEdit() {
+function submitEdit(edited = false) {
   var regex = /[A-Za-z-0-9]/;
   var num = -1;
 
@@ -200,6 +202,9 @@ function submitEdit() {
   let editAlbum = document.getElementById("edit-album-input").value;
   let editDate = document.getElementById("edit-date-input").value;
   let editCategory = document.getElementById("edit-selector-select").value;
+  var oldName = manageEditInput(nameData)
+  console.log("Name 1: "+oldName);
+  
 
   if (editName == "") {
     num = 0;
@@ -244,7 +249,7 @@ function submitEdit() {
   }
   else {
     console.log("Nueva cat: "+editCategory)
-    editSong(idEdit, editName, editDuration, editArtist, editAlbum, editDate, editCategory);
+    editSong(idEdit, editName, editDuration, editArtist, editAlbum, editDate, editCategory,edited,oldName);
 
   }
 
@@ -337,7 +342,7 @@ function addSong(name, duration, artistName, albumName, releaseDate, categoryId)
       console.error('Error editing category', error)
     })
 }
-function editSong(id, name, duration, artistName, albumName, releaseDate, category) {
+function editSong(id, name, duration, artistName, albumName, releaseDate, category,edited,oldName) {
   const apiUrl = 'http://localhost:9000/songs';
   fetch(apiUrl, {
     method: 'PUT',
@@ -354,11 +359,14 @@ function editSong(id, name, duration, artistName, albumName, releaseDate, catego
       return response.text();
     })
     .then(function (text) {
-      // if(text == 'Found'){
-      //   alert("No se puede modificar la canción, ya existe una con ese nombre")
-      // }else{
-      //   editSongMessage();
-      // }
+      if(text == 'Found'&& oldName == ""){
+        console.log("Alertaaa");
+        console.log("Nombre:"+oldName);
+        
+        alert("No se puede modificar la canción, ya existe una con ese nombre")
+      }else if(text == 'Found'&& oldName == "Same"){
+        editSongMessage();
+      }
       getSongs();
     })
     .catch(function (error) {
@@ -511,4 +519,36 @@ function cleanEdit(){
     list2.removeChild(options[i]);
   }
 }
+
+
+
+
+function manageEditInput(text){
+    var result ="";
+    // var textBox = document.getElementById("edit-name-input");
+    // var oldText = textBox.value;
+
+    if(text == document.getElementById("edit-name-input").value){
+      result = "Same"
+    }
+    
+    console.log("Result: "+result);
+    
+
+    return result;
+  
+}
+
+// document.addEventListener("input",function (event){
+//   var result =false;
+//   var textBox = document.getElementById("edit-name-input");
+//   var oldText = textBox.value;
+//   if(event.target && event.target.id === "edit-name-input" &&(textBox!==oldText) ){
+//     alert("Modified")
+//     result = true;
+    
+//   }
+
+//   return result;
+// })
 
