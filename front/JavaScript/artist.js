@@ -59,7 +59,7 @@ async function getArtists(onlydata = false) {
       // Si ocurre algún error durante la petición o la conversión, se muestra en la consola.
       console.error('Error al cargar los artistas:', error);
       // También se muestra un mensaje de error en el contenedor HTML.
-      document.getElementById('artists-container').innerHTML = '<p>Error al cargar las categorias.</p>';
+      document.getElementById('artists-container').innerHTML = '<p>Error al cargar los artistas.</p>';
     });
 }
 
@@ -85,7 +85,7 @@ function renderartists(artists) {
     var warning = document.createElement('p')
 
     container.innerHTML = '';
-    warning.innerHTML = '<span class=empty-page> No hay categorías </span>'
+    warning.innerHTML = '<span class=empty-page> No hay artistas </span>'
 
     container.appendChild(warning)
 
@@ -362,14 +362,14 @@ function deleteArtist(id) {
     })
     .then(function () {
       console.log("Recargo")
-      getartists();
+      getArtists();
     })
     .catch(function (error) {
       // Paso 4: Manejo de errores.
       // Si ocurre algún error durante la petición o la conversión, se muestra en la consola.
       console.error('Error al borrar la categoria:', error);
       // También se muestra un mensaje de error en el contenedor HTML.
-      document.getElementById('artists-container').innerHTML = '<p>Error al borrar la categoria.</p>';
+      document.getElementById('artists-container').innerHTML = '<p>Error al borrar el artista.</p>';
     });
 
 }
