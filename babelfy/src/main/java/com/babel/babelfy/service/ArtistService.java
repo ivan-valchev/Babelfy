@@ -1,8 +1,6 @@
 package com.babel.babelfy.service;
 
-import com.babel.babelfy.dto.ArtistDTORequestCreate;
-import com.babel.babelfy.dto.ArtistDTORequestEdit;
-import com.babel.babelfy.dto.ArtistDTOResponseList;
+import com.babel.babelfy.dto.*;
 import com.babel.babelfy.model.Artist;
 import com.babel.babelfy.repository.ArtistRepository;
 import jakarta.transaction.Transactional;
@@ -56,6 +54,17 @@ public class ArtistService {
         return text;
     }
 
-    public
+    public ArtistDTOResponseDetails findById(long id){
+        Artist a;
+        a =artistRepo.findById(id).orElse(null);
+
+        return ArtistDTOResponseDetails.artistDTODetailsToArtist(a);
+
+    }
+    public String delete (ArtistDTORequestDelete aDTO){
+        artistRepo.delete(ArtistDTORequestDelete.ArtistDTODeleteToArtist(aDTO));
+        return "Borrado";
+
+    }
 
 }

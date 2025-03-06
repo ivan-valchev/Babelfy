@@ -97,6 +97,7 @@ function renderartists(artists) {
       var card = document.createElement('div');
       // Agregar la clase "song-card" para aplicar los estilos CSS definidos.
       card.classList.add('artist-card');
+      card.id = "artist-card";
 
 
       card.innerHTML =
@@ -182,6 +183,7 @@ document.addEventListener('click', function (event) {
     currentArtist = parseInt(event.target.id.split('-')[2])
     console.log(currentArtist);
     openInfo(currentArtist);
+    // showInfo(currentArtist, true);
     // artistsList(currentArtist);
   }
 
@@ -200,10 +202,10 @@ function artistOpenPopup(id) {
     .then(function (value) {
       document.getElementById("artist-popup-input").value = value;
       document.getElementById("artist-popup-overlay").style.display = "block";
-      
+
     })
-    document.getElementById("artist-popup-input").value = "";
-      document.getElementById("artist-popup-overlay").style.display = "block";
+  // document.getElementById("artist-popup-input").value = "";
+  //   document.getElementById("artist-popup-overlay").style.display = "block";
 }
 
 function artistOpenAdd() {
@@ -482,6 +484,33 @@ function reverseText(text) {
   return text.split('-').reverse().join('-');
 
 }
+
+// function showInfo(currentArtist, isOpen) {
+
+//   var artist = getArtistId(currentArtist,true);
+  
+  
+//   if (isOpen) {
+//     var card = document.getElementById('artist-card');
+//     var forminfo =document.createElement('div')
+//     forminfo.id = "artist-overlay-info" + currentArtist;
+//     forminfo.classList.add('form-info')
+//     console.log(forminfo.innerHTML);
+//     var titulo = document.createElement('h2')
+//     var nombre = document.createElement('h3')
+    
+//     titulo.innerHTML='Información'
+//     nombre.innerHTML ='Nombre: '+artist.name
+//     console.log(titulo.innerHTML);
+    
+//     forminfo.appendChild(titulo);
+//     forminfo.appendChild(nombre);
+//     card.appendChild(forminfo);
+//   }
+
+  
+
+// }
 
 
 
