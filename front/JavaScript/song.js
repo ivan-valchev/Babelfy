@@ -90,6 +90,7 @@ document.addEventListener('click', function (event) {
 
   if (event.target && event.target.id == 'Song-add') {
     openAddPopup();
+   
   }
   if (event.target && event.target.id == 'song-add-close-btn') {
     closeAddPopup();
@@ -138,6 +139,14 @@ document.addEventListener('click', function (event) {
 
 function openAddPopup() {
   console.log("POP");
+  var currenDate = new Date();
+  var year = currenDate.getFullYear();
+  var month = String(currenDate.getMonth()+1).padStart(2,'0')
+  var day = String(currenDate.getDate()).padStart(2,'0')
+
+  var formattedDate = year + '-' + month +'-'+ day;
+
+  document.getElementById('add-date-input').setAttribute('max',formattedDate)
 
   document.getElementById("song-add-overlay").style.display = "block";
   document.getElementById("add-name-input").value = "";
