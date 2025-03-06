@@ -110,7 +110,7 @@
       background-color: rgb(0, 0, 0);
       padding: 30px;
       border-radius: 10px;
-      width: 300px;
+      width: 450px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
@@ -197,7 +197,7 @@
       background-color: rgb(0, 0, 0);
       padding: 30px;
       border-radius: 10px;
-      width: 300px;
+      width: 450px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       color: white;
       text-align: center;
@@ -259,7 +259,9 @@
       background-color: rgb(0, 0, 0);
       padding: 30px;
       border-radius: 10px;
-      width: 300px;
+      width: 450px;
+      max-height: 400px;
+      overflow: auto;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
     .info{
@@ -352,7 +354,7 @@
       width: auto;
       text-align: right;
       width: auto;
-      margin-left: 275px;
+      margin-left: 400px;
       padding: 12px;
       background-color: white;
       color: black;
@@ -364,6 +366,13 @@
       color: white;
     }
 
+    table,th,td{
+      border: 1px solid rgb(245, 245, 245);
+      /* margin-left:-15px; */
+    }
+    td{
+      width: 200px
+    }
 
   </style>
 </head>
@@ -384,7 +393,8 @@
       <button id="add-close-btn" class="close-window">X</button>
       <h2>Add Category</h2>
       <form>
-        <input type="text" id="add-input">
+        <span>Nombre</span><br>
+        <input type="text" maxlength="20" id="add-input">
       </form>
       <button type="submit" id="add-submit">Add Category</button>
     </div>

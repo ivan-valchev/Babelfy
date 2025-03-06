@@ -1,10 +1,6 @@
 package com.babel.babelfy.controller;
 
-import com.babel.babelfy.dto.SongDTO;
-import com.babel.babelfy.dto.SongDTORequest;
-import com.babel.babelfy.dto.SongDTORequestCreate;
-import com.babel.babelfy.dto.SongDTORequestFind;
-import com.babel.babelfy.dto.SongDTOResponse;
+import com.babel.babelfy.dto.*;
 import com.babel.babelfy.model.Category;
 import com.babel.babelfy.model.Song;
 import com.babel.babelfy.service.SongService;
@@ -23,20 +19,20 @@ public class SongController {
 private SongService songService;
 
 @GetMapping("")
-    public List<Song> getAll(){
+    public List<SongDTOResponseDetail> getAll(){
         return songService.getAll();
     }
 @GetMapping("/{id}")
-public Song getById(@PathVariable long id){
+public SongDTOResponseDetail getById(@PathVariable long id){
     return songService.getById(id);
 }
   @PostMapping("")
-  public Song create (@RequestBody SongDTORequestCreate songDTO) {
+  public String create (@RequestBody SongDTORequestCreate songDTO) {
       return songService.addSong(songDTO);
 
   }
     @PutMapping("")
-    public Song updateSong(@RequestBody SongDTORequest request) {
+    public String updateSong(@RequestBody SongDTORequest request) {
         return songService.updateSong(request);
     }
 
