@@ -145,36 +145,36 @@ document.addEventListener('click', function (event) {
   if (event.target && event.target.id.startsWith('artist-delete-')) {
     const categoryId = parseInt(event.target.id.split('-')[2])
     if (categoryId != 1) {
-      deleteCategory(categoryId);
-      deleteMessage();
+      deleteArtist(categoryId);
+      // deleteMessage();
     }
 
   }
   if (event.target && event.target.id.startsWith('artist-edit-')) {
     currentId = parseInt(event.target.id.split('-')[2])
     console.log(currentId);
-    openPopup(currentId);
+    artistOpenPopup(currentId);
     document.getElementById("artist-popup-input").setAttribute("maxlength", 20)
 
   }
   if (event.target && event.target.id === 'artist-submit-btn') {
-    acceptInput();
+    artistAcceptInput();
     document.getElementById("artist-add-input").setAttribute("maxlength", 20)
 
   }
   if (event.target && event.target.id === 'artist-close-btn') {
-    closePopup();
+    artistClosePopup();
   }
   if (event.target && event.target.id === 'artist-add') {
 
-    openAdd();
+    artistOpenAdd();
   }
   if (event.target && event.target.id === 'artist-add-submit') {
-    addInput();
+    artistAddInput();
     // addMessage();
   }
   if (event.target && event.target.id === 'artist-add-close-btn') {
-    closeAdd();
+    artistCloseAdd();
   }
 
   if (event.target && event.target.id.startsWith('artist-info-')) {
@@ -187,7 +187,7 @@ document.addEventListener('click', function (event) {
 
 
   if (event.target && event.target.id === 'artist-close-info') {
-    closeInfo();
+    artistCloseInfo();
   }
 
   if (event.target && event.target.id === 'artist-close-message') {
@@ -195,18 +195,18 @@ document.addEventListener('click', function (event) {
   }
 });
 
-function openPopup(id) {
-  // getCategoryId(id, true)
-  //   .then(function (value) {
-  //     document.getElementById("artist-popup-input").value = value;
-  //     document.getElementById("artist-popup-overlay").style.display = "block";
+function artistOpenPopup(id) {
+  getArtistId(id, true)
+    .then(function (value) {
+      document.getElementById("artist-popup-input").value = value;
+      document.getElementById("artist-popup-overlay").style.display = "block";
       
-  //   })
+    })
     document.getElementById("artist-popup-input").value = "";
       document.getElementById("artist-popup-overlay").style.display = "block";
 }
 
-function openAdd() {
+function artistOpenAdd() {
   document.getElementById("artist-add-input").value = "";
   document.getElementById("artist-add-overlay").style.display = "block";
 }
@@ -217,15 +217,15 @@ function openInfo(currentCat) {
   // artistsList(currentCat);
 }
 
-function closePopup() {
+function artistClosePopup() {
   document.getElementById("artist-popup-overlay").style.display = "none";
 }
 
-function closeAdd() {
+function artistCloseAdd() {
   document.getElementById("artist-add-overlay").style.display = "none";
 }
 
-function closeInfo() {
+function artistCloseInfo() {
   //document.getElementById("overlay-info").style.display = "none";
   document.getElementById("artist-form-info-" + currentArtist).style.display = "none";
   // if (document.getElementById("table") != null) {
@@ -235,18 +235,18 @@ function closeInfo() {
   console.log(currentArtist);
 }
 
-function acceptInput() {
+function artistAcceptInput() {
   let inputValue = document.getElementById("artist-popup-input").value;
   var regex = /[A-Za-z-0-9]/;
   if (inputValue == "") {
     alert("Introduce el nombre de la categoría")
-    // closePopup();
+    // artistClosePopup();
     // editMessage(false)
   } else if (!regex.test(inputValue)) {
     alert("Solo se permiten letras a la hora de modificar una clase")
   } else {
-    editCategory(currentId, inputValue);
-    closePopup();
+    editArtist(currentId, inputValue);
+    artistClosePopup();
     // editMessage();
 
   }
@@ -255,21 +255,21 @@ function acceptInput() {
 
 }
 
-function addInput() {
+function artistAddInput() {
   let inputName = document.getElementById("artist-add-input").value;
   var regex = /[A-Za-z-0-9]/;
   if (inputName == "") {
     alert("Introduce el nombre de la categoría")
-    // closeAdd();
+    // artistCloseAdd();
     // addMessage(false)
   } else if (!regex.test(inputName)) {
     alert("Solo se permiten letras a la hora de crear una clase.")
   } else {
     addArtist(inputName);
-    closeAdd();
+    artistCloseAdd();
   }
   // addArtist(inputName)
-  // closeAdd();
+  // artistCloseAdd();
 }
 
 
@@ -372,7 +372,7 @@ function deleteArtist(id) {
 
 }
 
-function editCategory(id, name) {
+function editArtist(id, name) {
   const apiUrl = 'http://localhost:9000/artists';
   fetch(apiUrl, {
     method: 'PUT',
@@ -393,16 +393,16 @@ function editCategory(id, name) {
       if (text == "Found") {
         alert("Ya existe una categoría con ese nombre")
       } else {
-        editMessage();
+        // editMessage();
       }
-      getartists();
+      getArtists();
     })
     .catch(function (error) {
       console.error('Error editing category', error)
     })
 }
 
-function getCategoryId(id, name = true) {
+function getArtistId(id, name = true) {
   const apiUrl = 'http://localhost:9000/artists/' + id;
   var value;
   value = fetch(apiUrl, {
@@ -419,7 +419,7 @@ function getCategoryId(id, name = true) {
       if (name) {
         return text.name;
       } else {
-        getartists();
+        getArtists();
       }
     })
     .catch(function (error) {

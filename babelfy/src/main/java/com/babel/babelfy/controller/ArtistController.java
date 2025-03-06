@@ -1,6 +1,7 @@
 package com.babel.babelfy.controller;
 
 import com.babel.babelfy.dto.ArtistDTORequestCreate;
+import com.babel.babelfy.dto.ArtistDTORequestEdit;
 import com.babel.babelfy.dto.ArtistDTOResponseList;
 import com.babel.babelfy.service.ArtistService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,10 @@ public class ArtistController {
     @PostMapping("")
     public String create(@RequestBody ArtistDTORequestCreate artistDTO){
         return artistService.create(artistDTO);
+    }
+    @PutMapping("")
+    public String edit (@RequestBody ArtistDTORequestEdit artistDTOEdit){
+        return artistService.edit(artistDTOEdit);
     }
 
 }

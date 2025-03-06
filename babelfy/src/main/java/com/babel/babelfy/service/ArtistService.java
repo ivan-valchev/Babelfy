@@ -1,6 +1,7 @@
 package com.babel.babelfy.service;
 
 import com.babel.babelfy.dto.ArtistDTORequestCreate;
+import com.babel.babelfy.dto.ArtistDTORequestEdit;
 import com.babel.babelfy.dto.ArtistDTOResponseList;
 import com.babel.babelfy.model.Artist;
 import com.babel.babelfy.repository.ArtistRepository;
@@ -38,5 +39,23 @@ public class ArtistService {
         }
         return artistDTO.getName();
     }
+
+    public String edit(ArtistDTORequestEdit aDTO){
+        String text ="Found";
+        Artist a;
+        List<Artist>list;
+        list = artistRepo.findByName(aDTO.getName());
+        if(list.isEmpty()){
+            a =ArtistDTORequestEdit.artistDTOEditToArtist(aDTO);
+            artistRepo.save(a);
+            text ="";
+        }
+
+
+
+        return text;
+    }
+
+    public
 
 }
