@@ -167,7 +167,7 @@
       background-color: rgb(255, 255, 255);
       color: rgb(29, 185, 84);
     }
-    #add-overlay{
+    #artist-add-overlay{
       display: none;
       position: fixed;
       top: 0;
@@ -189,7 +189,7 @@
       background-color: rgb(255, 255, 255);
       color: rgb(29, 185, 84);
     }
-    #add-form{
+    #artist-add-form{
       position: fixed;
       top: -10px;
       left: 50%;
@@ -203,7 +203,7 @@
       text-align: center;
     }
 
-    #add-form button{
+    #artist-add-form button{
       padding: 12px;
       background-color: white;
       color: black;
@@ -212,7 +212,7 @@
       cursor: pointer;
     }
 
-    #add-input{
+    #artist-add-input{
       width: 100%;
       padding: 10px;
       margin-bottom: 15px;
@@ -221,20 +221,20 @@
       box-sizing: border-box;
     }
 
-    #add-submit {
+    #artist-add-submit {
       margin-top: 15px;
     }
-    #add-submit:hover{
+    #artist-add-submit:hover{
       background-color: rgb(29, 185, 84);
       color: white;
     }
 
-    #add-close-btn {
+    #artist-add-close-btn {
       background-color: white;
       color: black;
       font-weight: 100;
     }
-    #add-close-btn:hover{
+    #artist-add-close-btn:hover{
       background-color: rgb(29, 185, 84);
       color: white;
     }
@@ -392,16 +392,16 @@
     <a href="artists.html">Artists</a>
   </div>
   <h1 class="titulo">Artists</h1>
-  <button id="add" class="add">Add Artist</button>
-  <div id="add-overlay">
-    <div id="add-form">
-      <button id="add-close-btn" class="close-window">X</button>
+  <button id="artist-add" class="add">Add Artist</button>
+  <div id="artist-add-overlay">
+    <div id="artist-add-form">
+      <button id="artist-add-close-btn" class="close-window">X</button>
       <h2>Add Category</h2>
       <form>
         <span>Nombre</span><br>
-        <input type="text" maxlength="20" id="add-input">
+        <input type="text" maxlength="20" id="artist-add-input">
       </form>
-      <button type="submit" id="add-submit">Add Category</button>
+      <button type="submit" id="artist-add-submit">Add Category</button>
     </div>
   </div>
 

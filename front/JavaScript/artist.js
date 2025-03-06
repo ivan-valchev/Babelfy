@@ -159,21 +159,21 @@ document.addEventListener('click', function (event) {
   }
   if (event.target && event.target.id === 'artist-submit-btn') {
     acceptInput();
-    document.getElementById("add-input").setAttribute("maxlength", 20)
+    document.getElementById("artist-add-input").setAttribute("maxlength", 20)
 
   }
   if (event.target && event.target.id === 'artist-close-btn') {
     closePopup();
   }
-  if (event.target && event.target.id === 'add') {
+  if (event.target && event.target.id === 'artist-add') {
 
     openAdd();
   }
-  if (event.target && event.target.id === 'add-submit') {
+  if (event.target && event.target.id === 'artist-add-submit') {
     addInput();
     // addMessage();
   }
-  if (event.target && event.target.id === 'add-close-btn') {
+  if (event.target && event.target.id === 'artist-add-close-btn') {
     closeAdd();
   }
 
@@ -207,8 +207,8 @@ function openPopup(id) {
 }
 
 function openAdd() {
-  document.getElementById("add-input").value = "";
-  document.getElementById("add-overlay").style.display = "block";
+  document.getElementById("artist-add-input").value = "";
+  document.getElementById("artist-add-overlay").style.display = "block";
 }
 
 function openInfo(currentCat) {
@@ -222,7 +222,7 @@ function closePopup() {
 }
 
 function closeAdd() {
-  document.getElementById("add-overlay").style.display = "none";
+  document.getElementById("artist-add-overlay").style.display = "none";
 }
 
 function closeInfo() {
@@ -236,7 +236,7 @@ function closeInfo() {
 }
 
 function acceptInput() {
-  let inputValue = document.getElementById("popup-input").value;
+  let inputValue = document.getElementById("artist-popup-input").value;
   var regex = /[A-Za-z-0-9]/;
   if (inputValue == "") {
     alert("Introduce el nombre de la categoría")
@@ -273,37 +273,37 @@ function addInput() {
 }
 
 
-function addMessage(funcionando = true) {
-  if (!funcionando) {
-    document.getElementById("message-add").innerHTML = '<h2>La categoría no se ha podido crear</h2>' + '<button id="close-message">Cerrar</button>'
-  } else {
-    document.getElementById("message-add").innerHTML = '<h2>La categoría se ha podido crear correctamente</h2>' + '<button id="close-message">Cerrar</button>'
-  }
-  document.getElementById("message-overlay").style.display = "block"
-  document.getElementById("message-add").style.display = "block"
-  document.getElementById("message-delete").style.display = "none"
-  document.getElementById("message-edit").style.display = "none"
-}
-function deleteMessage() {
-  console.log("DELETE MESSAGE");
+// function addMessage(funcionando = true) {
+//   if (!funcionando) {
+//     document.getElementById("message-add").innerHTML = '<h2>La categoría no se ha podido crear</h2>' + '<button id="close-message">Cerrar</button>'
+//   } else {
+//     document.getElementById("message-add").innerHTML = '<h2>La categoría se ha podido crear correctamente</h2>' + '<button id="close-message">Cerrar</button>'
+//   }
+//   document.getElementById("message-overlay").style.display = "block"
+//   document.getElementById("message-add").style.display = "block"
+//   document.getElementById("message-delete").style.display = "none"
+//   document.getElementById("message-edit").style.display = "none"
+// }
+// function deleteMessage() {
+//   console.log("DELETE MESSAGE");
 
-  document.getElementById("message-overlay").style.display = "block"
-  document.getElementById("message-delete").style.display = "block"
-  document.getElementById("message-add").style.display = "none"
-  document.getElementById("message-edit").style.display = "none"
-}
+//   document.getElementById("message-overlay").style.display = "block"
+//   document.getElementById("message-delete").style.display = "block"
+//   document.getElementById("message-add").style.display = "none"
+//   document.getElementById("message-edit").style.display = "none"
+// }
 
-function editMessage(funcionando = true) {
-  if (!funcionando) {
-    document.getElementById("message-edit").innerHTML = '<h2>La categoría no se ha podido modificar</h2>' + '<button id="close-message" class="message-button">Cerrar</button>'
-  } else {
-    document.getElementById("message-edit").innerHTML = '<h2>Se ha modificado correctamente.</h2> ' + '<button id="close-message" class="message-button">Cerrar</button>'
-  }
-  document.getElementById("message-overlay").style.display = "block"
-  document.getElementById("message-edit").style.display = "block"
-  document.getElementById("message-delete").style.display = "none"
-  document.getElementById("message-add").style.display = "none"
-}
+// function editMessage(funcionando = true) {
+//   if (!funcionando) {
+//     document.getElementById("message-edit").innerHTML = '<h2>La categoría no se ha podido modificar</h2>' + '<button id="close-message" class="message-button">Cerrar</button>'
+//   } else {
+//     document.getElementById("message-edit").innerHTML = '<h2>Se ha modificado correctamente.</h2> ' + '<button id="close-message" class="message-button">Cerrar</button>'
+//   }
+//   document.getElementById("message-overlay").style.display = "block"
+//   document.getElementById("message-edit").style.display = "block"
+//   document.getElementById("message-delete").style.display = "none"
+//   document.getElementById("message-add").style.display = "none"
+// }
 function closeMessage() {
 
   document.getElementById("message-overlay").style.display = "none";
@@ -331,16 +331,16 @@ function addArtist(name) {
       if (text == 'Found') {
         alert("Ya existe una categoría con ese nombre")
       } else {
-        addMessage();
+        // addMessage();
       }
-      getartists();
+      getArtists();
     })
     .catch(function (error) {
       console.error('Error editing category', error)
     })
 }
 
-function deleteCategory(id) {
+function deleteArtist(id) {
   console.log("Delete", id);
   const apiUrl = 'http://localhost:9000/artists';
   fetch(apiUrl, {

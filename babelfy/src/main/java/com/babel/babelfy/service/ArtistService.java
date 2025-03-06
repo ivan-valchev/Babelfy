@@ -1,5 +1,6 @@
 package com.babel.babelfy.service;
 
+import com.babel.babelfy.dto.ArtistDTORequestCreate;
 import com.babel.babelfy.dto.ArtistDTOResponseList;
 import com.babel.babelfy.model.Artist;
 import com.babel.babelfy.repository.ArtistRepository;
@@ -26,6 +27,16 @@ public class ArtistService {
         }
 
         return list;
+    }
+
+    public String create (ArtistDTORequestCreate artistDTO){
+        String text = "Found";
+        List<Artist> list = artistRepo.findByName(artistDTO.getName());
+        if(list.isEmpty()){
+            artistRepo.save(ArtistDTORequestCreate.artistDTOCreateToArtist(artistDTO));
+            text ="Guardado";
+        }
+        return artistDTO.getName();
     }
 
 }
