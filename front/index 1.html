@@ -384,6 +384,21 @@
       width: 200px
     }
 
+    .delete-popup{
+      display: none;
+      position: fixed;
+      top: 100px;
+      left: 50%;
+      transform: translate(-50%, 50%);
+      background-color: rgb(0, 0, 0);
+      padding: 30px;
+      border-radius: 10px;
+      width: 300px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      color: white;
+      text-align: center;
+    }
+
   </style>
 </head>
 
@@ -423,6 +438,12 @@
       <!-- <h2>Categoría modificada correctamente!</h2>
       <button id="close-message">Cerrar</button> -->
     </div>
+  </div>
+
+  <div id="categories-popup-delete" class="delete-popup">
+    <span>¿Estas segur@ que quieres eliminar esta categoría?</span><br>
+    <button id="categories-accept-delete" class="button">Sí</button>
+    <button id="categories-decline-delete" class="button">No</button>
   </div>
   <!-- Este div es el contenedor donde se mostrarán las tarjetas de canciones -->
   <div id="categories-container"></div>

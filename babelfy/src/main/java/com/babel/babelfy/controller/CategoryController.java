@@ -21,7 +21,7 @@ import java.util.List;
 public class CategoryController {
        private final CategoryService categoryService;
 
-
+    @Transactional
     @GetMapping("")
     public List<CategoryDTOResponseList> getAll(){
         return categoryService.getAll();
@@ -32,15 +32,18 @@ public class CategoryController {
         return categoryService.getById(id);
     }
 
+    @Transactional
     @PostMapping("")
     public String create(@RequestBody CategoryDTORequestCreate cDTOR){
 
         return categoryService.createCategory(cDTOR);
     }
+    @Transactional
     @PutMapping("")
     public String modify(@RequestBody CategoryDTORequestEdit cDTO){
         return  categoryService.modify(cDTO);
     }
+    @Transactional
     @DeleteMapping("")
     public String delete(@RequestBody CategoryDTORequestDelete cDTO){
         categoryService.delete(cDTO);

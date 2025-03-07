@@ -154,10 +154,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.addEventListener('click', function (event) {
   if (event.target && event.target.id.startsWith('delete-')) {
-    const categoryId = parseInt(event.target.id.split('-')[1])
-    if (categoryId != 1) {
-      deleteCategory(categoryId);
-      deleteMessage();
+    id = parseInt(event.target.id.split('-')[1])
+    if (id != 1) {
+      // deleteCategory(categoryId);
+      openDeletePopup(id);
+      // deleteMessage();
     }
 
   }
@@ -204,7 +205,35 @@ document.addEventListener('click', function (event) {
   if (event.target && event.target.id === 'close-message') {
     closeMessage();
   }
+
+  if (event.target && event.target.id === 'categories-accept-delete') {
+    console.log(id);
+    deleteCategory(id);
+    
+    
+    deleteClosePopup();
+  }
+  
+  if (event.target && event.target.id === 'categories-decline-delete') {
+    deleteClosePopup();
+  }
+
 });
+
+function openDeletePopup(id) {
+  document.getElementById("categories-popup-delete").style.display="block";
+  console.log(id);
+  
+  return id;
+
+  
+}
+function deleteClosePopup() {
+  document.getElementById("categories-popup-delete").style.display="none";
+
+  
+  
+}
 
 function openPopup(id) {
   getCategoryId(id, true)
