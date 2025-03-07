@@ -167,6 +167,7 @@ function songOpenInfo(index) {
   document.getElementById("song-info-form-" + index).style.display = "block";
 }
 function songCloseInfo() {
+  document.getElementById("song-info-overlay-"+index).style.display="none";
   document.getElementById("song-info-form-" + index).style.display = "none";
   console.log(index);
 }
