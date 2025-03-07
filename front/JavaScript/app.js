@@ -209,9 +209,8 @@ document.addEventListener('click', function (event) {
   if (event.target && event.target.id === 'categories-accept-delete') {
     console.log(id);
     deleteCategory(id);
-    
-    
     deleteClosePopup();
+    deleteMessage();
   }
   
   if (event.target && event.target.id === 'categories-decline-delete') {

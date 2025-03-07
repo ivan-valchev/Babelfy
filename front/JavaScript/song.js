@@ -142,6 +142,7 @@ document.addEventListener('click', function (event) {
     // var prueba =parseInt(document.getElementById.startsWith("song-delete-").split("-")[2]);
     // console.log(prueba);  
     closeDeletePopup();
+    deleteSongMessage();
   }
   if(event.target&&event.target.id === 'song-decline-delete'){
     closeDeletePopup();
