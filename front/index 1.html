@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Spotify</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    /* =========================
+       Estilos para la maquetación
+       ========================= */
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(rgb(0, 0, 0), rgb(93, 93, 93));
+      background-repeat: no-repeat;
+      margin: 0;
+      padding: 0;
+      /* height: 100vh; */
+      min-height: 100vh;  ;
+      background-size: 100% 100%;
+
+    }
+
+    header {
+      background: linear-gradient(rgb(29, 185, 84), rgb(14, 65, 33));
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    /* Contenedor para las tarjetas de canciones */
+    #categories-container {
+      margin: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* Estilo para cada tarjeta de canción */
+    .category-card {
+      background-color: rgb(29, 185, 84);
+      border: 1px solid rgb(33, 33, 33)#ccc;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin: 10px;
+      padding: 15px;
+      width: 300px;
+      text-align: center;
+      color: white;
+      transition: all 0.5s;
+    }
+
+    /* .category-card:hover {
+      color: rgb(29, 185, 84);
+      background-color: rgb(255, 255, 255);
+      cursor: pointer;
+    } */
+
+    .button {
+      background-color: rgb(29, 185, 84);
+      border: none;
+      color: white;
+      font-size: 20px;
+    }
+
+    .button:hover {
+      color: rgb(14, 65, 33);
+      cursor: pointer;
+
+    }
+
+    ul {
+      list-style-type: none;
+    }
+
+    #button {
+      display: none;
+    }
+
+    #popup-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+
+    .edit {
+      padding: 12px 20px;
+      background-color: black;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .edit:hover {
+      background-color: rgb(255, 255, 255);
+      color: rgb(29, 185, 84);
+    }
+
+    #popup-form {
+      position: fixed;
+      top: -10px;
+      left: 50%;
+      transform: translate(-50%, 50%);
+      background-color: rgb(0, 0, 0);
+      padding: 30px;
+      border-radius: 10px;
+      width: 450px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    #popup-form button {
+      
+      padding: 12px;
+      background-color: white;
+      color: black;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* #popup-form:hover {
+      background-color: rgb(29, 185, 84);
+    } */
+
+    #popup-input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid rgb(29, 185, 84);
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    #submit-btn {
+      margin-top: 15px;
+    }
+    #submit-btn:hover{
+      background-color: rgb(29, 185, 84);
+      color: white;
+    }
+
+    #close-btn {
+      background-color: white;
+      color: black;
+      font-weight: 100;
+    }
+    #close-btn:hover{
+      background-color: rgb(29, 185, 84);
+      color: white;
+    }
+    .delete{
+      padding: 12px 20px;
+      margin-right:10px ;
+      background-color: black;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .delete:hover {
+      background-color: rgb(255, 255, 255);
+      color: rgb(29, 185, 84);
+    }
+    #add-overlay{
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+    .add{
+      padding: 12px 20px;
+      background-color: rgb(29, 185, 84);
+      color: rgb(255, 255, 255);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .add:hover{
+      background-color: rgb(255, 255, 255);
+      color: rgb(29, 185, 84);
+    }
+    #add-form{
+      position: fixed;
+      top: -10px;
+      left: 50%;
+      transform: translate(-50%, 50%);
+      background-color: rgb(0, 0, 0);
+      padding: 30px;
+      border-radius: 10px;
+      width: 450px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      color: white;
+      text-align: center;
+    }
+
+    #add-form button{
+      padding: 12px;
+      background-color: white;
+      color: black;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #add-input{
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid rgb(29, 185, 84);
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    #add-submit {
+      margin-top: 15px;
+    }
+    #add-submit:hover{
+      background-color: rgb(29, 185, 84);
+      color: white;
+    }
+
+    #add-close-btn {
+      background-color: white;
+      color: black;
+      font-weight: 100;
+    }
+    #add-close-btn:hover{
+      background-color: rgb(29, 185, 84);
+      color: white;
+    }
+
+    /*INFO*/
+    #overlay-info{
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+    .overlay{
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+    .form-info{
+      display: none;
+      position: fixed;
+      top: -10px;
+      left: 50%;
+      transform: translate(-50%, 50%);
+      background-color: rgb(0, 0, 0);
+      padding: 30px;
+      border-radius: 10px;
+      width: 450px;
+      max-height: 400px;
+      overflow: auto;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .info{
+      padding: 12px 20px;
+      background-color: rgb(0, 0, 0);
+      color: rgb(255, 255, 255);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-left: 10px;  
+    }
+    .info:hover{
+      background-color: rgb(255, 255, 255);
+      color:rgb(29, 185, 84);
+    }
+
+    #close-info {
+      background-color: white;
+      color: black;
+      font-weight: 100;
+      border: none;
+     
+    }
+    #close-info:hover{
+      background-color: rgb(29, 185, 84);
+      color: white;
+    }
+
+    .message-overlay{
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      text-align: center;
+    }
+
+
+    .message-overlay>div{
+      position: fixed;
+      top: 100px;
+      left: 50%;
+      color: white;
+      transform: translate(-50%, 50%);
+      background-color: rgb(0, 0, 0);
+      padding: 30px;
+      border-radius: 10px;
+      width: 300px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .message-overlay>div>button{
+      background-color: white;
+      color: black;
+      font-size: 25px;
+      font-weight: 100;
+      border: 2px solid rgb(255, 255, 255);
+      border-radius: 5px;
+    }
+    .message-overlay>div>button:hover{
+      background-color: rgb(29, 185, 84);
+      color: white;
+      border: 2px solid rgb(29, 185, 84);
+      border-radius: 5px;
+    }
+    .message-button:hover{
+      cursor: pointer;
+    }
+    .enlaces{
+      background-color:rgb(14, 65, 33);
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .enlaces>a{
+      color: white;
+      text-decoration: none;
+      margin:30px;
+    }
+    .enlaces>a:hover{
+      color:rgb(29, 185, 84);
+    }
+    .titulo{
+      color: rgb(255, 255, 255);
+      text-align: center;
+    }
+    .close-window{
+      width: auto;
+      text-align: right;
+      width: auto;
+      margin-left: 400px;
+      padding: 12px;
+      background-color: white;
+      color: black;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .empty-page{
+      color: white;
+    }
+
+    table,th,td{
+      border: 1px solid rgb(245, 245, 245);
+      /* margin-left:-15px; */
+    }
+    td{
+      width: 200px
+    }
+
+    .delete-popup{
+      display: none;
+      position: fixed;
+      top: 100px;
+      left: 50%;
+      transform: translate(-50%, 50%);
+      background-color: rgb(0, 0, 0);
+      padding: 30px;
+      border-radius: 10px;
+      width: 300px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      color: white;
+      text-align: center;
+    }
+
+  </style>
+</head>
+
+<body>
+  <!-- Encabezado de la página -->
+  <header>
+    <h1><i class="bi bi-spotify"></i>Spotify</h1>
+  </header>
+  <div class="enlaces">
+    <a href="index 1.html">Categories</a>
+    <a href="songs.html">Songs</a>
+  </div>
+  <h1 class="titulo">Categories</h1>
+  <button id="add" class="add">Add Category</button>
+  <div id="add-overlay">
+    <div id="add-form">
+      <button id="add-close-btn" class="close-window">X</button>
+      <h2>Add Category</h2>
+      <form>
+        <span>Nombre</span><br>
+        <input type="text" maxlength="20" id="add-input">
+      </form>
+      <button type="submit" id="add-submit">Add Category</button>
+    </div>
+  </div>
+
+  <div id="message-overlay" class="message-overlay">
+    <div id="message-add">
+      <h2>Categoría añadida correctamente!</h2>
+      <button id="close-message" class="message-button">Cerrar</button>
+    </div>
+    <div id="message-delete">
+      <h2>Categoría eliminada correctamente!</h2>
+      <button id="close-message" class="message-button">Cerrar</button>
+    </div>
+    <div id="message-edit">
+      <!-- <h2>Categoría modificada correctamente!</h2>
+      <button id="close-message">Cerrar</button> -->
+    </div>
+  </div>
+
+  <div id="categories-popup-delete" class="delete-popup">
+    <span>¿Estas segur@ que quieres eliminar esta categoría?</span><br>
+    <button id="categories-accept-delete" class="button">Sí</button>
+    <button id="categories-decline-delete" class="button">No</button>
+  </div>
+  <!-- Este div es el contenedor donde se mostrarán las tarjetas de canciones -->
+  <div id="categories-container"></div>
+
+  <!-- Enlace al archivo JavaScript que contiene la lógica para llamar a la API y pintar los datos -->
+  <script src="JavaScript/app.js"></script>
+</body>
+
+</html>
