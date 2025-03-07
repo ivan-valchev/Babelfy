@@ -2,6 +2,7 @@ package com.babel.babelfy.controller;
 
 import com.babel.babelfy.dto.*;
 import com.babel.babelfy.service.CategoryService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import com.babel.babelfy.model.Category;
@@ -25,6 +26,7 @@ public class CategoryController {
     public List<CategoryDTOResponseList> getAll(){
         return categoryService.getAll();
     }
+    @Transactional
     @GetMapping("/{id}")
     public CategoryDTOResponseDetail findId(@PathVariable long id){
         return categoryService.getById(id);

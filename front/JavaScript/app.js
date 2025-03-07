@@ -438,6 +438,8 @@ function getCategoryId(id, name = true) {
 
 function CategoriesList(category) {
 
+  console.log(category);
+  
   fetch('http://localhost:9000/categories/' + category)
     .then(function (response) {
       if (!response.ok) {
