@@ -106,7 +106,7 @@ function renderCategories(categories) {
         '<button id = cat-edit-' + category.id + ' class = "edit"> Edit </button>' +
         '<button id = info-' + category.id + ' class = "info">Info</button>' +
         '<div id = popup-overlay> <div id = popup-form> <button id = cat-close-btn class = close-window>X</button> <h2>Modificar</h2> <form><input type ="text" id = popup-input> </form> <button type= "submit" id="submit-btn">Submit</button> </div></div>' +
-        '<div id = overlay-info' + category.id + '> <div class = "form-info" id = form-info-' + category.id + '> <button id = close-info class=close-window>X</button> <h2>Información</h2> <h3> Nombre: ' + category.name + '</h3></div></div>';
+        '<div id = overlay-info' + category.id + ' class ="overlay"> <div class = "form-info" id = form-info-' + category.id + '> <button id = close-info class=close-window>X</button> <h2>Información</h2> <h3> Nombre: ' + category.name + '</h3></div></div>';
         console.log("Distinto de 1")
       
     
@@ -116,7 +116,7 @@ function renderCategories(categories) {
         // '<i>Modificar</i>'
         '<button id = info-' + category.id + ' class = "info">Info</button>' +
         '<div id = popup-overlay> <div id = popup-form> <button id = cat-close-btn class = close-window>X</button> <h2>Modificar</h2> <form><span>Nombre</span><br><input type ="text"   id = popup-input> </form> <button type= "submit" id="submit-btn">Submit</button> </div></div>' +
-        '<div id = overlay-info' + category.id + '> <div class = "form-info" id = form-info-' + category.id + '> <button id = close-info class=close-window>X</button> <h2>Información</h2> <h3> Nombre: ' + category.name + '</h3></div></div>';
+        '<div id = overlay-info' + category.id + ' class=overlay> <div class = "form-info" id = form-info-' + category.id + '> <button id = close-info class=close-window>X</button> <h2>Información</h2> <h3> Nombre: ' + category.name + '</h3></div></div>';
 
         console.log("Soy el 1");
         
@@ -154,10 +154,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.addEventListener('click', function (event) {
   if (event.target && event.target.id.startsWith('delete-')) {
-    const categoryId = parseInt(event.target.id.split('-')[1])
-    if (categoryId != 1) {
-      deleteCategory(categoryId);
-      deleteMessage();
+    id = parseInt(event.target.id.split('-')[1])
+    if (id != 1) {
+      // deleteCategory(categoryId);
+      openDeletePopup(id);
+      // deleteMessage();
     }
 
   }
@@ -204,7 +205,35 @@ document.addEventListener('click', function (event) {
   if (event.target && event.target.id === 'close-message') {
     closeMessage();
   }
+
+  if (event.target && event.target.id === 'categories-accept-delete') {
+    console.log(id);
+    deleteCategory(id);
+    
+    
+    deleteClosePopup();
+  }
+  
+  if (event.target && event.target.id === 'categories-decline-delete') {
+    deleteClosePopup();
+  }
+
 });
+
+function openDeletePopup(id) {
+  document.getElementById("categories-popup-delete").style.display="block";
+  console.log(id);
+  
+  return id;
+
+  
+}
+function deleteClosePopup() {
+  document.getElementById("categories-popup-delete").style.display="none";
+
+  
+  
+}
 
 function openPopup(id) {
   getCategoryId(id, true)
@@ -234,7 +263,7 @@ function closeAdd() {
 }
 
 function closeInfo() {
-  //document.getElementById("overlay-info").style.display = "none";
+  document.getElementById("overlay-info"+currentCat).style.display = "none";
   document.getElementById("form-info-" + currentCat).style.display = "none";
   if(document.getElementById("table")!= null){
     document.getElementById("table").remove();

@@ -87,7 +87,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 document.addEventListener('click', function (event) {
-
   if (event.target && event.target.id == 'Song-add') {
     openAddPopup();
    
@@ -109,8 +108,9 @@ document.addEventListener('click', function (event) {
   if (event.target && event.target.id.startsWith('song-delete-')) {
     id = parseInt(event.target.id.split('-')[2])
     console.log(id);
-    deleteSong(id);
-    deleteSongMessage();
+    // deleteSong(id);
+    deletePopUp(id);
+    // deleteSongMessage();
 
   }
   if (event.target && event.target.id.startsWith('song-edit-')) {
@@ -135,7 +135,34 @@ document.addEventListener('click', function (event) {
     closeMessage();
   }
 
+  if(event.target&&event.target.id === 'song-accept-delete'){
+    deleteSong(id);
+    console.log(id);
+    
+    // var prueba =parseInt(document.getElementById.startsWith("song-delete-").split("-")[2]);
+    // console.log(prueba);  
+    closeDeletePopup();
+  }
+  if(event.target&&event.target.id === 'song-decline-delete'){
+    closeDeletePopup();
+  }
+  
+
+
 })
+
+
+function deletePopUp(id) {
+  document.getElementById("popup-delete").style.display='block';
+  console.log(id);
+  
+  // deleteSongMessage();
+  // closeDeletePopup();
+  return id;
+}
+function closeDeletePopup() {
+  document.getElementById("popup-delete").style.display="none";
+}
 
 function openAddPopup() {
   console.log("POP");
@@ -167,6 +194,7 @@ function songOpenInfo(index) {
   document.getElementById("song-info-form-" + index).style.display = "block";
 }
 function songCloseInfo() {
+  document.getElementById("song-info-overlay-"+index).style.display="none";
   document.getElementById("song-info-form-" + index).style.display = "none";
   console.log(index);
 }
@@ -560,4 +588,3 @@ function manageEditInput(text){
 
 //   return result;
 // })
-
